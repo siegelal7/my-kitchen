@@ -13,7 +13,10 @@ const Home = () => {
   return (
     <View style={styleYo.container}>
       {allRecipes.map(i => (
-        <Text key={i._id}>{i.title}</Text>
+        <View key={i._id} style={{marginTop: 7}}>
+          <Text style={{fontWeight: 'bold'}}>{i.title}</Text>
+          <Text>{i.instructions}</Text>
+        </View>
       ))}
     </View>
   );
