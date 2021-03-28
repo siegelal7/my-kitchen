@@ -40,9 +40,9 @@ const App: () => Node = () => {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
+      <Tab.Navigator initialRouteName="All Recipes">
         {/* <RecipeEntry /> */}
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="All Recipes" component={Home} />
         <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
       </Tab.Navigator>
     </NavigationContainer>

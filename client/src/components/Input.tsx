@@ -1,7 +1,17 @@
 import React from 'react';
 import {TextInput, Text, View} from 'react-native';
 
-const Input = ({label, value, onChangeText, placeHolder, allStyles}) => {
+const Input = ({
+  label,
+  value,
+  viewStyles,
+  onChangeText,
+  placeHolder,
+  allStyles,
+  onSubmitEditing,
+  multiline,
+  numberOfLines,
+}) => {
   // const {labelStyles, inputStyles, viewStyles} = allStyles;
   // console.log(allStyles.viewStyles);
   return (
@@ -20,12 +30,13 @@ const Input = ({label, value, onChangeText, placeHolder, allStyles}) => {
         autoCorrect={false}
         autofocus={true}
         placeholder={placeHolder}
-        style={
-          allStyles.inputStyles ? allStyles.inputStyles : {marginBottom: 10}
-        }
+        style={allStyles ? allStyles : {marginBottom: 10}}
         onChangeText={onChangeText}
+        onSubmitEditing={onSubmitEditing && onSubmitEditing}
         value={value}
         // keyboardType="default"
+        multiline={multiline ? true : false}
+        numberOfLines={numberOfLines && numberOfLines}
         underlineColorAndroid="transparent"
       />
     </View>

@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import type {Node} from 'react';
-import {TextInput, StyleSheet, View} from 'react-native';
+import {TextInput, StyleSheet, View, Text, Button} from 'react-native';
 import axios from 'axios';
 import Input from './Input';
 // import View from 'react-native-gesture-handler/lib/typescript/GestureHandlerRootView';
 
 const styles = StyleSheet.create({
   inputStyles: {
-    backgroundColor: 'aqua',
+    // backgroundColor: 'aqua',
+    borderColor: '#555555',
+    borderWidth: 1,
     height: 40,
-    width: 200,
+    width: 300,
     marginBottom: 25,
     color: 'black',
   },
@@ -18,15 +20,27 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   viewStyles: {
-    marginTop: 40,
-    width: 120,
-    height: 25,
+    // flex: 1,
+    // marginTop: 40,
+    // width: 120,
+    // height: 25,
     // backgroundColor: 'black',
   },
+  MainContainer: {
+    flex: 1,
+    marginTop: 20,
+    alignItems: 'center',
+  },
   textarea: {
-    height: 50,
-    width: 200,
-    backgroundColor: 'lightgreen',
+    // height: 120,
+    textAlignVertical: 'top',
+    width: 300,
+    borderColor: '#555555',
+    borderWidth: 1,
+    // backgroundColor: 'lightgreen',
+  },
+  button: {
+    marginTop: 5,
   },
 });
 
@@ -35,60 +49,70 @@ const RecipeEntry = () => {
     title: '',
     instructions: '',
   });
+  const [errorToast, setErrorToast] = useState(false);
 
   const handleTitleInputChange = e => {
     // console.log(e.target.);
+    setErrorToast(false);
     setPayload({...payload, title: e});
   };
   const handleInstructionsChange = e => {
-    setPayload({...payload, instructions: [...payload.instructions, e]});
+    setErrorToast(false);
+
+    // setPayload({...payload, instructions: [...payload.instructions, e]});
+    setPayload({...payload, instructions: e});
   };
 
   const handleSubmit = e => {
     // console.log(payload);
-    axios
-      .post('http://192.168.56.1:3001/api/recipes', payload)
-      .then(res => {
-        setPayload({...payload, title: ''});
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
+    if (payload.title !== '' && payload.instructions !== '') {
+      axios
+        .post('http://192.168.56.1:3001/api/recipes', payload)
+        .then(res => {
+          setPayload({title: '', instructions: ''});
+          console.log(res.data);
+          //   return;
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    } else {
+      setErrorToast(true);
+    }
   };
 
   return (
-    <>
+    <View style={styles.MainContainer}>
       <Input
         label="Fart"
         value={payload.title}
         onChangeText={handleTitleInputChange}
-        allStyles={styles}
-        placeHolder="Queef"
+        allStyles={styles.inputStyles}
+        viewStyles={styles.viewStyles}
+        placeHolder="title"
+        onSubmitEditing={handleSubmit}
       />
       {/* {} */}
       <Input
         label="1"
         value={payload.instructions}
         onChangeText={handleInstructionsChange}
-        allStyles={styles}
-        placeHolder="one"
+        allStyles={styles.textarea}
+        placeHolder="directions"
+        onSubmitEditing={handleSubmit}
+        viewStyles={styles.viewStyles}
+        multiline={true}
+        numberOfLines={10}
       />
-      {/* <Input
-        label="2"
-        value={payload.instructions[1]}
-        onChangeText={handleInstructionsChange}
-        allStyles={styles}
-        placeHolder="two"
+      {errorToast && <Text>Please enter all info</Text>}
+      <Button
+        onPress={handleSubmit}
+        title="Serve"
+        color="navy"
+        style={styles.button}
+        accessibilityLabel="Submit a new recipe"
       />
-      <Input
-        label="3"
-        value={payload.instructions[2]}
-        onChangeText={handleInstructionsChange}
-        allStyles={styles}
-        placeHolder="three"
-      /> */}
-    </>
+    </View>
     // <TextInput
     //   style={styles.input}
     //   autofocus={true}
