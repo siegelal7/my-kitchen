@@ -24,14 +24,13 @@ import {NavigationContainer} from '@react-navigation/native';
 // import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './src/pages/Home';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 const Tab = createBottomTabNavigator();
 
+const queryClient = new QueryClient();
+
 const App: () => Node = () => {
-  const [payload, setPayload] = useState({
-    title: '',
-    instructions: ['for now', "i'll hardcode it", 'wah'],
-  });
   const isDarkMode = useColorScheme() === 'dark';
 
   // const handleInputChange = e => {
@@ -39,13 +38,15 @@ const App: () => Node = () => {
   // };
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="All Recipes">
-        {/* <RecipeEntry /> */}
-        <Tab.Screen name="All Recipes" component={Home} />
-        <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Tab.Navigator initialRouteName="All Recipes">
+          {/* <RecipeEntry /> */}
+          <Tab.Screen name="All Recipes" component={Home} />
+          <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
 
     // <Input
     //   placeHolder="weeee"
