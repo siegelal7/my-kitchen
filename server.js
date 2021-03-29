@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const recipeController = require("./controllers/recipeController");
+const userController = require("./controllers/userController");
 
 const PORT = process.env.PORT || 3001;
 
@@ -29,6 +30,7 @@ connection.on("error", (err) => {
 });
 
 app.use(recipeController);
+app.use(userController);
 
 app.get("/api/config", (req, res) => {
   res.json({

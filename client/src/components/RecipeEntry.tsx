@@ -5,17 +5,19 @@ import axios from 'axios';
 import Input from './Input';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 // import View from 'react-native-gesture-handler/lib/typescript/GestureHandlerRootView';
+import {postRecipe} from '../utils/API';
 
 const RecipeEntry = () => {
+  const queryClient = useQueryClient();
   const [payload, setPayload] = useState({
     title: '',
     instructions: '',
   });
   const [errorToast, setErrorToast] = useState(false);
-  const queryClient = useQueryClient();
-  const postRecipe = data => {
-    axios.post('http://192.168.56.1:3001/api/recipes', data);
-  };
+
+  // const postRecipe = data => {
+  //   axios.post('http://192.168.56.1:3001/api/recipes', data);
+  // };
   const mutation = useMutation(postRecipe, {
     onMutate: variables => {
       // A mutation is about to happen!

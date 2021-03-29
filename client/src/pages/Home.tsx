@@ -2,14 +2,15 @@ import axios from 'axios';
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useQuery, useQueryClient} from 'react-query';
+import {getRecipes} from '../utils/API';
 
 const Home = () => {
   const [allRecipes, setAllRecipes] = useState([]);
 
-  const getRecipes = async () => {
-    const response = await axios.get('http://192.168.56.1:3001/api/recipes');
-    return response;
-  };
+  // const getRecipes = async () => {
+  //   const response = await axios.get('http://192.168.56.1:3001/api/recipes');
+  //   return response;
+  // };
 
   const queryClient = useQueryClient();
   // const query = useQuery('recipes', getRecipes);
