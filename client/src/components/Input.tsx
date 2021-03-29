@@ -11,6 +11,7 @@ const Input = ({
   onSubmitEditing,
   multiline,
   numberOfLines,
+  secureTextEntry,
 }) => {
   // const {labelStyles, inputStyles, viewStyles} = allStyles;
   // console.log(allStyles.viewStyles);
@@ -27,6 +28,7 @@ const Input = ({
       )}
       <TextInput
         // secureTextEntry={secureTextEntry}
+        secureTextEntry={secureTextEntry ? secureTextEntry : false}
         autoCorrect={false}
         autofocus={true}
         placeholder={placeHolder}

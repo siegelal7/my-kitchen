@@ -1,0 +1,49 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  //   name: {
+  //     type: String,
+  //     // required: true,
+  //   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  register_date: {
+    type: Date,
+    default: Date.now,
+  },
+  //   image: {
+  //     type: String,
+  //     default: "https://avatars.dicebear.com/api/female/sdfsdf.svg",
+  //   },
+  //   videos: [Object],
+  //   following: [Object],
+  //   followers: [Object],
+  //   role: {
+  //     type: String,
+  //     enum: ["Consumer", "Content Creator"],
+  //     default: "Consumer",
+  //   },
+  //   sentMessages: [{ type: Schema.Types.ObjectId, ref: "SentMessage" }],
+  //   // sentMessages: [Object],
+  //   // receivedMessages: [Object],
+  //   receivedMessages: [{ type: Schema.Types.ObjectId, ref: "ReceivedMessage" }],
+  //   favorites: [{ type: Schema.Types.ObjectId, ref: "Kit" }],
+  //   kits: [{ type: Schema.Types.ObjectId, ref: "Kit" }],
+});
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
