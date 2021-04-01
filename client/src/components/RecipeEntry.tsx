@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import type {Node} from 'react';
 import {
   StyleSheet,
@@ -11,45 +11,79 @@ import {
 
 import Input from './Input';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
-// import View from 'react-native-gesture-handler/lib/typescript/GestureHandlerRootView';
 import {postRecipe} from '../utils/API';
 import {useNavigation} from '@react-navigation/native';
+import UserContext from '../utils/UserContext';
+import axios from 'axios';
 
 const RecipeEntry = () => {
   const queryClient = useQueryClient();
+  const {user} = useContext(UserContext);
   const [payload, setPayload] = useState({
     title: '',
     instructions: '',
+    author: user.user.username ? user.user.username : '',
+    authorId: user.user.id ? user.user.id : '',
   });
+  // console.log(user.user.username);
   const [errorToast, setErrorToast] = useState(false);
   const navigation = useNavigation();
 
   // const postRecipe = data => {
   //   axios.post('http://192.168.56.1:3001/api/recipes', data);
   // };
-  const mutation = useMutation(postRecipe, {
-    onMutate: variables => {
-      // A mutation is about to happen!
-      // Optionally return a context containing data to use when for example rolling back
-      // return {id: 1};
-      return variables;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries('recipes');
-      setPayload({
-        title: '',
-        instructions: '',
-      });
-      Keyboard.dismiss();
-      navigation.navigate('All Recipes');
-    },
-    onError: (error, variables, context) => {
-      // An error happened!
 
-      console.log(`rolling back optimistic update with id ${context.id}`);
+  const mutation = useMutation(
+    payload =>
+      axios.post(
+        `http://192.168.56.1:3001/api/recipes/${user.user.id}`,
+        payload,
+      ),
+    {
+      onMutate: variables => {
+        // A mutation is about to happen!
+        // Optionally return a context containing data to use when for example rolling back
+        // return {id: 1};
+        return variables;
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('recipes');
+        setPayload({
+          title: '',
+          instructions: '',
+        });
+        Keyboard.dismiss();
+        navigation.navigate('All Recipes');
+      },
+      onError: (error, variables, context) => {
+        // An error happened!
+
+        console.log(`rolling back optimistic update with id ${context.id}`);
+      },
     },
-  });
-  // const mutation = useMutation(newTodo => axios.post('/todos', newTodo));
+  );
+  // const mutation = useMutation(postRecipe, {
+  //   onMutate: variables => {
+  //     // A mutation is about to happen!
+  //     // Optionally return a context containing data to use when for example rolling back
+  //     // return {id: 1};
+  //     return variables;
+  //   },
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries('recipes');
+  //     setPayload({
+  //       title: '',
+  //       instructions: '',
+  //     });
+  //     Keyboard.dismiss();
+  //     navigation.navigate('All Recipes');
+  //   },
+  //   onError: (error, variables, context) => {
+  //     // An error happened!
+
+  //     console.log(`rolling back optimistic update with id ${context.id}`);
+  //   },
+  // });
 
   const handleTitleInputChange = e => {
     // console.log(e.target.);
@@ -65,7 +99,7 @@ const RecipeEntry = () => {
 
   const handleSubmit = e => {
     if (payload.title != '' && payload.instructions != '') {
-      mutation.mutate(payload);
+      mutation.mutate(payload, user.user.id);
     }
     // TODO: set an error toast saying enter all shit
   };

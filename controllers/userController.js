@@ -29,7 +29,7 @@ router.post("/api/login", async (req, res) => {
       token,
       user: {
         id: user._id,
-        userName: user.userName,
+        username: user.username,
         email: user.email,
       },
     });
@@ -77,6 +77,15 @@ router.post("/api/register", async (req, res) => {
   } catch (e) {
     res.status(400).json({ error: e.message });
   }
+});
+
+router.get("/api/user/:id", (req, res) => {
+  const id = req.params.id;
+  db.User.findById(id)
+    .populate("recipes")
+    .then((found) => {
+      res.json(found);
+    });
 });
 
 // router.get("/api/user", auth, (req, res) => {

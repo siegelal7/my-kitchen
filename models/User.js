@@ -16,6 +16,7 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
   password: {
     type: String,
     required: true,
