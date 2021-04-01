@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {response} from 'express';
-export const postRecipe = data => {
-  axios.post('http://192.168.56.1:3001/api/recipes', data);
+// import {response} from 'express';
+export const postRecipe = (data, id) => {
+  axios.post(`http://192.168.56.1:3001/api/recipes/${id}`, data);
 };
 
 export const getRecipes = async () => {

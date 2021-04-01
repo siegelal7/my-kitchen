@@ -9,6 +9,10 @@ const RecipeSchema = new Schema({
     // type: Array,
     type: String,
   },
+  author: {
+    type: String,
+  },
+
   //   senderId: {
   //     type: String,
   //   },
