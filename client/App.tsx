@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import type {Node} from 'react';
 import {useColorScheme} from 'react-native';
 
@@ -19,6 +19,7 @@ import Home from './src/pages/Home';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import LoginStack from './src/pages/LoginStack';
 import UserContext from './src/utils/UserContext';
+import Logout from './src/pages/Logout';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,8 @@ const App: () => Node = () => {
   const [user, setUser] = useState({});
   const isDarkMode = useColorScheme() === 'dark';
 
+  // console.log(user);
+
   return (
     <UserContext.Provider value={{user, setUser}}>
       <QueryClientProvider client={queryClient}>
@@ -36,7 +39,11 @@ const App: () => Node = () => {
             <Tab.Screen name="All Recipes" component={Home} />
             <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
             {/* another stack in LoginStack.tsx */}
-            <Tab.Screen name="Login" component={LoginStack} />
+            {user.token ? (
+              <Tab.Screen name="Logout" component={Logout} />
+            ) : (
+              <Tab.Screen name="Login" component={LoginStack} />
+            )}
           </Tab.Navigator>
         </NavigationContainer>
       </QueryClientProvider>
