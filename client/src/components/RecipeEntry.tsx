@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import type {Node} from 'react';
-import {TextInput, StyleSheet, View, Text, Button} from 'react-native';
-import axios from 'axios';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  Keyboard,
+} from 'react-native';
+
 import Input from './Input';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 // import View from 'react-native-gesture-handler/lib/typescript/GestureHandlerRootView';
 import {postRecipe} from '../utils/API';
+import {useNavigation} from '@react-navigation/native';
 
 const RecipeEntry = () => {
   const queryClient = useQueryClient();
@@ -14,6 +22,7 @@ const RecipeEntry = () => {
     instructions: '',
   });
   const [errorToast, setErrorToast] = useState(false);
+  const navigation = useNavigation();
 
   // const postRecipe = data => {
   //   axios.post('http://192.168.56.1:3001/api/recipes', data);
@@ -31,6 +40,8 @@ const RecipeEntry = () => {
         title: '',
         instructions: '',
       });
+      Keyboard.dismiss();
+      navigation.navigate('All Recipes');
     },
     onError: (error, variables, context) => {
       // An error happened!
@@ -53,29 +64,10 @@ const RecipeEntry = () => {
   };
 
   const handleSubmit = e => {
-    // console.log(payload);
-    // if (payload.title !== '' && payload.instructions !== '') {
-    //   axios
-    //     .post('http://192.168.56.1:3001/api/recipes', payload)
-    //     .then(res => {
-    //       setPayload({title: '', instructions: ''});
-    //       console.log(res.data);
-    //       //   return;
-    //     })
-    //     .catch(err => {
-    //       console.log(err.message);
-    //     });
-    // } else {
-    //   setErrorToast(true);
-    // }
-    mutation.mutate(payload);
-    // setPayload
-    // if (mutation.isSuccess) {
-    //   setPayload({
-    //     title: '',
-    //     instructions: '',
-    //   });
-    // }
+    if (payload.title != '' && payload.instructions != '') {
+      mutation.mutate(payload);
+    }
+    // TODO: set an error toast saying enter all shit
   };
 
   return (
@@ -102,23 +94,15 @@ const RecipeEntry = () => {
         numberOfLines={10}
       />
       {errorToast && <Text>Please enter all info</Text>}
-      <Button
-        onPress={handleSubmit}
-        title="Serve"
-        color="navy"
-        style={styles.button}
-        accessibilityLabel="Submit a new recipe"
-      />
+      <TouchableOpacity style={styles.button}>
+        <Button
+          onPress={handleSubmit}
+          title="Serve"
+          color="navy"
+          accessibilityLabel="Submit a new recipe"
+        />
+      </TouchableOpacity>
     </View>
-    // <TextInput
-    //   style={styles.input}
-    //   autofocus={true}
-    //   //   placeholder="test"
-    //   onChangeText={handleInputChange}
-    //   value={payload.title}
-    //   onSubmitEditing={handleSubmit}
-    //   underlineColorAndroid="transparent"
-    // />
   );
 };
 
@@ -137,11 +121,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   viewStyles: {
-    // flex: 1,
-    // marginTop: 40,
-    // width: 120,
-    // height: 25,
-    // backgroundColor: 'black',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   MainContainer: {
     flex: 1,
@@ -157,7 +139,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'lightgreen',
   },
   button: {
-    marginTop: 5,
+    marginTop: 10,
+    width: 100,
   },
 });
 

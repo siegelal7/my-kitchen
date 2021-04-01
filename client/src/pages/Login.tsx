@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,9 +11,7 @@ import Input from '../components/Input';
 import {useMutation} from 'react-query';
 import {loginUser} from '../utils/API';
 import {useNavigation} from '@react-navigation/native';
-// import {NavigationContainer} from '@react-navigation/native';
-// import {createStackNavigator} from '@react-navigation/stack';
-// import Home from './Home';
+import UserContext from '../utils/UserContext';
 
 // const LoginStack = createStackNavigator();
 const Login = () => {
@@ -21,6 +19,7 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const {setUser} = useContext(UserContext);
   const navigation = useNavigation();
 
   // const handleLoginSubmit = e => {
@@ -34,12 +33,14 @@ const Login = () => {
       // return {id: 1};
       return variables;
     },
-    onSuccess: () => {
+    onSuccess: r => {
       //   queryClient.invalidateQueries('recipes');
       setUserInfo({
         email: '',
         password: '',
       });
+      setUser(r.data);
+
       Keyboard.dismiss();
       navigation.navigate('All Recipes');
     },
@@ -93,6 +94,12 @@ const Login = () => {
   );
 };
 const styles = StyleSheet.create({
+  viewStyles: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
   inputStyles: {
     // backgroundColor: 'aqua',
     borderColor: '#555555',
@@ -106,20 +113,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
   },
-  viewStyles: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
   linkStyles: {
-    marginTop: 10,
-    textAlign: 'center',
+    marginTop: 15,
     color: 'blue',
   },
   button: {
     marginTop: 5,
-    width: 300,
+    width: 100,
   },
 });
 

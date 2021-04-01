@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Text, Button, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Keyboard,
+  Text,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import Input from '../components/Input';
 import {registerUser} from '../utils/API';
 import {useMutation} from 'react-query';
@@ -29,6 +36,8 @@ const Register = () => {
         email: '',
         password: '',
       });
+      Keyboard.dismiss();
+      navigation.navigate('Home');
     },
     onError: (error, variables, context) => {
       // An error happened!
@@ -93,6 +102,11 @@ const Register = () => {
 };
 
 const styles = StyleSheet.create({
+  viewStyles: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   inputStyles: {
     // backgroundColor: 'aqua',
     borderColor: '#555555',
@@ -106,22 +120,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
   },
-  viewStyles: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   linkStyles: {
-    marginTop: 10,
-    textAlign: 'center',
+    marginTop: 15,
     color: 'blue',
   },
   button: {
-    display: 'flex',
     marginTop: 5,
-    // width: 300,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: 100,
   },
 });
 
