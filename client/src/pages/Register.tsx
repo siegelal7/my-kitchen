@@ -40,7 +40,7 @@ const Register = () => {
         password: '',
       });
       Keyboard.dismiss();
-      navigation.navigate('Home');
+      navigation.navigate('All Recipes');
     },
     onError: (error, variables, context) => {
       // An error happened!
