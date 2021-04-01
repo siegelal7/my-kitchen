@@ -27,51 +27,21 @@ const queryClient = new QueryClient();
 const App: () => Node = () => {
   const [user, setUser] = useState({});
   const isDarkMode = useColorScheme() === 'dark';
-  // console.log(queryClient);
-
-  // const handleInputChange = e => {
-  //   setPayload({...payload, title: e.target.value});
-  // };
 
   return (
     <UserContext.Provider value={{user, setUser}}>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <Tab.Navigator initialRouteName="All Recipes">
-            {/* <RecipeEntry /> */}
             <Tab.Screen name="All Recipes" component={Home} />
             <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
+            {/* another stack in LoginStack.tsx */}
             <Tab.Screen name="Login" component={LoginStack} />
-            {/* <Tab.Screen style={st} name="Register" component={Register} /> */}
           </Tab.Navigator>
         </NavigationContainer>
       </QueryClientProvider>
     </UserContext.Provider>
   );
 };
-
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   input: {
-//     backgroundColor: 'aqua',
-//     height: 50,
-//     width: 200,
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
 
 export default App;

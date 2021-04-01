@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,6 +11,7 @@ import Input from '../components/Input';
 import {registerUser} from '../utils/API';
 import {useMutation} from 'react-query';
 import {useNavigation} from '@react-navigation/native';
+import UserContext from '../utils/UserContext';
 
 const Register = () => {
   //   const queryClient = useQueryClient();
@@ -20,6 +21,7 @@ const Register = () => {
     password: '',
   });
   const [errorModal, setErrorModal] = useState(false);
+  const {setUser} = useContext(UserContext);
   const navigation = useNavigation();
 
   const mutation = useMutation(registerUser, {
@@ -29,8 +31,9 @@ const Register = () => {
       // return {id: 1};
       return variables;
     },
-    onSuccess: () => {
+    onSuccess: r => {
       //   queryClient.invalidateQueries('recipes');
+      setUser(r.data);
       setUserInfo({
         username: '',
         email: '',
