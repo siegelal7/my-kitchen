@@ -25,7 +25,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './src/pages/Home';
 import Register from './src/pages/Register';
+// import Login from './src/pages/Login';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import LoginStack from './src/pages/LoginStack';
 // import {getUser} from './src/utils/API';
 
 const Tab = createBottomTabNavigator();
@@ -34,7 +36,7 @@ const queryClient = new QueryClient();
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  console.log(queryClient);
+  // console.log(queryClient);
 
   // const handleInputChange = e => {
   //   setPayload({...payload, title: e.target.value});
@@ -47,17 +49,11 @@ const App: () => Node = () => {
           {/* <RecipeEntry /> */}
           <Tab.Screen name="All Recipes" component={Home} />
           <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
-          <Tab.Screen name="Register" component={Register} />
+          <Tab.Screen name="Login" component={LoginStack} />
+          {/* <Tab.Screen style={st} name="Register" component={Register} /> */}
         </Tab.Navigator>
       </NavigationContainer>
     </QueryClientProvider>
-
-    // <Input
-    //   placeHolder="weeee"
-    //   label="test"
-    //   onChangeText={handleInputChange}
-    //   value={payload.title}
-    // />
   );
 };
 

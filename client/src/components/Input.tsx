@@ -6,7 +6,7 @@ const Input = ({
   value,
   viewStyles,
   onChangeText,
-  placeHolder,
+  placeholder,
   allStyles,
   onSubmitEditing,
   multiline,
@@ -31,11 +31,11 @@ const Input = ({
         secureTextEntry={secureTextEntry ? secureTextEntry : false}
         autoCorrect={false}
         autofocus={true}
-        placeholder={placeHolder}
+        placeholder={placeholder}
         style={allStyles ? allStyles : {marginBottom: 10}}
-        onChangeText={onChangeText}
+        onChangeText={e => onChangeText(e)}
         onSubmitEditing={onSubmitEditing && onSubmitEditing}
-        value={value}
+        value={value && value}
         // keyboardType="default"
         multiline={multiline ? true : false}
         numberOfLines={numberOfLines && numberOfLines}
