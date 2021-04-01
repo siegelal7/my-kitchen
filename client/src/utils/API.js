@@ -14,6 +14,11 @@ export const registerUser = user => {
   return response;
 };
 
+export const loginUser = user => {
+  const response = axios.post('http://192.168.56.1:3001/api/login', user);
+  return response;
+};
+
 // export const getUser = () => {
 //   const response = axios.get(`http://192.168.56.1:3001/api/user`);
 //   return response;

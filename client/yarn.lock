@@ -2991,6 +2991,11 @@ flatted@^2.0.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-2.0.2.tgz"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
+flatted@^3.1.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.1.1.tgz#c4b489e80096d9df1dfc97c79871aea7c617c469"
+  integrity sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==
+
 flow-parser@0.*:
   version "0.147.0"
   resolved "https://registry.npmjs.org/flow-parser/-/flow-parser-0.147.0.tgz"
@@ -5542,6 +5547,13 @@ react-native@0.64.0:
     use-subscription "^1.0.0"
     whatwg-fetch "^3.0.0"
     ws "^6.1.4"
+
+react-query-native-devtools@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-query-native-devtools/-/react-query-native-devtools-3.0.1.tgz#7244eddb7f6d18bad87a373ba83f16e7a5a0454e"
+  integrity sha512-n7Sf3jQz9kdaEWN1gzZkIOePTQ09KOG1KMEQqJRvMylW7mdG8Ec9GqvuFn8bhZ4Y/mnCQcGMbMpDn0kYmKy2DQ==
+  dependencies:
+    flatted "^3.1.0"
 
 react-query@^3.13.0:
   version "3.13.0"

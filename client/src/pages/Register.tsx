@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Text, Button} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {
+  View,
+  StyleSheet,
+  Keyboard,
+  Text,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import Input from '../components/Input';
 import {registerUser} from '../utils/API';
 import {useMutation} from 'react-query';
+import {useNavigation} from '@react-navigation/native';
+import UserContext from '../utils/UserContext';
 
-const Login = () => {
+const Register = () => {
   //   const queryClient = useQueryClient();
   const [userInfo, setUserInfo] = useState({
     username: '',
@@ -12,6 +21,8 @@ const Login = () => {
     password: '',
   });
   const [errorModal, setErrorModal] = useState(false);
+  const {setUser} = useContext(UserContext);
+  const navigation = useNavigation();
 
   const mutation = useMutation(registerUser, {
     onMutate: variables => {
@@ -20,13 +31,16 @@ const Login = () => {
       // return {id: 1};
       return variables;
     },
-    onSuccess: () => {
+    onSuccess: r => {
       //   queryClient.invalidateQueries('recipes');
+      setUser(r.data);
       setUserInfo({
         username: '',
         email: '',
         password: '',
       });
+      Keyboard.dismiss();
+      navigation.navigate('Home');
     },
     onError: (error, variables, context) => {
       // An error happened!
@@ -35,25 +49,8 @@ const Login = () => {
     },
   });
 
-  //   const handleRegisterSubmit = e => {
-  //     registerUser(userInfo)
-  //       .then(res => {
-  //         console.log(res.data);
-  //         setUserInfo({
-  //           username: '',
-  //           email: '',
-  //           password: '',
-  //         });
-  //       })
-  //       .catch(err => {
-  //         // console.log(err);
-
-  //         setErrorModal(true);
-  //       });
-  //   };
-
   return (
-    <View>
+    <View style={styles.viewStyles}>
       <Input
         label="username"
         value={userInfo.username}
@@ -86,21 +83,33 @@ const Login = () => {
         allStyles={styles.inputStyles}
       />
       {errorModal && <Text>Try again!</Text>}
-      <Button
-        onPress={e => {
-          e.persist();
-          mutation.mutate(userInfo);
-        }}
-        title="Register"
-        color="navy"
-        style={styles.button}
-        accessibilityLabel="submit registration"
-      />
+      <TouchableOpacity style={styles.button}>
+        <Button
+          onPress={e => {
+            e.persist();
+            mutation.mutate(userInfo);
+          }}
+          title="Register"
+          color="navy"
+          accessibilityLabel="submit registration"
+        />
+      </TouchableOpacity>
+
+      <Text
+        style={styles.linkStyles}
+        onPress={() => navigation.navigate('Login')}>
+        Already have an account? Login Here
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  viewStyles: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   inputStyles: {
     // backgroundColor: 'aqua',
     borderColor: '#555555',
@@ -114,18 +123,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
   },
-  viewStyles: {
-    // flex: 1,
-    // marginTop: 40,
-    // width: 120,
-    // height: 25,
-    // backgroundColor: 'black',
+  linkStyles: {
+    marginTop: 15,
+    color: 'blue',
   },
-
   button: {
     marginTop: 5,
-    width: 300,
+    width: 100,
   },
 });
 
-export default Login;
+export default Register;

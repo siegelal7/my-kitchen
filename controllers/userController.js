@@ -8,43 +8,34 @@ const auth = require("../middleware/auth");
 
 router.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
-  //   const authToken = crypto.randomBytes(64).toString("base64");
 
+  // Simple validation
   if (!email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
   try {
+    // Check for existing user
     const user = await db.User.findOne({ email });
     if (!user) throw Error("User does not exist");
 
-    const salt = await bcrypt.genSalt(10);
-    if (!salt) throw Error("Something went wrong with bcrypt");
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) throw Error("Invalid credentials");
 
-    const hash = await bcrypt.hash(password, salt);
-    if (!hash) throw Error("Something went wrong hashing the password");
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    if (!token) throw Error("Couldn't sign the token");
 
-    const newUser = new db.User({
-      email,
-      password: hash,
-    });
-
-    const savedUser = await newUser.save();
-    if (!savedUser) throw Error("Something went wrong saving the user");
-
-    const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
     res.status(200).json({
       token,
       user: {
-        id: savedUser.id,
-        username: savedUser.username,
-        email: savedUser.email,
+        id: user._id,
+        userName: user.userName,
+        email: user.email,
       },
     });
   } catch (e) {
-    res.status(400).json({ error: e.message });
+    res.status(400).json({ msg: e.msg });
   }
-  // db.User.findOne()
 });
 
 router.post("/api/register", async (req, res) => {

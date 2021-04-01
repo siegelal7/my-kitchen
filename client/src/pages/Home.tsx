@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useState, useContext} from 'react';
+import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {useQuery, useQueryClient} from 'react-query';
 import {getRecipes} from '../utils/API';
+import UserContext from '../utils/UserContext';
 
 const Home = () => {
   const [allRecipes, setAllRecipes] = useState([]);
+  const {user} = useContext(UserContext);
 
   // const getRecipes = async () => {
   //   const response = await axios.get('http://192.168.56.1:3001/api/recipes');
@@ -32,22 +34,17 @@ const Home = () => {
     return <Text>Error: {error.message}</Text>;
   }
 
-  // console.log(data.data);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('http://192.168.56.1:3001/api/recipes')
-  //     .then(res => setAllRecipes(res.data))
-  //     .catch(err => console.log(err));
-  // }, []);
   return (
     <View style={styleYo.container}>
-      {data.data.map(i => (
-        <View key={i._id} style={{marginTop: 7}}>
-          <Text style={{fontWeight: 'bold'}}>{i.title}</Text>
-          <Text>{i.instructions}</Text>
-        </View>
-      ))}
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        {data.data.map(i => (
+          <View key={i._id} style={{marginTop: 7}}>
+            <Text style={{fontWeight: 'bold'}}>{i.title}</Text>
+            <Text style={{marginBottom: 5}}>{i.instructions}</Text>
+          </View>
+        ))}
+      </ScrollView>
+
       {/* {allRecipes.map(i => (
         <View key={i._id} style={{marginTop: 7}}>
           <Text style={{fontWeight: 'bold'}}>{i.title}</Text>
@@ -57,11 +54,16 @@ const Home = () => {
     </View>
   );
 };
+const screenHeight = Dimensions.get('window').height;
 
 const styleYo = StyleSheet.create({
   container: {
     marginTop: 32,
     paddingHorizontal: 24,
+    height: screenHeight,
+    paddingBottom: 100,
+    // marginBottom: 200,
+    // backgroundColor: '#dcedc8',
   },
 });
 
