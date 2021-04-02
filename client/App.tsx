@@ -37,10 +37,13 @@ const App: () => Node = () => {
         <NavigationContainer>
           <Tab.Navigator initialRouteName="All Recipes">
             <Tab.Screen name="All Recipes" component={Home} />
-            <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
+            {/* <Tab.Screen name="Enter Recipe" component={RecipeEntry} /> */}
             {/* another stack in LoginStack.tsx */}
             {user.token ? (
-              <Tab.Screen name="Logout" component={Logout} />
+              <>
+                <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
+                <Tab.Screen name="Logout" component={Logout} />
+              </>
             ) : (
               <Tab.Screen name="Login" component={LoginStack} />
             )}
