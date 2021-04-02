@@ -38,19 +38,18 @@ const Home = () => {
     <View style={styleYo.container}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {data.data.map(i => (
-          <View key={i._id} style={{marginTop: 7}}>
-            <Text style={{fontWeight: 'bold'}}>{i.title}</Text>
+          <View
+            key={i._id}
+            style={{marginTop: 5, borderWidth: 1, paddingHorizontal: 5}}>
+            <View
+              style={{flexDirection: 'row', flewWrap: 'wrap', marginBottom: 5}}>
+              <Text style={{fontWeight: 'bold'}}>{i.title} </Text>
+              <Text>From{i.author}</Text>
+            </View>
             <Text style={{marginBottom: 5}}>{i.instructions}</Text>
           </View>
         ))}
       </ScrollView>
-
-      {/* {allRecipes.map(i => (
-        <View key={i._id} style={{marginTop: 7}}>
-          <Text style={{fontWeight: 'bold'}}>{i.title}</Text>
-          <Text>{i.instructions}</Text>
-        </View>
-      ))} */}
     </View>
   );
 };
