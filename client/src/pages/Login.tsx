@@ -57,7 +57,7 @@ const Login = () => {
         label="Email"
         // onSubmitEditing={mutation.mutate(userInfo)}
         placeholder="email"
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
         value={userInfo.email}
         onChangeText={e => {
           setUserInfo({...userInfo, email: e});
@@ -67,7 +67,7 @@ const Login = () => {
         label="Password"
         // onSubmitEditing={mutation.mutate(userInfo)}
         placeholder="password"
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
         secureTextEntry={true}
         value={userInfo.password}
         onChangeText={e => {

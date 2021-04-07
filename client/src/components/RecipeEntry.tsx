@@ -62,28 +62,6 @@ const RecipeEntry = () => {
       },
     },
   );
-  // const mutation = useMutation(postRecipe, {
-  //   onMutate: variables => {
-  //     // A mutation is about to happen!
-  //     // Optionally return a context containing data to use when for example rolling back
-  //     // return {id: 1};
-  //     return variables;
-  //   },
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries('recipes');
-  //     setPayload({
-  //       title: '',
-  //       instructions: '',
-  //     });
-  //     Keyboard.dismiss();
-  //     navigation.navigate('All Recipes');
-  //   },
-  //   onError: (error, variables, context) => {
-  //     // An error happened!
-
-  //     console.log(`rolling back optimistic update with id ${context.id}`);
-  //   },
-  // });
 
   const handleTitleInputChange = e => {
     // console.log(e.target.);
@@ -110,7 +88,7 @@ const RecipeEntry = () => {
         label="Dish Name"
         value={payload.title}
         onChangeText={handleTitleInputChange}
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
         viewStyles={styles.viewStyles}
         // placeHolder="title"
         onSubmitEditing={handleSubmit}
@@ -120,9 +98,9 @@ const RecipeEntry = () => {
         label="Instructions"
         value={payload.instructions}
         onChangeText={handleInstructionsChange}
-        allStyles={styles.textarea}
+        inputStyles={styles.textarea}
         // placeHolder=""
-        onSubmitEditing={handleSubmit}
+        // onSubmitEditing={handleSubmit}
         viewStyles={styles.viewStyles}
         multiline={true}
         numberOfLines={10}

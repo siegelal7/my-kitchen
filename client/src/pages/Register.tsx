@@ -59,7 +59,7 @@ const Register = () => {
           setUserInfo({...userInfo, username: e});
         }}
         // onSubmitEditing={mutation.mutate(userInfo)}
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
       />
       <Input
         label="email"
@@ -69,7 +69,7 @@ const Register = () => {
           setUserInfo({...userInfo, email: e});
         }}
         // onSubmitEditing={mutation.mutate(userInfo)}
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
       />
       <Input
         label="password"
@@ -80,7 +80,7 @@ const Register = () => {
         }}
         secureTextEntry={true}
         // onSubmitEditing={mutation.mutate(userInfo)}
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
       />
       {errorModal && <Text>Try again!</Text>}
       <TouchableOpacity style={styles.button}>

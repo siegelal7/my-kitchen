@@ -7,7 +7,7 @@ const Input = ({
   viewStyles,
   onChangeText,
   placeholder,
-  allStyles,
+  inputStyles,
   onSubmitEditing,
   multiline,
   numberOfLines,
@@ -16,23 +16,21 @@ const Input = ({
   // const {labelStyles, inputStyles, viewStyles} = allStyles;
   // console.log(allStyles.viewStyles);
   return (
-    <View style={allStyles.viewStyles ? allStyles.viewStyles : {marginTop: 14}}>
+    <View style={viewStyles ? viewStyles : {marginTop: 14}}>
       {label ? (
         <Text
           // style={labelStyles}
           style={{fontWeight: 'bold'}}>
           {label}
         </Text>
-      ) : (
-        ''
-      )}
+      ) : null}
       <TextInput
         // secureTextEntry={secureTextEntry}
         secureTextEntry={secureTextEntry ? secureTextEntry : false}
         autoCorrect={false}
         autofocus={true}
         placeholder={placeholder}
-        style={allStyles ? allStyles : {marginBottom: 10}}
+        style={inputStyles ? inputStyles : {marginBottom: 10}}
         onChangeText={e => onChangeText(e)}
         onSubmitEditing={onSubmitEditing && onSubmitEditing}
         value={value && value}
