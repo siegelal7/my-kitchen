@@ -1,34 +1,34 @@
-import axios from 'axios';
 import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {useQuery, useQueryClient} from 'react-query';
-import {getRecipes} from '../utils/API';
+import Input from '../components/Input';
+import {getRecipes, searchForUser} from '../utils/API';
 import UserContext from '../utils/UserContext';
 
 const Home = () => {
   const [allRecipes, setAllRecipes] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
   const {user} = useContext(UserContext);
 
-  // const getRecipes = async () => {
-  //   const response = await axios.get('http://192.168.56.1:3001/api/recipes');
-  //   return response;
-  // };
-
   const queryClient = useQueryClient();
-  // const query = useQuery('recipes', getRecipes);
+
+  const handleTitleInputChange = e => {
+    setSearchValue(e);
+  };
+
+  const handleSearchSubmit = e => {
+    setSearchValue('');
+    searchForUser(searchValue).then(res => console.log(res.data));
+  };
+
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
     'recipes',
     getRecipes,
   );
-  // const mutation = useMutation(postRecipe, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries('recipes');
-  //   },
-  // });
+
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
-  // if (isFetching)
 
   if (isError) {
     return <Text>Error: {error.message}</Text>;
@@ -36,6 +36,15 @@ const Home = () => {
 
   return (
     <View style={styleYo.container}>
+      <Input
+        // label="Dish Name"
+        value={searchValue}
+        onChangeText={handleTitleInputChange}
+        inputStyles={styleYo.inputStyles}
+        viewStyles={styleYo.viewStyles}
+        // placeHolder="title"
+        onSubmitEditing={handleSearchSubmit}
+      />
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {data.data.map(i => (
           <View
@@ -44,7 +53,7 @@ const Home = () => {
             <View
               style={{flexDirection: 'row', flewWrap: 'wrap', marginBottom: 5}}>
               <Text style={{fontWeight: 'bold'}}>{i.title} </Text>
-              <Text>From{i.author}</Text>
+              <Text>from {i.author}</Text>
             </View>
             <Text style={{marginBottom: 5}}>{i.instructions}</Text>
           </View>
@@ -64,6 +73,15 @@ const styleYo = StyleSheet.create({
     // marginBottom: 200,
     // backgroundColor: '#dcedc8',
   },
+  inputStyles: {
+    borderColor: '#555555',
+    borderWidth: 1,
+    height: 40,
+    width: 300,
+    marginBottom: 25,
+    color: 'black',
+  },
+  viewStyle: {},
 });
 
 export default Home;

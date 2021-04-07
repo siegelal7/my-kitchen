@@ -20,6 +20,7 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import LoginStack from './src/pages/LoginStack';
 import UserContext from './src/utils/UserContext';
 import Logout from './src/pages/Logout';
+import ProfileStack from './src/pages/ProfileStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,8 @@ const App: () => Node = () => {
             {user.token ? (
               <>
                 <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
-                <Tab.Screen name="Logout" component={Logout} />
+                <Tab.Screen name="Profile" component={ProfileStack} />
+                {/* <Tab.Screen name="Logout" component={Logout} /> */}
               </>
             ) : (
               <Tab.Screen name="Login" component={LoginStack} />

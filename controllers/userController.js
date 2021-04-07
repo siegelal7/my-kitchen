@@ -88,23 +88,31 @@ router.get("/api/user/:id", (req, res) => {
     });
 });
 
-// router.get("/api/user", auth, (req, res) => {
-//   db.User.findById({})
-//     .then((found) => {
-//       res.json(found);
-//     })
-//     .catch((err) => {
-//       res.status(400).json(err);
-//     });
-// });
-// router.get("/api/user/:id", auth, (req, res) => {
-//   db.User.findById(req.params.id)
-//     .then((found) => {
-//       res.json(found);
-//     })
-//     .catch((err) => {
-//       res.status(400).json(err);
-//     });
-// });
+router.get("/api/finduser/:name", async (req, res) => {
+  const name = req.params.name;
+  // try {
+  //   const user = await db.User.find({ username: name });
+  //   console.log(user);
+  //   res.json(user);
+  // } catch (err) {}
+  db.User.find({ username: { $regex: name } })
+    .then((found) => {
+      // console.log(found);
+      if (found.length > 0) {
+        res.json(found);
+        return;
+      }
+
+      const deleteFirstLetter = name.split("").slice(1).join("");
+      // console.log(deleteFirstLetter.split("").slice(0, 7)).join("");
+      db.User.find({ username: { $regex: deleteFirstLetter } })
+        .then((nowFound) => {
+          console.log("got here");
+          res.json(nowFound);
+        })
+        .catch((error) => res.status(400).json(error));
+    })
+    .catch((err) => res.status(400).json(err));
+});
 
 module.exports = router;

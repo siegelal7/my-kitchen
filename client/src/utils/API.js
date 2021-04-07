@@ -19,6 +19,11 @@ export const loginUser = user => {
   return response;
 };
 
+export const searchForUser = user => {
+  const response = axios.get(`http://192.168.56.1:3001/api/finduser/${user}`);
+  return response;
+};
+
 // export const getUser = () => {
 //   const response = axios.get(`http://192.168.56.1:3001/api/user`);
 //   return response;
