@@ -3,23 +3,23 @@ import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {useQuery, useQueryClient} from 'react-query';
 import Input from '../components/Input';
 import {getRecipes, searchForUser} from '../utils/API';
-import UserContext from '../utils/UserContext';
+// import UserContext from '../utils/UserContext';
 
 const Home = () => {
-  const [allRecipes, setAllRecipes] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
-  const {user} = useContext(UserContext);
+  // const [allRecipes, setAllRecipes] = useState([]);
+  // const [searchValue, setSearchValue] = useState('');
+  // const {user} = useContext(UserContext);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const handleTitleInputChange = e => {
-    setSearchValue(e);
-  };
+  // const handleTitleInputChange = e => {
+  //   setSearchValue(e);
+  // };
 
-  const handleSearchSubmit = e => {
-    setSearchValue('');
-    searchForUser(searchValue).then(res => console.log(res.data));
-  };
+  // const handleSearchSubmit = e => {
+  //   setSearchValue('');
+  //   searchForUser(searchValue).then(res => console.log(res.data));
+  // };
 
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
     'recipes',
@@ -36,7 +36,7 @@ const Home = () => {
 
   return (
     <View style={styleYo.container}>
-      <Input
+      {/* <Input
         // label="Dish Name"
         value={searchValue}
         onChangeText={handleTitleInputChange}
@@ -44,7 +44,7 @@ const Home = () => {
         viewStyles={styleYo.viewStyles}
         // placeHolder="title"
         onSubmitEditing={handleSearchSubmit}
-      />
+      /> */}
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {data.data.map(i => (
           <View

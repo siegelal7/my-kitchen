@@ -88,7 +88,7 @@ const RecipeEntry = () => {
         label="Dish Name"
         value={payload.title}
         onChangeText={handleTitleInputChange}
-        allStyles={styles.inputStyles}
+        inputStyles={styles.inputStyles}
         viewStyles={styles.viewStyles}
         // placeHolder="title"
         onSubmitEditing={handleSubmit}
@@ -98,7 +98,7 @@ const RecipeEntry = () => {
         label="Instructions"
         value={payload.instructions}
         onChangeText={handleInstructionsChange}
-        allStyles={styles.textarea}
+        inputStyles={styles.textarea}
         // placeHolder=""
         // onSubmitEditing={handleSubmit}
         viewStyles={styles.viewStyles}
