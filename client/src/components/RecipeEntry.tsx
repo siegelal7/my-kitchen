@@ -1,20 +1,14 @@
 import React, {useState, useContext} from 'react';
 import type {Node} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Keyboard,
-} from 'react-native';
+import {View, Text, Button, TouchableOpacity, Keyboard} from 'react-native';
 
 import Input from './Input';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
-import {postRecipe} from '../utils/API';
+// import {postRecipe} from '../utils/API';
 import {useNavigation} from '@react-navigation/native';
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
+import {styles} from '../utils/styles';
 
 const RecipeEntry = () => {
   const queryClient = useQueryClient();
@@ -83,7 +77,7 @@ const RecipeEntry = () => {
   };
 
   return (
-    <View style={styles.MainContainer}>
+    <View style={styles.flexColContainer}>
       <Input
         label="Dish Name"
         value={payload.title}
@@ -117,43 +111,5 @@ const RecipeEntry = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  inputStyles: {
-    // backgroundColor: 'aqua',
-    borderColor: '#555555',
-    borderWidth: 1,
-    height: 40,
-    width: 300,
-    marginBottom: 25,
-    color: 'black',
-  },
-  labelStyles: {
-    fontWeight: 'bold',
-    marginTop: 20,
-  },
-  viewStyles: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  MainContainer: {
-    flex: 1,
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  textarea: {
-    // height: 120,
-    textAlignVertical: 'top',
-    width: 300,
-    borderColor: '#555555',
-    borderWidth: 1,
-    // backgroundColor: 'lightgreen',
-  },
-  button: {
-    marginTop: 10,
-    width: 100,
-  },
-});
 
 export default RecipeEntry;

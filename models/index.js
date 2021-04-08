@@ -5,4 +5,5 @@ module.exports = {
   //   ReceivedMessage: require("./ReceivedMessage"),
   Recipe: require("./Recipe"),
   User: require("./User"),
+  Kitchen: require("./Kitchen"),
 };

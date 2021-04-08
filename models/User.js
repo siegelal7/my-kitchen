@@ -17,6 +17,7 @@ const userSchema = new Schema({
     unique: true,
   },
   recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
+  kitchens: [{ type: Schema.Types.ObjectId, ref: "Kitchen" }],
   password: {
     type: String,
     required: true,
@@ -25,24 +26,6 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  //   image: {
-  //     type: String,
-  //     default: "https://avatars.dicebear.com/api/female/sdfsdf.svg",
-  //   },
-  //   videos: [Object],
-  //   following: [Object],
-  //   followers: [Object],
-  //   role: {
-  //     type: String,
-  //     enum: ["Consumer", "Content Creator"],
-  //     default: "Consumer",
-  //   },
-  //   sentMessages: [{ type: Schema.Types.ObjectId, ref: "SentMessage" }],
-  //   // sentMessages: [Object],
-  //   // receivedMessages: [Object],
-  //   receivedMessages: [{ type: Schema.Types.ObjectId, ref: "ReceivedMessage" }],
-  //   favorites: [{ type: Schema.Types.ObjectId, ref: "Kit" }],
-  //   kits: [{ type: Schema.Types.ObjectId, ref: "Kit" }],
 });
 
 const User = mongoose.model("User", userSchema);

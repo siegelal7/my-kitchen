@@ -12,6 +12,7 @@ import {registerUser} from '../utils/API';
 import {useMutation} from 'react-query';
 import {useNavigation} from '@react-navigation/native';
 import UserContext from '../utils/UserContext';
+import {styles} from '../utils/styles';
 
 const Register = () => {
   //   const queryClient = useQueryClient();
@@ -96,41 +97,12 @@ const Register = () => {
       </TouchableOpacity>
 
       <Text
-        style={styles.linkStyles}
+        style={styles.linkStyle}
         onPress={() => navigation.navigate('Login')}>
         Already have an account? Login Here
       </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  viewStyles: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputStyles: {
-    // backgroundColor: 'aqua',
-    borderColor: '#555555',
-    borderWidth: 1,
-    height: 40,
-    width: 300,
-    marginBottom: 25,
-    color: 'black',
-  },
-  labelStyles: {
-    fontWeight: 'bold',
-    marginTop: 20,
-  },
-  linkStyles: {
-    marginTop: 15,
-    color: 'blue',
-  },
-  button: {
-    marginTop: 5,
-    width: 100,
-  },
-});
 
 export default Register;
