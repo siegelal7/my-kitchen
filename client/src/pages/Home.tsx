@@ -1,8 +1,9 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import {useQuery, useQueryClient} from 'react-query';
 import Input from '../components/Input';
 import {getRecipes, searchForUser} from '../utils/API';
+import {styles} from '../utils/styles';
 // import UserContext from '../utils/UserContext';
 
 const Home = () => {
@@ -35,7 +36,7 @@ const Home = () => {
   }
 
   return (
-    <View style={styleYo.container}>
+    <View style={styles.container}>
       {/* <Input
         // label="Dish Name"
         value={searchValue}
@@ -47,11 +48,8 @@ const Home = () => {
       /> */}
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {data.data.map(i => (
-          <View
-            key={i._id}
-            style={{marginTop: 5, borderWidth: 1, paddingHorizontal: 5}}>
-            <View
-              style={{flexDirection: 'row', flewWrap: 'wrap', marginBottom: 5}}>
+          <View key={i._id} style={styles.recipeCard}>
+            <View style={styles.recipeInfo}>
               <Text style={{fontWeight: 'bold'}}>{i.title} </Text>
               <Text>from {i.author}</Text>
             </View>
@@ -62,26 +60,5 @@ const Home = () => {
     </View>
   );
 };
-const screenHeight = Dimensions.get('window').height;
-
-const styleYo = StyleSheet.create({
-  container: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-    height: screenHeight,
-    paddingBottom: 100,
-    // marginBottom: 200,
-    // backgroundColor: '#dcedc8',
-  },
-  inputStyles: {
-    borderColor: '#555555',
-    borderWidth: 1,
-    height: 40,
-    width: 300,
-    marginBottom: 25,
-    color: 'black',
-  },
-  viewStyle: {},
-});
 
 export default Home;

@@ -9,7 +9,6 @@ import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import type {Node} from 'react';
 import {useColorScheme} from 'react-native';
-
 import RecipeEntry from './src/components/RecipeEntry';
 // import Input from './src/components/Input';
 import {NavigationContainer} from '@react-navigation/native';
@@ -19,7 +18,7 @@ import Home from './src/pages/Home';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import LoginStack from './src/pages/LoginStack';
 import UserContext from './src/utils/UserContext';
-import Logout from './src/pages/Logout';
+// import Logout from './src/pages/Logout';
 import ProfileStack from './src/pages/ProfileStack';
 
 const Tab = createBottomTabNavigator();

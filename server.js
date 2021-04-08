@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const recipeController = require("./controllers/recipeController");
 const userController = require("./controllers/userController");
+const kitchenController = require("./controllers/kitchenController");
 
 const PORT = process.env.PORT || 3001;
 
@@ -31,6 +32,7 @@ connection.on("error", (err) => {
 
 app.use(recipeController);
 app.use(userController);
+app.use(kitchenController);
 
 app.get("/api/config", (req, res) => {
   res.json({

@@ -16,7 +16,7 @@ router.post("/api/login", async (req, res) => {
 
   try {
     // Check for existing user
-    const user = await db.User.findOne({ email });
+    const user = await await db.User.findOne({ email });
     if (!user) throw Error("User does not exist");
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -31,6 +31,8 @@ router.post("/api/login", async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        kitchens: user.kitchens,
+        recipes: user.recipes,
       },
     });
   } catch (e) {
@@ -72,6 +74,8 @@ router.post("/api/register", async (req, res) => {
         id: savedUser.id,
         username: savedUser.username,
         email: savedUser.email,
+        kitchens: savedUser.kitchens,
+        recipes: savedUser.recipes,
       },
     });
   } catch (e) {
@@ -83,6 +87,7 @@ router.get("/api/user/:id", (req, res) => {
   const id = req.params.id;
   db.User.findById(id)
     .populate("recipes")
+    .populate("kitchens")
     .then((found) => {
       res.json(found);
     });
@@ -90,11 +95,6 @@ router.get("/api/user/:id", (req, res) => {
 
 router.get("/api/finduser/:name", async (req, res) => {
   const name = req.params.name;
-  // try {
-  //   const user = await db.User.find({ username: name });
-  //   console.log(user);
-  //   res.json(user);
-  // } catch (err) {}
   db.User.find({ username: { $regex: name } })
     .then((found) => {
       // console.log(found);
