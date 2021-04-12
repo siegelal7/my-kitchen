@@ -11,11 +11,11 @@ import ManageKitchens from './ManageKitchens';
 import KitchensContext from '../utils/KitchensContext';
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
-import KitchenStack from './KitchenStack';
+import GroceryList from './GroceryList';
 
-const ProfStack = createStackNavigator();
+const KitcStack = createStackNavigator();
 
-const ProfileStack = () => {
+const KitchenStack = () => {
   const [myKitchens, setMyKitchens] = useState([]);
   const {user} = useContext(UserContext);
   useEffect(() => {
@@ -31,18 +31,19 @@ const ProfileStack = () => {
   return (
     // <NavigationContainer>
     <KitchensContext.Provider value={{myKitchens, setMyKitchens}}>
-      <ProfStack.Navigator initialRouteName="profile">
-        <ProfStack.Screen name="profile" component={Profile} />
-        <ProfStack.Screen name="Logout" component={Logout} />
-        {/* <ProfStack.Screen name="Search Users" component={SearchUsers} /> */}
-        <ProfStack.Screen name="Kitchen Stack" component={KitchenStack} />
-        {/* <ProfStack.Screen name="Create a Kitchen" component={CreateKitchen} /> */}
-        {/* <ProfStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
-      </ProfStack.Navigator>
+      <KitcStack.Navigator initialRouteName="profile">
+        <KitcStack.Screen name="Manage Kitchens" component={ManageKitchens} />
+        {/* <KitcStack.Screen name="Logout" component={Logout} /> */}
+        {/* <KitcStack.Screen name="Search Users" component={SearchUsers} /> */}
+        <KitcStack.Screen name="Create a Kitchen" component={CreateKitchen} />
+        <KitcStack.Screen name="Grocery List" component={GroceryList} />
+        <KitcStack.Screen name="Search Users" component={SearchUsers} />
+        {/* <KitcStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
+      </KitcStack.Navigator>
     </KitchensContext.Provider>
 
     // </NavigationContainer>
   );
 };
 
-export default ProfileStack;
+export default KitchenStack;

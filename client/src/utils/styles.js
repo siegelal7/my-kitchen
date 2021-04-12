@@ -10,6 +10,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'center',
+    position: 'relative',
+    // height: 'full',
   },
   infoText: {
     paddingHorizontal: 3,
@@ -68,5 +70,18 @@ export const styles = StyleSheet.create({
   linkStyle: {
     marginTop: 15,
     color: 'blue',
+  },
+  header: {
+    fontSize: 32,
+    marginVertical: 10,
+  },
+  inputStylesBottom: {
+    borderColor: '#555555',
+    borderWidth: 1,
+    height: 40,
+    width: 300,
+    marginBottom: 10,
+    color: 'black',
+    marginTop: 140,
   },
 });
