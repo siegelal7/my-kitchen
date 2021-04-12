@@ -23,18 +23,20 @@ const CreateKitchen = ({navigation}) => {
     axios
       .post('http://192.168.56.1:3001/api/kitchen', kitchen)
       .then(res => {
-        // console.log(res.data.kitchens);
+        console.log(res.data.kitchens);
         // setMyKitchens(res.data.kitchens);
         setUser({...user, kitchens: res.data.kitchens});
         axios
           .get(`http://192.168.56.1:3001/api/user/${user.user.id}`)
           .then(now => {
             // console.log(now.data);
+            // console.log(now.data.kitchens);
             setMyKitchens(now.data.kitchens);
           })
           .catch(error => console.log(error));
       })
       .catch(err => console.log(err));
+    navigation.navigate('Manage Kitchens');
   };
   return (
     <View>

@@ -4,12 +4,46 @@ import KitchensContext from '../utils/KitchensContext';
 import {styles} from '../utils/styles';
 const ManageKitchens = ({navigation}) => {
   const {myKitchens} = useContext(KitchensContext);
-  console.log(myKitchens);
+
+  const handleKitchenClick = name => {
+    // console.log(name);
+    const match = myKitchens.filter(i => i.name === name)[0];
+    // console.log(match[0].groceryList);
+    // navigation.navigate('Grocery List', {
+    //   name: match.name,
+    //   list: match.groceryList,
+    //   kitchenId: match._id,
+    // });
+    navigation.navigate('Grocery List', {
+      info: match,
+    });
+  };
+
   return (
-    // <View style={styles.flexColContainer}>
-    <View style={styles.container}>
-      {myKitchens && myKitchens.map(i => <Text key={i._id}>{i.name}</Text>)}
-      {/* <Text>hi</Text> */}
+    <View style={styles.flexColContainer}>
+      {myKitchens.length > 0 && (
+        <Text style={styles.header}>Your Kitchens</Text>
+      )}
+
+      {myKitchens &&
+        myKitchens.map(i => (
+          <Text
+            key={i._id}
+            value={i.name}
+            style={styles.linkStyle}
+            onPress={() => handleKitchenClick(i.name)}>
+            {i.name}
+          </Text>
+        ))}
+      <View style={{marginTop: 40}}>
+        <Text
+          style={styles.linkStyle}
+          onPress={() => navigation.navigate('Create a Kitchen')}>
+          {myKitchens.length > 0
+            ? 'Create another Kitchen'
+            : 'Create your own Kitchen'}
+        </Text>
+      </View>
     </View>
   );
 };

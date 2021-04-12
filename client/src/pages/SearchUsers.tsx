@@ -33,7 +33,7 @@ const SearchUsers = () => {
   //   }, []);
 
   //   console.log('b4');
-  //   console.log(myKitchens);
+  console.log(myKitchens);
   const handleAddToKitchen = id => {
     console.log('b4');
     console.log(myKitchens);
@@ -92,7 +92,7 @@ const SearchUsers = () => {
       />
       {foundUsers &&
         foundUsers.map(i => (
-          <View style={styles.userCard}>
+          <View key={i._id} style={styles.userCard}>
             <Text style={{marginTop: 4, fontSize: 18}} key={i._id}>
               {i.username}
             </Text>

@@ -28,15 +28,32 @@ const Home = () => {
   );
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={styles.flexColContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   if (isError) {
-    return <Text>Error: {error.message}</Text>;
+    return (
+      <View style={styles.flexColContainer}>
+        <Text>Error: {error.message}</Text>
+      </View>
+    );
+  }
+
+  if (data.data.length === 0) {
+    return (
+      <View style={styles.flexColContainer}>
+        <Text>Add some recipes!</Text>
+      </View>
+    );
   }
 
   return (
-    <View style={styles.container}>
+    // <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* <Input
         // label="Dish Name"
         value={searchValue}
@@ -46,18 +63,18 @@ const Home = () => {
         // placeHolder="title"
         onSubmitEditing={handleSearchSubmit}
       /> */}
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        {data.data.map(i => (
-          <View key={i._id} style={styles.recipeCard}>
-            <View style={styles.recipeInfo}>
-              <Text style={{fontWeight: 'bold'}}>{i.title} </Text>
-              <Text>from {i.author}</Text>
-            </View>
-            <Text style={{marginBottom: 5}}>{i.instructions}</Text>
+      {/* <ScrollView contentContainerStyle={{flexGrow: 1}}> */}
+      {data.data.map(i => (
+        <View key={i._id} style={styles.recipeCard}>
+          <View style={styles.recipeInfo}>
+            <Text style={{fontWeight: 'bold'}}>{i.title} </Text>
+            <Text>from {i.author}</Text>
           </View>
-        ))}
-      </ScrollView>
-    </View>
+          <Text style={{marginBottom: 5}}>{i.instructions}</Text>
+        </View>
+      ))}
+      {/* </ScrollView> */}
+    </ScrollView>
   );
 };
 

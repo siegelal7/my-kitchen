@@ -13,19 +13,22 @@ const Profile = ({navigation}) => {
         Nemo quas laboriosam rerum, numquam quia recusandae?
       </Text>
       {/* <TouchableOpacity style={styles.button}> */}
-      <Text
+      {/* <Text
+        // FIXME: fix link stack stiuation
         style={styles.linkStyle}
-        onPress={() => navigation.navigate('Create a Kitchen')}>
+        onPress={() => navigation.navigate('Kitchen Stack')}>
         Create your own kitchen
-      </Text>
+      </Text> */}
       <Text
         style={styles.linkStyle}
-        onPress={() => navigation.navigate('Search Users')}>
+        onPress={() =>
+          navigation.navigate('Kitchen Stack', {screen: 'Search Users'})
+        }>
         Search Users
       </Text>
       <Text
         style={styles.linkStyle}
-        onPress={() => navigation.navigate('Manage Kitchens')}>
+        onPress={() => navigation.navigate('Kitchen Stack')}>
         Manage Kitchens
       </Text>
       <Text
