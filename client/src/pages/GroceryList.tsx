@@ -1,15 +1,17 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, TouchableOpacity} from 'react-native';
 import Input from '../components/Input';
 import {styles} from '../utils/styles';
 import KitchensContext from '../utils/KitchensContext';
 import {useMutation} from 'react-query';
 import axios from 'axios';
+import UserContext from '../utils/UserContext';
 
 const GroceryList = props => {
   const [newItem, setNewItem] = useState('');
   const {myKitchens, setMyKitchens} = useContext(KitchensContext);
   const {info} = props.route.params;
+  const {user} = useContext(UserContext);
 
   const {groceryList, name, _id, participants, owner} = info;
 
@@ -37,6 +39,25 @@ const GroceryList = props => {
   );
   //   console.log(myKitchens);
 
+  const handleDeleteKitchen = () => {
+    axios
+      .delete(`http://192.168.56.1:3001/api/kitchen/${info._id}`)
+      .then(res => {
+        // const without = groceryListItems.filter(
+        //   i => i._id !== res.data._id,
+        // );
+        // console.log(res.data);
+        const without = myKitchens.filter(i =>
+          res.data.kitchens.includes(i._id),
+        );
+        // const without = myKitchens.filter(i => i._id !== res.data._id);
+        //   console.log(res.data);
+        // console.log(without);
+        setMyKitchens(without);
+        props.navigation.navigate('Manage Kitchens');
+      });
+  };
+
   const handleGroceryItemAdd = item => {
     // console.log(item);
     // console.log(list.includes(item));
@@ -61,29 +82,18 @@ const GroceryList = props => {
   // console.log(myKitchens);
   return (
     <View style={styles.flexColContainer}>
-      <Button
-        color="#FF033f"
-        onPress={() => {
-          axios
-            .delete(`http://192.168.56.1:3001/api/kitchen/${info._id}`)
-            .then(res => {
-              // const without = groceryListItems.filter(
-              //   i => i._id !== res.data._id,
-              // );
-              // console.log(res.data);
-              const without = myKitchens.filter(i =>
-                res.data.kitchens.includes(i._id),
-              );
-              // const without = myKitchens.filter(i => i._id !== res.data._id);
-              //   console.log(res.data);
-              // console.log(without);
-              setMyKitchens(without);
-              props.navigation.navigate('Manage Kitchens');
-            });
-        }}
-        title="Delete Kitchen"></Button>
+      {owner === user.id && (
+        <TouchableOpacity style={{}}>
+          <Button
+            color="#FF033f"
+            onPress={handleDeleteKitchen}
+            title="Delete Kitchen"
+          />
+        </TouchableOpacity>
+      )}
+
       <Text style={styles.header}>
-        Kitchen: {name}
+        {name}
         {/* her */}
       </Text>
       {/* <Text> */}
@@ -106,21 +116,24 @@ const GroceryList = props => {
       {/* participants list */}
       <View style={{marginTop: 40}}>
         <Text style={styles.header}>Kitchen-mates</Text>
-        <Button
-          color="#318ce7"
-          onPress={() =>
-            props.navigation.navigate('Search Users', {
-              info: {
-                groceryList: groceryList,
-                name: name,
-                _id: _id,
-                participants: participants,
-                owner: owner,
-              },
-            })
-          }
-          title="Add people to kitchen"
-        />
+        {owner === user.id && (
+          <Button
+            color="#318ce7"
+            onPress={() =>
+              props.navigation.navigate('Search Users', {
+                info: {
+                  groceryList: groceryList,
+                  name: name,
+                  _id: _id,
+                  participants: participants,
+                  owner: owner,
+                },
+              })
+            }
+            title="Add people to kitchen"
+          />
+        )}
+
         {participants &&
           participants.length > 0 &&
           participants.map(person => (

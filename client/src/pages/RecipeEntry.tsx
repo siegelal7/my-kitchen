@@ -16,8 +16,8 @@ const RecipeEntry = () => {
   const [payload, setPayload] = useState({
     title: '',
     instructions: '',
-    author: user.user.username ? user.user.username : '',
-    authorId: user.user.id ? user.user.id : '',
+    author: user.username ? user.username : '',
+    authorId: user.id ? user.id : '',
   });
   // console.log(user.user.username);
   const [errorToast, setErrorToast] = useState(false);
@@ -29,10 +29,7 @@ const RecipeEntry = () => {
 
   const mutation = useMutation(
     payload =>
-      axios.post(
-        `http://192.168.56.1:3001/api/recipes/${user.user.id}`,
-        payload,
-      ),
+      axios.post(`http://192.168.56.1:3001/api/recipes/${user.id}`, payload),
     {
       onMutate: variables => {
         // A mutation is about to happen!
@@ -71,7 +68,7 @@ const RecipeEntry = () => {
 
   const handleSubmit = e => {
     if (payload.title != '' && payload.instructions != '') {
-      mutation.mutate(payload, user.user.id);
+      mutation.mutate(payload, user.id);
     }
     // TODO: set an error toast saying enter all shit
   };

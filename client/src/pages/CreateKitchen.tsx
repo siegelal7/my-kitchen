@@ -5,15 +5,16 @@ import Input from '../components/Input';
 import {styles} from '../utils/styles';
 import UserContext from '../utils/UserContext';
 import KitchensContext from '../utils/KitchensContext';
+import KitchensImInContext from '../utils/KitchensImInContext';
 
 const CreateKitchen = ({navigation}) => {
   const {user, setUser} = useContext(UserContext);
   const {setMyKitchens} = useContext(KitchensContext);
+  const {setKitchensImIn} = useContext(KitchensImInContext);
 
-  // console.log(user);
   const [kitchen, setKitchen] = useState({
     name: '',
-    owner: user && user.user && user.user.id,
+    owner: user && user.id,
     participants: [],
   });
   const handleNameInputChange = e => {
@@ -21,6 +22,8 @@ const CreateKitchen = ({navigation}) => {
   };
   const handleSubmit = () => {
     // console.log(kitchen);
+    // FIXME: holy shit what was I  thinking?
+    // TODO: fix this shit
     axios
       .post('http://192.168.56.1:3001/api/kitchen', kitchen)
       .then(res => {
@@ -29,13 +32,21 @@ const CreateKitchen = ({navigation}) => {
         // setUser({...user, kitchens: res.data.kitchens});
         setUser({
           ...user,
-          user: {...user.user, kitchens: res.data.kitchens},
+          kitchens: res.data.kitchens,
         });
         axios
-          .get(`http://192.168.56.1:3001/api/user/${user.user.id}`)
-          .then(now => {
+          .get(`http://192.168.56.1:3001/api/user/${user.id}`)
+          .then(async now => {
             // console.log(now.data);
             // console.log(now.data.kitchens);
+            const imIn = await now.data.kitchens.filter(
+              j => j.owner !== user.id,
+            );
+            const mine = await now.data.kitchens.filter(
+              i => i.owner === user.id,
+            );
+            setKitchensImIn(imIn);
+            setMyKitchens(mine);
             setMyKitchens(now.data.kitchens);
           })
           .catch(error => console.log(error));

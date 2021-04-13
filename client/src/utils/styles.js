@@ -12,9 +12,14 @@ export const styles = StyleSheet.create({
     // color: 'white',
     textAlign: 'center',
     position: 'relative',
-    // height: 'full',
     backgroundColor: '#30363a',
     // paddingTop: 10,
+  },
+  blockFlexColContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 50,
   },
   flexFullCenter: {
     flex: 1,
