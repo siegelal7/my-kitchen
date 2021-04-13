@@ -14,12 +14,14 @@ import RecipeEntry from './src/components/RecipeEntry';
 import {NavigationContainer} from '@react-navigation/native';
 // import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from './src/pages/Home';
+import Recipes from './src/pages/Recipes';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import LoginStack from './src/pages/LoginStack';
 import UserContext from './src/utils/UserContext';
 // import Logout from './src/pages/Logout';
 import ProfileStack from './src/pages/ProfileStack';
+import RecipesStack from './src/pages/RecipesStack';
+import KitchenStack from './src/pages/KitchenStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,21 +31,17 @@ const App: () => Node = () => {
   const [user, setUser] = useState({});
   const isDarkMode = useColorScheme() === 'dark';
 
-  // console.log(user);
-
   return (
     <UserContext.Provider value={{user, setUser}}>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
           <Tab.Navigator initialRouteName="All Recipes">
-            <Tab.Screen name="All Recipes" component={Home} />
-            {/* <Tab.Screen name="Enter Recipe" component={RecipeEntry} /> */}
-            {/* another stack in LoginStack.tsx */}
+            <Tab.Screen name="Recipes" component={RecipesStack} />
+
             {user.token ? (
               <>
-                <Tab.Screen name="Enter Recipe" component={RecipeEntry} />
+                <Tab.Screen name="Kitchens" component={KitchenStack} />
                 <Tab.Screen name="Profile" component={ProfileStack} />
-                {/* <Tab.Screen name="Logout" component={Logout} /> */}
               </>
             ) : (
               <Tab.Screen name="Login" component={LoginStack} />

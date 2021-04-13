@@ -46,7 +46,7 @@ const Login = ({navigation}) => {
   });
 
   return (
-    <View style={styles.flexColContainer}>
+    <View style={styles.flexFullCenter}>
       <Input
         label="Email"
         // onSubmitEditing={mutation.mutate(userInfo)}
@@ -74,13 +74,13 @@ const Login = ({navigation}) => {
             e.persist();
             mutation.mutate(userInfo);
           }}
-          title="Login"
-          color="navy"
+          title="LOGIN"
+          color="#318ce7"
           accessibilityLabel="submit Login"
         />
       </TouchableOpacity>
       <Text
-        style={styles.linkStyle}
+        style={styles.bigLink}
         onPress={() => navigation.navigate('Register')}>
         Don't have an account yet? Register here
       </Text>

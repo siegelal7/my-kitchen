@@ -77,7 +77,7 @@ const RecipeEntry = () => {
   };
 
   return (
-    <View style={styles.flexColContainer}>
+    <View style={styles.flexFullCenter}>
       <Input
         label="Dish Name"
         value={payload.title}
@@ -104,7 +104,7 @@ const RecipeEntry = () => {
         <Button
           onPress={handleSubmit}
           title="Serve"
-          color="navy"
+          color="#318ce7"
           accessibilityLabel="Submit a new recipe"
         />
       </TouchableOpacity>

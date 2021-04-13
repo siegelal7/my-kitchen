@@ -12,13 +12,7 @@ const Profile = ({navigation}) => {
         consectetur adipisicing elit. Nobis tempore labore consectetur maxime?
         Nemo quas laboriosam rerum, numquam quia recusandae?
       </Text>
-      {/* <TouchableOpacity style={styles.button}> */}
-      {/* <Text
-        // FIXME: fix link stack stiuation
-        style={styles.linkStyle}
-        onPress={() => navigation.navigate('Kitchen Stack')}>
-        Create your own kitchen
-      </Text> */}
+
       <Text
         style={styles.linkStyle}
         onPress={() =>

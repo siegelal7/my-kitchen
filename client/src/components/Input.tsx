@@ -20,7 +20,7 @@ const Input = ({
       {label ? (
         <Text
           // style={labelStyles}
-          style={{fontWeight: 'bold'}}>
+          style={{fontWeight: 'bold', color: 'white', textAlign: 'center'}}>
           {label}
         </Text>
       ) : null}
