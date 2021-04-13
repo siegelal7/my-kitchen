@@ -9,10 +9,23 @@ import axios from 'axios';
 const GroceryList = props => {
   const [newItem, setNewItem] = useState('');
   const {myKitchens, setMyKitchens} = useContext(KitchensContext);
-  //   const {name, list, kitchenId} = props.route.params;
   const {info} = props.route.params;
-  const {groceryList, name, _id, participants} = info;
-  //   console.log(participants);
+
+  const {groceryList, name, _id, participants, owner} = info;
+
+  //   const {name, list, kitchenId} = props.route.params;
+  // useEffect(() => {
+  //   const {info} = props.route.params;
+
+  //   const {groceryList, name, _id, participants} = info;
+  //   // return groceryList, name, _id, participants;
+  // }, []);
+
+  const [participantsToMap, setParticipantsToMap] = useState(
+    participants ? participants : [],
+  );
+
+  // console.log(participants);
   //   useEffect(() => {
   //     for (let i = 0; i < participants.length; i++) {
   //       console.log(participants[i].username);
@@ -45,19 +58,25 @@ const GroceryList = props => {
     }
     console.log('alrdy added that item');
   };
-
+  // console.log(myKitchens);
   return (
     <View style={styles.flexColContainer}>
       <Button
         color="#FF033f"
         onPress={() => {
           axios
-            .delete(`http://192.168.56.1:3001/api/kitchen/${kitchenId}`)
+            .delete(`http://192.168.56.1:3001/api/kitchen/${info._id}`)
             .then(res => {
-              const without = groceryListItems.filter(
-                i => i._id !== res.data._id,
+              // const without = groceryListItems.filter(
+              //   i => i._id !== res.data._id,
+              // );
+              // console.log(res.data);
+              const without = myKitchens.filter(i =>
+                res.data.kitchens.includes(i._id),
               );
+              // const without = myKitchens.filter(i => i._id !== res.data._id);
               //   console.log(res.data);
+              // console.log(without);
               setMyKitchens(without);
               props.navigation.navigate('Manage Kitchens');
             });
@@ -87,6 +106,21 @@ const GroceryList = props => {
       {/* participants list */}
       <View style={{marginTop: 40}}>
         <Text style={styles.header}>Kitchen-mates</Text>
+        <Button
+          color="#318ce7"
+          onPress={() =>
+            props.navigation.navigate('Search Users', {
+              info: {
+                groceryList: groceryList,
+                name: name,
+                _id: _id,
+                participants: participants,
+                owner: owner,
+              },
+            })
+          }
+          title="Add people to kitchen"
+        />
         {participants &&
           participants.length > 0 &&
           participants.map(person => (

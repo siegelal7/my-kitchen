@@ -36,7 +36,7 @@ const ProfileStack = () => {
         <ProfStack.Screen name="Logout" component={Logout} />
         {/* <ProfStack.Screen name="Search Users" component={SearchUsers} /> */}
         <ProfStack.Screen name="Kitchen Stack" component={KitchenStack} />
-        <ProfStack.Screen name="Search Users" component={SearchUsers} />
+        {/* <ProfStack.Screen name="Search Users" component={SearchUsers} /> */}
         {/* <ProfStack.Screen name="Create a Kitchen" component={CreateKitchen} /> */}
         {/* <ProfStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
       </ProfStack.Navigator>

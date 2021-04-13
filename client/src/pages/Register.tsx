@@ -30,6 +30,7 @@ const Register = () => {
       // A mutation is about to happen!
       // Optionally return a context containing data to use when for example rolling back
       // return {id: 1};
+
       return variables;
     },
     onSuccess: r => {

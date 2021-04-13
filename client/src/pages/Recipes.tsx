@@ -54,7 +54,7 @@ const Recipes = ({navigation}) => {
         </View>
       ))}
       <Text
-        style={styles.linkStyle}
+        style={styles.bottomLink}
         onPress={() => {
           navigation.navigate('New Recipe');
         }}>

@@ -1,21 +1,23 @@
 import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import KitchensContext from '../utils/KitchensContext';
 import {styles} from '../utils/styles';
+import UserContext from '../utils/UserContext';
 
 const ManageKitchens = ({navigation}) => {
   const {myKitchens} = useContext(KitchensContext);
+  const {user} = useContext(UserContext);
+  // console.log(user);
 
   const handleKitchenClick = name => {
     const match = myKitchens.filter(i => i.name === name)[0];
-
     navigation.navigate('Grocery List', {
       info: match,
     });
   };
 
   return (
-    <View style={styles.flexColContainer}>
+    <SafeAreaView style={styles.flexColContainer}>
       {myKitchens.length > 0 && (
         <Text style={styles.header}>Your Kitchens</Text>
       )}
@@ -39,7 +41,10 @@ const ManageKitchens = ({navigation}) => {
             : 'Create your own Kitchen'}
         </Text>
       </View>
-    </View>
+      <View style={{marginVertical: 30}}>
+        <Text style={styles.header}>Kitchens you're in</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 

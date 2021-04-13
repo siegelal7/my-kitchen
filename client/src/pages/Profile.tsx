@@ -13,25 +13,19 @@ const Profile = ({navigation}) => {
         Nemo quas laboriosam rerum, numquam quia recusandae?
       </Text>
 
-      <Text
+      {/* <Text
         style={styles.linkStyle}
-        onPress={() =>
-          navigation.navigate('Kitchen Stack', {screen: 'Search Users'})
-        }>
+        onPress={() => navigation.navigate('Search Users')}>
         Search Users
-      </Text>
-      <Text
-        style={styles.linkStyle}
-        onPress={() => navigation.navigate('Kitchen Stack')}>
-        Manage Kitchens
-      </Text>
+      </Text> */}
+
+      {/* TODO: implement this shit */}
+      <Text style={styles.linkStyle}>Edit Profile </Text>
       <Text
         style={styles.linkStyle}
         onPress={() => navigation.navigate('Logout')}>
         Logout
       </Text>
-      {/* <Button title="logout" onPress={() => navigation.navigate('Logout')} /> */}
-      {/* </TouchableOpacity> */}
     </View>
   );
 };

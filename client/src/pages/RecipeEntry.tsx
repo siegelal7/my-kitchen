@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import type {Node} from 'react';
 import {View, Text, Button, TouchableOpacity, Keyboard} from 'react-native';
 
-import Input from './Input';
+import Input from '../components/Input';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 // import {postRecipe} from '../utils/API';
 import {useNavigation} from '@react-navigation/native';
@@ -77,7 +77,7 @@ const RecipeEntry = () => {
   };
 
   return (
-    <View style={styles.flexFullCenter}>
+    <View style={styles.flexColContainer}>
       <Input
         label="Dish Name"
         value={payload.title}
