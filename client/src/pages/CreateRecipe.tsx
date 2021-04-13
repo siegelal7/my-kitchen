@@ -10,7 +10,7 @@ import UserContext from '../utils/UserContext';
 import axios from 'axios';
 import {styles} from '../utils/styles';
 
-const RecipeEntry = () => {
+const CreateRecipe = () => {
   const queryClient = useQueryClient();
   const {user} = useContext(UserContext);
   const [payload, setPayload] = useState({
@@ -109,4 +109,4 @@ const RecipeEntry = () => {
   );
 };
 
-export default RecipeEntry;
+export default CreateRecipe;

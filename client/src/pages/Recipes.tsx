@@ -55,13 +55,15 @@ const Recipes = ({navigation}) => {
           </Text>
         </View>
       ))}
-      <Text
-        style={styles.bottomLink}
-        onPress={() => {
-          navigation.navigate('New Recipe');
-        }}>
-        Add a Recipe
-      </Text>
+      {user.username && (
+        <Text
+          style={styles.bottomLink}
+          onPress={() => {
+            navigation.navigate('New Recipe');
+          }}>
+          Add a Recipe
+        </Text>
+      )}
     </ScrollView>
   );
 };
