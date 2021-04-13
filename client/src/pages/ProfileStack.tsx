@@ -6,8 +6,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Logout from './Logout';
 import Profile from './Profile';
 import SearchUsers from './SearchUsers';
-import CreateKitchen from './CreateKitchen';
-import ManageKitchens from './ManageKitchens';
+// import CreateKitchen from './CreateKitchen';
+// import ManageKitchens from './ManageKitchens';
 import KitchensContext from '../utils/KitchensContext';
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
@@ -36,6 +36,7 @@ const ProfileStack = () => {
         <ProfStack.Screen name="Logout" component={Logout} />
         {/* <ProfStack.Screen name="Search Users" component={SearchUsers} /> */}
         <ProfStack.Screen name="Kitchen Stack" component={KitchenStack} />
+        <ProfStack.Screen name="Search Users" component={SearchUsers} />
         {/* <ProfStack.Screen name="Create a Kitchen" component={CreateKitchen} /> */}
         {/* <ProfStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
       </ProfStack.Navigator>

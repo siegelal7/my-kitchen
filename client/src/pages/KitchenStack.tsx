@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 // import {NavigationContainer} from '@react-navigation/native';
 import Logout from './Logout';
 import Profile from './Profile';
-import SearchUsers from './SearchUsers';
+// import SearchUsers from './SearchUsers';
 import CreateKitchen from './CreateKitchen';
 import ManageKitchens from './ManageKitchens';
 import KitchensContext from '../utils/KitchensContext';
@@ -37,7 +37,7 @@ const KitchenStack = () => {
         {/* <KitcStack.Screen name="Search Users" component={SearchUsers} /> */}
         <KitcStack.Screen name="Create a Kitchen" component={CreateKitchen} />
         <KitcStack.Screen name="Grocery List" component={GroceryList} />
-        <KitcStack.Screen name="Search Users" component={SearchUsers} />
+        {/* <KitcStack.Screen name="Search Users" component={SearchUsers} /> */}
         {/* <KitcStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
       </KitcStack.Navigator>
     </KitchensContext.Provider>

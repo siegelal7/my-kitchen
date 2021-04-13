@@ -2,18 +2,13 @@ import React, {useContext} from 'react';
 import {View, Text} from 'react-native';
 import KitchensContext from '../utils/KitchensContext';
 import {styles} from '../utils/styles';
+
 const ManageKitchens = ({navigation}) => {
   const {myKitchens} = useContext(KitchensContext);
 
   const handleKitchenClick = name => {
-    // console.log(name);
     const match = myKitchens.filter(i => i.name === name)[0];
-    // console.log(match[0].groceryList);
-    // navigation.navigate('Grocery List', {
-    //   name: match.name,
-    //   list: match.groceryList,
-    //   kitchenId: match._id,
-    // });
+
     navigation.navigate('Grocery List', {
       info: match,
     });

@@ -8,7 +8,7 @@ import KitchensContext from '../utils/KitchensContext';
 
 const CreateKitchen = ({navigation}) => {
   const {user, setUser} = useContext(UserContext);
-  const {myKitchens, setMyKitchens} = useContext(KitchensContext);
+  const {setMyKitchens} = useContext(KitchensContext);
 
   const [kitchen, setKitchen] = useState({
     name: '',
@@ -39,7 +39,7 @@ const CreateKitchen = ({navigation}) => {
     navigation.navigate('Manage Kitchens');
   };
   return (
-    <View>
+    <View style={styles.container}>
       <Input
         label="Kitchen Name"
         value={kitchen.name}

@@ -49,7 +49,7 @@ const GroceryList = props => {
   return (
     <View style={styles.flexColContainer}>
       <Button
-        color="#FF0000"
+        color="#FF033f"
         onPress={() => {
           axios
             .delete(`http://192.168.56.1:3001/api/kitchen/${kitchenId}`)
@@ -70,12 +70,12 @@ const GroceryList = props => {
       {/* <Text> */}
       {groceryListItems.length !== 0 ? (
         groceryListItems.map((i, n) => (
-          <Text style={{marginTop: 5}} key={i}>
+          <Text style={styles.groceryItem} key={i}>
             {n + 1}: {i}
           </Text>
         ))
       ) : (
-        <Text>Don't starve yourself!</Text>
+        <Text style={styles.noGroceryItemsText}>Don't starve yourself!</Text>
       )}
       <Input
         placeholder="Add an item"
@@ -90,7 +90,10 @@ const GroceryList = props => {
         {participants &&
           participants.length > 0 &&
           participants.map(person => (
-            <Text key={person._id}>{person.username}</Text>
+            <Text key={person._id} style={styles.kitchenParticipants}>
+              {/* {index + 1 + ': '} */}
+              {person.username}
+            </Text>
           ))}
       </View>
       {/* his */}

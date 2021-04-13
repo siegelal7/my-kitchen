@@ -51,7 +51,7 @@ const Register = () => {
   });
 
   return (
-    <View style={styles.viewStyles}>
+    <View style={styles.flexFullCenter}>
       <Input
         label="username"
         value={userInfo.username}
@@ -90,15 +90,13 @@ const Register = () => {
             e.persist();
             mutation.mutate(userInfo);
           }}
-          title="Register"
-          color="navy"
+          title="REGISTER"
+          color="#318ce7"
           accessibilityLabel="submit registration"
         />
       </TouchableOpacity>
 
-      <Text
-        style={styles.linkStyle}
-        onPress={() => navigation.navigate('Login')}>
+      <Text style={styles.bigLink} onPress={() => navigation.navigate('Login')}>
         Already have an account? Login Here
       </Text>
     </View>
