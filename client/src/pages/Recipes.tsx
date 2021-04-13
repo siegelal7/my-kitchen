@@ -4,9 +4,11 @@ import {useQuery, useQueryClient} from 'react-query';
 // import Input from '../components/Input';
 import {getRecipes, searchForUser} from '../utils/API';
 import {styles} from '../utils/styles';
+import UserContext from '../utils/UserContext';
 // import UserContext from '../utils/UserContext';
 
 const Recipes = ({navigation}) => {
+  const {user} = useContext(UserContext);
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
     'recipes',
     getRecipes,

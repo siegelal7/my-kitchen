@@ -16,7 +16,10 @@ router.post("/api/login", async (req, res) => {
 
   try {
     // Check for existing user
-    const user = await await db.User.findOne({ email });
+    const user = await await db.User.findOne({ email }).populate({
+      path: "kitchens",
+      populate: { path: "participants" },
+    });
     if (!user) throw Error("User does not exist");
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -27,13 +30,13 @@ router.post("/api/login", async (req, res) => {
 
     res.status(200).json({
       token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        kitchens: user.kitchens,
-        recipes: user.recipes,
-      },
+      // user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      kitchens: user.kitchens,
+      recipes: user.recipes,
+      // },
     });
   } catch (e) {
     res.status(400).json({ msg: e.msg });
@@ -49,7 +52,10 @@ router.post("/api/register", async (req, res) => {
   }
 
   try {
-    const user = await db.User.findOne({ email });
+    const user = await db.User.findOne({ email }).populate({
+      path: "kitchens",
+      populate: { path: "participants" },
+    });
     if (user) throw Error("User already exists");
 
     const salt = await bcrypt.genSalt(10);
@@ -70,13 +76,13 @@ router.post("/api/register", async (req, res) => {
     const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET);
     res.status(200).json({
       token,
-      user: {
-        id: savedUser.id,
-        username: savedUser.username,
-        email: savedUser.email,
-        kitchens: savedUser.kitchens,
-        recipes: savedUser.recipes,
-      },
+      // user: {
+      id: savedUser.id,
+      username: savedUser.username,
+      email: savedUser.email,
+      kitchens: savedUser.kitchens,
+      recipes: savedUser.recipes,
+      // },
     });
   } catch (e) {
     res.status(400).json({ error: e.message });

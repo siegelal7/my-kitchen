@@ -3,14 +3,23 @@ import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import KitchensContext from '../utils/KitchensContext';
 import {styles} from '../utils/styles';
 import UserContext from '../utils/UserContext';
+import KitchensImInContext from '../utils/KitchensImInContext';
 
 const ManageKitchens = ({navigation}) => {
   const {myKitchens} = useContext(KitchensContext);
   const {user} = useContext(UserContext);
-  // console.log(user);
+  const {kitchensImIn} = useContext(KitchensImInContext);
+  // console.log(kitchensImIn);
 
-  const handleKitchenClick = name => {
+  const handleMyKitchenClick = name => {
     const match = myKitchens.filter(i => i.name === name)[0];
+    navigation.navigate('Grocery List', {
+      info: match,
+    });
+  };
+
+  const handleKitchenImInClick = name => {
+    const match = kitchensImIn.filter(i => i.name === name)[0];
     navigation.navigate('Grocery List', {
       info: match,
     });
@@ -28,7 +37,7 @@ const ManageKitchens = ({navigation}) => {
             key={i._id}
             value={i.name}
             style={styles.linkStyle}
-            onPress={() => handleKitchenClick(i.name)}>
+            onPress={() => handleMyKitchenClick(i.name)}>
             {i.name}
           </Text>
         ))}
@@ -41,8 +50,18 @@ const ManageKitchens = ({navigation}) => {
             : 'Create your own Kitchen'}
         </Text>
       </View>
-      <View style={{marginVertical: 30}}>
+      <View style={styles.blockFlexColContainer}>
         <Text style={styles.header}>Kitchens you're in</Text>
+        {kitchensImIn &&
+          kitchensImIn.map(j => (
+            <Text
+              key={j._id}
+              // value={j.name}
+              style={styles.linkStyle}
+              onPress={() => handleKitchenImInClick(j.name)}>
+              {j.name}
+            </Text>
+          ))}
       </View>
     </SafeAreaView>
   );
