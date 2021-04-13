@@ -25,7 +25,13 @@ import KitchenStack from './src/pages/KitchenStack';
 
 const Tab = createBottomTabNavigator();
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 3600,
+    },
+  },
+});
 
 const App: () => Node = () => {
   const [user, setUser] = useState({});

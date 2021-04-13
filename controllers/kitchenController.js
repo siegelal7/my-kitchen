@@ -8,7 +8,7 @@ const getKitchenById = (id) => {
 };
 
 router.post("/api/kitchen", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   db.Kitchen.create(req.body)
     .then((newKitchen) =>
       db.User.findByIdAndUpdate(
@@ -47,9 +47,25 @@ router.put("/api/addparticipant/:id", (req, res) => {
     },
     { new: true }
   )
-    .then((nowNow) => {
-      res.json(nowNow);
-    })
+    .populate({ path: "participants", select: "-password -email" })
+    // .populate("participants")
+    // // TODO:not sure this is right
+    // .select("-password")
+    .then(
+      (nowNow) =>
+        // res.json(nowNow);
+        db.User.findByIdAndUpdate(
+          newPerson,
+          {
+            $push: { kitchens: nowNow._id },
+          },
+          { new: true }
+        ).then((newnewnew) => {
+          // console.log("got here");
+          res.json(newnewnew);
+        })
+      // .catch((error) => res.status(400).json(error))
+    )
     .catch((err) => res.status(400).json(err));
 });
 
@@ -84,9 +100,13 @@ router.delete("/api/kitchen/:id", (req, res) => {
   //   res.json(del);
   // });
   db.Kitchen.findByIdAndDelete(req.params.id).then((del) =>
-    db.User.findByIdAndUpdate(del.owner, {
-      $pull: { kitchens: del._id },
-    })
+    db.User.findByIdAndUpdate(
+      del.owner,
+      {
+        $pull: { kitchens: del._id },
+      },
+      { new: true }
+    )
       .then((removedBoth) => res.json(removedBoth))
       .catch((err) => res.status(400).json(err))
   );

@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useQuery} from 'react-query';
 import Recipes from './Recipes';
-import RecipeEntry from '../components/RecipeEntry';
+import RecipeEntry from './RecipeEntry';
 
 const RecipeStack = createStackNavigator();
 

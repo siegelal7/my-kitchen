@@ -10,6 +10,7 @@ const CreateKitchen = ({navigation}) => {
   const {user, setUser} = useContext(UserContext);
   const {setMyKitchens} = useContext(KitchensContext);
 
+  // console.log(user);
   const [kitchen, setKitchen] = useState({
     name: '',
     owner: user && user.user && user.user.id,
@@ -23,9 +24,13 @@ const CreateKitchen = ({navigation}) => {
     axios
       .post('http://192.168.56.1:3001/api/kitchen', kitchen)
       .then(res => {
-        console.log(res.data.kitchens);
+        // console.log(res.data.kitchens);
         // setMyKitchens(res.data.kitchens);
-        setUser({...user, kitchens: res.data.kitchens});
+        // setUser({...user, kitchens: res.data.kitchens});
+        setUser({
+          ...user,
+          user: {...user.user, kitchens: res.data.kitchens},
+        });
         axios
           .get(`http://192.168.56.1:3001/api/user/${user.user.id}`)
           .then(now => {

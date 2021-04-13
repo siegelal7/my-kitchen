@@ -6,7 +6,7 @@ const screenWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
   flexColContainer: {
     flex: 1,
-    marginTop: 15,
+    // marginTop: 15,
     flexDirection: 'column',
     alignItems: 'center',
     // color: 'white',
@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
   infoText: {
     paddingHorizontal: 3,
     color: '#cec9c6',
+    marginTop: 20,
   },
   button: {marginTop: 20, width: 100},
   button2: {
@@ -41,8 +42,8 @@ export const styles = StyleSheet.create({
     right: 0,
   },
   container: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    // marginTop: 32,
+    // paddingHorizontal: 24,
     height: screenHeight,
     paddingBottom: 100,
     // color: 'white',
@@ -93,6 +94,7 @@ export const styles = StyleSheet.create({
   },
   userCard: {
     // flex: 1,
+    borderColor: '#cec9c6',
     marginTop: 5,
     borderWidth: 1,
     paddingHorizontal: 30,
@@ -118,6 +120,12 @@ export const styles = StyleSheet.create({
   linkStyle: {
     marginTop: 15,
     color: '#318ce7',
+  },
+  bottomLink: {
+    marginVertical: 15,
+    color: '#318ce7',
+    textAlign: 'center',
+    fontSize: 20,
   },
   header: {
     fontSize: 32,
