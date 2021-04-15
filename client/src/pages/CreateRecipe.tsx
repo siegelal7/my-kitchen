@@ -5,7 +5,7 @@ import {View, Text, Button, TouchableOpacity, Keyboard} from 'react-native';
 import Input from '../components/Input';
 import {useQuery, useMutation, useQueryClient} from 'react-query';
 // import {postRecipe} from '../utils/API';
-import {useNavigation} from '@react-navigation/native';
+
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
 import {styles} from '../utils/styles';
@@ -14,9 +14,8 @@ import AddPeopleOrRecipes from '../components/AddPeopleOrRecipes';
 const CreateRecipe = props => {
   const queryClient = useQueryClient();
   const {user} = useContext(UserContext);
-  // useEffect(() => {
-  //   return () => console.log('cleanup createRecipe');
-  // }, []);
+  const [length, setLength] = useState();
+
   // const [payload, setPayload] = useState({
   //   title: '',
   //   instructions: '',
@@ -25,16 +24,22 @@ const CreateRecipe = props => {
   // });
   const [title, setTitle] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [ingredients, setingredients] = useState([]);
+  const [ingredInput, setingredInput] = useState('');
   const [author, setAuthor] = useState(user.username ? user.username : '');
   const [authorId, setAuthorId] = useState(user.id ? user.id : '');
   const {kitchen, recipes} = props.route.params;
   // console.log(kitchen);
   const [errorToast, setErrorToast] = useState(false);
-  const navigation = useNavigation();
 
-  // const postRecipe = data => {
-  //   axios.post('http://192.168.56.1:3001/api/recipes', data);
-  // };
+  useEffect(() => {
+    return () => console.log('cleanup createRecipe');
+  }, []);
+
+  useEffect(() => {
+    setLength(ingredients.length);
+    return () => {};
+  }, [ingredients]);
 
   const mutationToKitchen = useMutation(
     payload =>
@@ -56,12 +61,13 @@ const CreateRecipe = props => {
         // recipes.push(e);
         setTitle('');
         setInstructions('');
+        setingredInput('');
         // setPayload({
         //   title: '',
         //   instructions: '',
         // });
         Keyboard.dismiss();
-        navigation.navigate('Kitchens', {screen: 'Manage Kitchens'});
+        props.navigation.navigate('Kitchens', {screen: 'Manage Kitchens'});
       },
       onError: (error, variables, context) => {
         // An error happened!
@@ -87,10 +93,11 @@ const CreateRecipe = props => {
         //   title: '',
         //   instructions: '',
         // });
+        setingredInput('');
         setTitle('');
         setInstructions('');
         Keyboard.dismiss();
-        navigation.navigate('All Recipes');
+        props.navigation.navigate('All Recipes');
       },
       onError: (error, variables, context) => {
         // An error happened!
@@ -120,6 +127,7 @@ const CreateRecipe = props => {
         title,
         instructions,
         author,
+        ingredients,
         authorId,
       };
       mutation.mutate(payload, user.id);
@@ -130,6 +138,7 @@ const CreateRecipe = props => {
         title,
         instructions,
         author,
+        ingredients,
         authorId,
       };
       mutationToKitchen.mutate(payload, kitchen);
@@ -168,8 +177,36 @@ const CreateRecipe = props => {
         multiline={true}
         numberOfLines={10}
       />
+
+      <Input
+        label="Ingredients"
+        value={ingredInput}
+        onChangeText={setingredInput}
+        inputStyles={styles.inputStyles}
+        // onSubmitEditing={}
+      />
+      <TouchableOpacity style={styles.buttonTiny}>
+        <Button
+          onPress={() => {
+            setingredients(ingredients => [...ingredients, ingredInput]);
+            setingredInput('');
+          }}
+          title="+"
+          color="#318ce7"
+          accessibilityLabel="Submit a new recipe"
+        />
+      </TouchableOpacity>
+      <Text>
+        {ingredients &&
+          ingredients.map((i, index) => (
+            <Text style={{color: 'white', fontSize: 16}} key={i}>
+              {i}
+              {index !== length - 1 ? ', ' : ' '}
+            </Text>
+          ))}
+      </Text>
       {errorToast && <Text>Please enter all info</Text>}
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.buttonBtm}>
         <Button
           onPress={handleSubmit}
           title="Serve"
