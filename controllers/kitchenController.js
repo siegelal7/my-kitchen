@@ -1,12 +1,6 @@
 const router = require("express").Router();
 const db = require("../models");
 
-const getKitchenById = (id) => {
-  db.Kitchen.findById(id).populate("owner").populate("participants");
-  // .then((found) => res.json(found))
-  // .catch((err) => res.status(400).json(err));
-};
-
 router.post("/api/kitchen", (req, res) => {
   // console.log(req.body);
   db.Kitchen.create(req.body)
@@ -27,8 +21,11 @@ router.post("/api/kitchen", (req, res) => {
 });
 
 router.get("/api/kitchen/:id", (req, res) => {
-  getKitchenById(req.params.id)
+  // getKitchenById(req.params.id)
+  db.Kitchen.findById(req.params.id)
+    .populate("owner")
     .populate("participants")
+    .populate("recipes")
     .then((found) => res.json(found))
     .catch((err) => res.status(400).json(err));
 });
@@ -110,6 +107,39 @@ router.delete("/api/kitchen/:id", (req, res) => {
       .then((removedBoth) => res.json(removedBoth))
       .catch((err) => res.status(400).json(err))
   );
+});
+
+router.put("/api/kitchen/addrecipe/:id", (req, res) => {
+  const body = Object.keys(req.body)[0];
+  console.log(body);
+  const id = req.params.id;
+  db.Kitchen.findByIdAndUpdate(id, { $push: { recipes: body } }, { new: true })
+    .populate("recipes")
+    .then((newNew) => res.json(newNew))
+    .catch((err) => res.status(400).json(err));
+});
+
+router.post("/api/kitchen/newrecipe/:id", (req, res) => {
+  // console.log(req.body);
+  const id = req.params.id;
+  db.Recipe.create(req.body)
+    .then((newNew) =>
+      db.Kitchen.findByIdAndUpdate(
+        id,
+        { $push: { recipes: newNew._id } },
+        { new: true }
+      )
+        .populate("recipes")
+        .then((response) => res.json(response))
+    )
+    .catch((err) => res.status(400).json(err));
+  // db.Kitchen.findByIdAndUpdate(
+  //   id,
+  //   { $push: { recipes: req.body } },
+  //   { new: true }
+  // )
+  //   .then((newNew) => res.json(newNew))
+  //   .catch((err) => res.status(400).json(err));
 });
 
 module.exports = router;

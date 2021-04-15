@@ -13,12 +13,6 @@ const RecipeSchema = new Schema({
     type: String,
   },
 
-  //   senderId: {
-  //     type: String,
-  //   },
-  //   senderUsername: {
-  //     type: String,
-  //   },
   createdDate: {
     type: Date,
     default: Date.now,

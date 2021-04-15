@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import KitchensContext from '../utils/KitchensContext';
 import {styles} from '../utils/styles';
@@ -9,7 +9,10 @@ const ManageKitchens = ({navigation}) => {
   const {myKitchens} = useContext(KitchensContext);
   const {user} = useContext(UserContext);
   const {kitchensImIn} = useContext(KitchensImInContext);
-  // console.log(kitchensImIn);
+  // console.log(myKitchens);
+  useEffect(() => {
+    return () => console.log('cleanup manageKitchens');
+  }, []);
 
   const handleMyKitchenClick = name => {
     const match = myKitchens.filter(i => i.name === name)[0];
