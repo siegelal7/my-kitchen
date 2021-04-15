@@ -15,6 +15,7 @@ const Kitchen = props => {
   const [newItem, setNewItem] = useState('');
   // const [searchValue, setSearchValue] = useState('');
   const [results, setResults] = useState([]);
+  const [ingredDisplay, setingredDisplay] = useState('none');
 
   const {myKitchens, setMyKitchens} = useContext(KitchensContext);
   const {info} = props.route.params;
@@ -164,7 +165,24 @@ const Kitchen = props => {
           {recipes.map(i => (
             <View style={styles.recipeCard} key={i._id}>
               <Text style={{color: 'white'}}>{i.title}</Text>
-              <Text style={{color: 'white'}}>{i.instructions} yoyo</Text>
+              <Text style={{color: 'white'}}>{i.instructions}</Text>
+              <Text
+                style={{color: 'white'}}
+                onPress={() => {
+                  if (ingredDisplay === 'none') {
+                    setingredDisplay('flex');
+                    return;
+                  }
+                  setingredDisplay('none');
+                }}>
+                {ingredDisplay === 'none' ? 'Show' : 'Hide'} Ingredients
+              </Text>
+              {i.ingredients.map(j => (
+                <Text key={j} style={{color: 'white', display: ingredDisplay}}>
+                  {j}
+                </Text>
+              ))}
+              {/* <Text style={{color: 'white'}}>{i.ingredients}</Text> */}
             </View>
           ))}
         </View>

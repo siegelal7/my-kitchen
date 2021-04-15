@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {marginTop: 20, width: 100},
+  buttonBtm: {position: 'absolute', bottom: 10, marginVertical: 20, width: 100},
   button2: {
     // marginTop: 20,
     // width: 30,
@@ -50,6 +51,7 @@ export const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
+  buttonTiny: {},
   container: {
     // marginTop: 32,
     // paddingHorizontal: 24,
