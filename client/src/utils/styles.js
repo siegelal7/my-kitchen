@@ -1,19 +1,22 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
+// FIXME: TODO: not sure this is the best solution to prevent cutoff on bottom
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
   flexColContainer: {
     flex: 1,
+    // flexGrow: 1,
     // marginTop: 15,
     flexDirection: 'column',
     alignItems: 'center',
     // color: 'white',
-    height: screenHeight,
+    // height: screenHeight,
     textAlign: 'center',
     position: 'relative',
     backgroundColor: '#30363a',
+
     // paddingTop: 10,
   },
   blockFlexColContainer: {
@@ -162,6 +165,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   scrollScreen: {
+    // flex: 1,
     height: screenHeight,
+    // paddingBottom: 50,
+    flexGrow: 1,
   },
 });

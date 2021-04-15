@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, Text, Button, TouchableOpacity} from 'react-native';
+import {View, Text, Button, TouchableOpacity, SafeAreaView} from 'react-native';
 import Input from '../components/Input';
 import {styles} from '../utils/styles';
 import KitchensContext from '../utils/KitchensContext';
@@ -67,10 +67,20 @@ const Kitchen = props => {
     if (_id && !groceryListItems.includes(item) && newItem != '') {
       axios
         .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
-        .then(res => {
+        .then(async res => {
           setNewItem('');
+          console.log(res.data);
           if (owner === user.id) {
-            setMyKitchens(res.data.kitchens);
+            const imIn = await res.data.kitchens.filter(
+              j => j.owner !== user.id,
+            );
+            // console.log(imIn);
+            const mine = await res.data.kitchens.filter(
+              i => i.owner === user.id,
+            );
+            setMyKitchens(mine);
+            setKitchensImIn(imIn);
+            // setMyKitchens(res.data.kitchens);
           } else {
             // console.log(res.data);
             setKitchensImIn(res.data.kitchens);
@@ -90,7 +100,10 @@ const Kitchen = props => {
   };
   // console.log(myKitchens);
   return (
-    <ScrollView style={styles.scrollScreen}>
+    // <SafeAreaView style={{flex: 1}}>
+    <ScrollView
+      //   // contentContainerStyle={{flexGrow: 1}}
+      style={styles.scrollScreen}>
       <View style={styles.flexColContainer}>
         {owner === user.id && (
           <TouchableOpacity style={{}}>
@@ -147,7 +160,7 @@ const Kitchen = props => {
               </Text>
             ))}
         </View>
-        <View style={{paddingBottom: 200}}>
+        <View style={styles.container}>
           {recipes.map(i => (
             <View style={styles.recipeCard} key={i._id}>
               <Text style={{color: 'white'}}>{i.title}</Text>
@@ -157,6 +170,7 @@ const Kitchen = props => {
         </View>
       </View>
     </ScrollView>
+    // </SafeAreaView
   );
 };
 

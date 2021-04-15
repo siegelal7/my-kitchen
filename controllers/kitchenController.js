@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
 
+// New kitchen route
 router.post("/api/kitchen", (req, res) => {
   // console.log(req.body);
   db.Kitchen.create(req.body)
@@ -20,6 +21,7 @@ router.post("/api/kitchen", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+// Get a kitchen with all the info
 router.get("/api/kitchen/:id", (req, res) => {
   // getKitchenById(req.params.id)
   db.Kitchen.findById(req.params.id)
@@ -30,13 +32,10 @@ router.get("/api/kitchen/:id", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+//  add a user to a kitchen
 router.put("/api/addparticipant/:id", (req, res) => {
-  //   console.log(req.body);
   const newPerson = Object.keys(req.body)[0];
-  //   console.log(newPerson);
-  //   const found = db.Kitchen.findById(req.params.id);
-  //   console.log(found);
-  //   found.update({ $push: { participants: newPerson } });
+
   db.Kitchen.findByIdAndUpdate(
     req.params.id,
     {
@@ -45,9 +44,6 @@ router.put("/api/addparticipant/:id", (req, res) => {
     { new: true }
   )
     .populate({ path: "participants", select: "-password -email" })
-    // .populate("participants")
-    // // TODO:not sure this is right
-    // .select("-password")
     .then(
       (nowNow) =>
         // res.json(nowNow);
@@ -81,7 +77,9 @@ router.put("/api/additem/:id", (req, res) => {
       // console.log(newNew._id);
       db.User.findById(newNew.owner)
         .populate("recipes")
-        .populate("kitchens")
+        // .populate("kitchens")
+        .populate({ path: "kitchens", populate: { path: "recipes" } })
+        .populate({ path: "kitchens", populate: { path: "participants" } })
         .then((found) => {
           // console.log("eh");
           res.json(found);
@@ -90,12 +88,8 @@ router.put("/api/additem/:id", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
-//Delete a kitchen
+// Delete a kitchen
 router.delete("/api/kitchen/:id", (req, res) => {
-  // console.log(req.params.id);
-  // db.Kitchen.findByIdAndDelete(req.params.id).then((del) => {
-  //   res.json(del);
-  // });
   db.Kitchen.findByIdAndDelete(req.params.id).then((del) =>
     db.User.findByIdAndUpdate(
       del.owner,
@@ -109,6 +103,7 @@ router.delete("/api/kitchen/:id", (req, res) => {
   );
 });
 
+// add an existing recipe to a kitchen specifically
 router.put("/api/kitchen/addrecipe/:id", (req, res) => {
   const body = Object.keys(req.body)[0];
   console.log(body);
@@ -119,27 +114,39 @@ router.put("/api/kitchen/addrecipe/:id", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+const both = (newNew, id, res, req) => {
+  // console.log(newNew);
+  db.User.findByIdAndUpdate(req.body.authorId, {
+    $push: { recipes: newNew._id },
+  }).then((resp) =>
+    db.Kitchen.findByIdAndUpdate(
+      id,
+      { $push: { recipes: newNew._id } },
+      { new: true }
+    )
+      .populate("recipes")
+      // .populate({ path: "kitchens", populate: { path: "recipes" } })
+      .then((response) => res.json(response))
+  );
+};
+
+// add a NEW RECIPE to a kitchen specifically
 router.post("/api/kitchen/newrecipe/:id", (req, res) => {
   // console.log(req.body);
   const id = req.params.id;
   db.Recipe.create(req.body)
-    .then((newNew) =>
-      db.Kitchen.findByIdAndUpdate(
-        id,
-        { $push: { recipes: newNew._id } },
-        { new: true }
-      )
-        .populate("recipes")
-        .then((response) => res.json(response))
+    .then(
+      (newNew) => both(newNew, id, res, req)
+      // db.Kitchen.findByIdAndUpdate(
+      //   id,
+      //   { $push: { recipes: newNew._id } },
+      //   { new: true }
+      // )
+      //   .populate("recipes")
+      //   // .populate({ path: "kitchens", populate: { path: "recipes" } })
+      //   .then((response) => res.json(response))
     )
     .catch((err) => res.status(400).json(err));
-  // db.Kitchen.findByIdAndUpdate(
-  //   id,
-  //   { $push: { recipes: req.body } },
-  //   { new: true }
-  // )
-  //   .then((newNew) => res.json(newNew))
-  //   .catch((err) => res.status(400).json(err));
 });
 
 module.exports = router;

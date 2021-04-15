@@ -12,7 +12,11 @@ const RecipeSchema = new Schema({
   author: {
     type: String,
   },
-
+  ingredients: [
+    {
+      type: String,
+    },
+  ],
   createdDate: {
     type: Date,
     default: Date.now,
