@@ -31,4 +31,11 @@ router.get("/api/recipes", (req, res) => {
     });
 });
 
+router.get("/api/recipes/:name", (req, res) => {
+  const name = req.params.name;
+  db.Recipe.find({ title: { $regex: name } })
+    .then((response) => res.json(response))
+    .catch((err) => res.status(400).json(err));
+});
+
 module.exports = router;

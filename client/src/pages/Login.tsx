@@ -14,12 +14,9 @@ const Login = ({navigation}) => {
     password: '',
   });
   const {setUser} = useContext(UserContext);
-  // const navigation = useNavigation();
-
-  // const handleLoginSubmit = e => {
-  //   e.preventDefault();
-  //   console.log(userInfo);
-  // };
+  React.useEffect(() => {
+    return () => console.log('cleanup login');
+  }, []);
   const mutation = useMutation(loginUser, {
     onMutate: variables => {
       // A mutation is about to happen!

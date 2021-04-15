@@ -17,11 +17,16 @@ const CreateKitchen = ({navigation}) => {
     owner: user && user.id,
     participants: [],
   });
+
+  React.useEffect(() => {
+    return () => console.log('cleanup CreateKitchen');
+  }, []);
+
   const handleNameInputChange = e => {
     setKitchen({...kitchen, name: e});
   };
   const handleSubmit = () => {
-    // console.log(kitchen);
+    console.log('woah i added a kitchen');
     // FIXME: holy shit what was I  thinking?
     // TODO: fix this shit
     axios
@@ -47,7 +52,7 @@ const CreateKitchen = ({navigation}) => {
             );
             setKitchensImIn(imIn);
             setMyKitchens(mine);
-            setMyKitchens(now.data.kitchens);
+            // setMyKitchens(now.data.kitchens);
           })
           .catch(error => console.log(error));
       })

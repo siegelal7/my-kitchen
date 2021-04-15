@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     // color: 'white',
+    height: screenHeight,
     textAlign: 'center',
     position: 'relative',
     backgroundColor: '#30363a',
@@ -159,5 +160,8 @@ export const styles = StyleSheet.create({
     color: '#cec9c6',
     textAlign: 'center',
     fontSize: 16,
+  },
+  scrollScreen: {
+    height: screenHeight,
   },
 });

@@ -91,23 +91,13 @@ router.post("/api/register", async (req, res) => {
 
 router.get("/api/user/:id", (req, res) => {
   const id = req.params.id;
-  // const found = await db.User.findById(id)
-  //   .populate("recipes")
-  //   .populate("kitchens");
-  // await found.populate("participants").execPopulate();
-  // // console.log(found.populated("participants"));
-  // res.json(found.populated("participants"));
+
   db.User.findById(id)
-    // .populate("recipes")
-    // .populate("kitchens")
+
     .populate({ path: "recipes" })
     .populate({ path: "kitchens", populate: { path: "participants" } })
-    // .populate({
-    //   path: "kitchens",
-
-    //   // Get friends of friends - populate the 'friends' array for every friend
-    //   populate: { path: "participants" },
-    // })
+    .populate({ path: "kitchens", populate: { path: "recipes" } })
+    // .populate({ path: "kitchens", populate: { path: "owner" } })
     .then((found) => {
       res.json(found);
     });

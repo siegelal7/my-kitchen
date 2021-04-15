@@ -6,7 +6,7 @@ const KitchenSchema = new Schema({
   owner: { type: Schema.Types.ObjectId, ref: "User" },
   participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
   groceryList: [{ type: String }],
-
+  recipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
   createdDate: {
     type: Date,
     default: Date.now,

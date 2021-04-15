@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {useQuery, useQueryClient} from 'react-query';
 // import Input from '../components/Input';
@@ -9,6 +9,11 @@ import UserContext from '../utils/UserContext';
 
 const Recipes = ({navigation}) => {
   const {user} = useContext(UserContext);
+
+  useEffect(() => {
+    return () => console.log('cleanup Recipes');
+  }, []);
+
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
     'recipes',
     getRecipes,
@@ -33,7 +38,19 @@ const Recipes = ({navigation}) => {
   if (data.data.length === 0) {
     return (
       <View style={styles.flexColContainer}>
-        <Text>Add some recipes!</Text>
+        <Text style={{color: 'white', fontSize: 24}}>Add some recipes!</Text>
+        {user.username && (
+          <Text
+            style={styles.bottomLink}
+            onPress={() => {
+              navigation.navigate('New Recipe', {
+                recipes: null,
+                kitchen: null,
+              });
+            }}>
+            Add a Recipe
+          </Text>
+        )}
       </View>
     );
   }
@@ -59,7 +76,10 @@ const Recipes = ({navigation}) => {
         <Text
           style={styles.bottomLink}
           onPress={() => {
-            navigation.navigate('New Recipe');
+            navigation.navigate('New Recipe', {
+              recipes: null,
+              kitchen: null,
+            });
           }}>
           Add a Recipe
         </Text>

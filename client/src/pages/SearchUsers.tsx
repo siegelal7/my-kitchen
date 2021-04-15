@@ -19,17 +19,25 @@ const SearchUsers = props => {
   const [searchValue, setSearchValue] = useState('');
   const [foundUsers, setFoundUsers] = useState([]);
   //   const {user} = useContext(UserContext);
-  const {myKitchens, setMyKitchens} = useContext(KitchensContext);
+  // const {myKitchens, setMyKitchens} = useContext(KitchensContext);
   const handleTitleInputChange = e => {
     setSearchValue(e);
   };
   const {info} = props.route.params;
+
   const {_id, participants, owner} = info;
+  // console.log(participants);
+  useEffect(() => {
+    return () => {
+      console.log('cleanup searchUser');
+    };
+  }, []);
 
   const handleSearchSubmit = e => {
     setSearchValue('');
     searchForUser(searchValue).then(res => setFoundUsers(res.data));
   };
+  // console.log(owner);
 
   const addFriendToKitchen = idToAdd => {
     axios
@@ -39,19 +47,21 @@ const SearchUsers = props => {
   };
 
   const handleAddToKitchen = id => {
+    console.log(id === owner);
     if (participants.length > 0) {
-      if (
-        participants.filter(i => i._id === id).length > 0 ||
-        participants.filter(j => j._id === owner).length > 0
-      ) {
+      if (participants.filter(i => i._id === id).length > 0 || id === owner) {
         // TODO: alrdy added or it's yourkitchen - do something to tell user
+        console.log('alrdy in or your kitchen');
         return;
       }
+      console.log('added with ppl alrdy');
       addFriendToKitchen(id);
 
       return;
     }
+    if (!id === owner) console.log('added empty');
     addFriendToKitchen(id);
+    return;
   };
 
   return (

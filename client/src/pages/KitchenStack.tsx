@@ -12,7 +12,7 @@ import KitchensContext from '../utils/KitchensContext';
 import KitchensImInContext from '../utils/KitchensImInContext';
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
-import GroceryList from './GroceryList';
+import Kitchen from './Kitchen';
 
 const KitchStack = createStackNavigator();
 
@@ -23,7 +23,7 @@ const KitchenStack = () => {
   const [kitchensImIn, setKitchensImIn] = useState([]);
 
   useEffect(() => {
-    console.log('ran');
+    console.log('KitchenStack useEffect ran');
     // if (myKitchens.length == 0) {
 
     axios
@@ -32,12 +32,13 @@ const KitchenStack = () => {
         const imIn = await res.data.kitchens.filter(j => j.owner !== user.id);
         // console.log(imIn);
         const mine = await res.data.kitchens.filter(i => i.owner === user.id);
+        // console.log('ranyo');
         setKitchensImIn(imIn);
         setMyKitchens(mine);
       })
       .catch(err => console.log(err));
     // }
-    // return () => {};
+    return () => {};
   }, []);
   return (
     // <NavigationContainer>
@@ -54,7 +55,7 @@ const KitchenStack = () => {
             name="Create a Kitchen"
             component={CreateKitchen}
           />
-          <KitchStack.Screen name="Grocery List" component={GroceryList} />
+          <KitchStack.Screen name="Grocery List" component={Kitchen} />
           {/* <KitchStack.Screen name="Search Users" component={SearchUsers} /> */}
           {/* <KitchStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
         </KitchStack.Navigator>
