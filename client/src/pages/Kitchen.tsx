@@ -3,7 +3,7 @@ import {View, Text, Button, TouchableOpacity, SafeAreaView} from 'react-native';
 import Input from '../components/Input';
 import {styles} from '../utils/styles';
 import KitchensContext from '../utils/KitchensContext';
-import {useMutation} from 'react-query';
+// import {useMutation} from 'react-query';
 import axios from 'axios';
 import UserContext from '../utils/UserContext';
 import GroceryList from '../components/GroceryList';
@@ -30,7 +30,7 @@ const Kitchen = props => {
   );
 
   // const mutation = useMutation()
-
+  // console.log(user.id);
   useEffect(() => {
     return () => console.log('cleanup kitchen');
   }, []);
@@ -66,40 +66,43 @@ const Kitchen = props => {
 
   const handleGroceryItemAdd = item => {
     if (_id && !groceryListItems.includes(item) && newItem != '') {
-      axios
-        .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
-        .then(async res => {
-          setNewItem('');
-          console.log(res.data);
-          if (owner === user.id) {
-            const imIn = await res.data.kitchens.filter(
-              j => j.owner !== user.id,
-            );
-            // console.log(imIn);
-            const mine = await res.data.kitchens.filter(
-              i => i.owner === user.id,
-            );
+      if (owner === user.id) {
+        axios
+          .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
+          .then(res => {
+            setNewItem('');
+            const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
+            //           // console.log(imIn);
+            const mine = res.data.kitchens.filter(i => i.owner === user.id);
+            const newList = res.data.kitchens.filter(i => i.name === name);
+            setGroceryListItems(newList[0].groceryList);
             setMyKitchens(mine);
             setKitchensImIn(imIn);
-            // setMyKitchens(res.data.kitchens);
-          } else {
-            // console.log(res.data);
-            setKitchensImIn(res.data.kitchens);
-          }
-
-          const newList = res.data.kitchens.filter(i => i.name === name);
-          //   console.log(newList);
-          setGroceryListItems(newList[0].groceryList);
-        })
-        .catch(err => console.log(err));
-      return;
+          })
+          .catch(err => console.log(err));
+      } else {
+        const payload = {
+          user: user.id,
+          newItem,
+        };
+        axios
+          .put(
+            `http://192.168.56.1:3001/api/additemparticipant/${_id}`,
+            payload,
+          )
+          .then(res => {
+            console.log(res.data);
+            const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
+            const newList = res.data.kitchens.filter(i => i.name === name);
+            setGroceryListItems(newList[0].groceryList);
+            setKitchensImIn(imIn);
+          });
+      }
     }
-    const re = new RegExp(item, 'i');
-    // console.log(re);
-    // TODO: tell user alrdy added or whatever
+    //   // TODO: tell user alrdy added or whatever
     console.log('alrdy added that item');
   };
-  // console.log(myKitchens);
+
   return (
     // <SafeAreaView style={{flex: 1}}>
     <ScrollView
@@ -166,17 +169,20 @@ const Kitchen = props => {
             <View style={styles.recipeCard} key={i._id}>
               <Text style={{color: 'white'}}>{i.title}</Text>
               <Text style={{color: 'white'}}>{i.instructions}</Text>
-              <Text
-                style={{color: 'white'}}
-                onPress={() => {
-                  if (ingredDisplay === 'none') {
-                    setingredDisplay('flex');
-                    return;
-                  }
-                  setingredDisplay('none');
-                }}>
-                {ingredDisplay === 'none' ? 'Show' : 'Hide'} Ingredients
-              </Text>
+              {i.ingredients && i.ingredients.length > 0 && (
+                <Text
+                  style={{color: 'white'}}
+                  onPress={() => {
+                    if (ingredDisplay === 'none') {
+                      setingredDisplay('flex');
+                      return;
+                    }
+                    setingredDisplay('none');
+                  }}>
+                  {ingredDisplay === 'none' ? 'Show' : 'Hide'} Ingredients
+                </Text>
+              )}
+
               {i.ingredients.map(j => (
                 <Text key={j} style={{color: 'white', display: ingredDisplay}}>
                   {j}
