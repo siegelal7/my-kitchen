@@ -188,7 +188,6 @@ const Kitchen = props => {
                   {j}
                 </Text>
               ))}
-              {/* <Text style={{color: 'white'}}>{i.ingredients}</Text> */}
             </View>
           ))}
         </View>
