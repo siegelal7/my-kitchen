@@ -44,11 +44,11 @@ const CreateRecipe = props => {
         payload,
       ),
     {
-      onMutate: variables => {
+      onMutate: async variables => {
         // A mutation is about to happen!
         // Optionally return a context containing data to use when for example rolling back
         // return {id: 1};
-        recipes.push(variables);
+        await recipes.push(variables);
         return variables;
       },
       onSuccess: () => {
@@ -78,10 +78,11 @@ const CreateRecipe = props => {
     payload =>
       axios.post(`http://192.168.56.1:3001/api/recipes/${user.id}`, payload),
     {
-      onMutate: variables => {
+      onMutate: async variables => {
         // A mutation is about to happen!
         // Optionally return a context containing data to use when for example rolling back
         // return {id: 1};
+        await recipes.push(variables);
         return variables;
       },
       onSuccess: () => {
@@ -120,29 +121,33 @@ const CreateRecipe = props => {
   };
 
   const handleSubmit = () => {
-    if (title != '' && instructions != '' && !kitchen) {
-      let payload = {
-        title,
-        instructions,
-        author,
-        ingredients,
-        authorId,
-      };
-      mutation.mutate(payload, user.id);
-      return;
+    if (title !== '' && instructions != '') {
+      if (!kitchen) {
+        let payload = {
+          title,
+          instructions,
+          author,
+          ingredients,
+          authorId,
+        };
+        mutation.mutate(payload, user.id);
+        return;
+      }
+      // New Recipe to a kitchen- didnt work once the rec got added but not showing frontend
+      if (kitchen) {
+        let payload = {
+          title,
+          instructions,
+          author,
+          ingredients,
+          authorId,
+        };
+        mutationToKitchen.mutate(payload, kitchen);
+        return;
+        // FIXME:
+      }
     }
-    if (title != '' && instructions != '' && kitchen) {
-      let payload = {
-        title,
-        instructions,
-        author,
-        ingredients,
-        authorId,
-      };
-      mutationToKitchen.mutate(payload, kitchen);
-      return;
-      // FIXME:
-    }
+
     // TODO: set an error toast saying enter all shit
   };
 

@@ -4,7 +4,7 @@ import {styles} from '../utils/styles';
 
 const GroceryList = ({n, i}) => {
   return (
-    <Text style={styles.groceryItem} key={i}>
+    <Text style={styles.groceryItem}>
       {n + 1}: {i}
     </Text>
   );

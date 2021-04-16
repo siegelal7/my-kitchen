@@ -24,7 +24,7 @@ const Kitchen = props => {
   const {setKitchensImIn} = useContext(KitchensImInContext);
 
   const {groceryList, name, _id, participants, owner, recipes} = info;
-  // console.log(participants);
+  console.log(recipes);
 
   const [groceryListItems, setGroceryListItems] = useState(
     groceryList ? groceryList : [],
@@ -33,7 +33,9 @@ const Kitchen = props => {
   // const mutation = useMutation()
   // console.log(user.id);
   useEffect(() => {
-    return () => console.log('cleanup kitchen');
+    return () => {
+      console.log('cleanup kitchen');
+    };
   }, []);
 
   // const handleInputChange = e => {
@@ -94,6 +96,7 @@ const Kitchen = props => {
           )
           .then(res => {
             // console.log(res.data);
+            setNewItem('');
             const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
             const newList = res.data.kitchens.filter(i => i.name === name);
             setGroceryListItems(newList[0].groceryList);
@@ -128,7 +131,7 @@ const Kitchen = props => {
         </Text>
         {/* <Text> */}
         {groceryListItems.length !== 0 ? (
-          groceryListItems.map((i, n) => <GroceryList key={n} i={i} n={n} />)
+          groceryListItems.map((i, n) => <GroceryList key={i} i={i} n={n} />)
         ) : (
           <Text style={styles.noGroceryItemsText}>Grocery list goes here!</Text>
         )}

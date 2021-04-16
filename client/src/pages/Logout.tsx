@@ -15,7 +15,8 @@ const Logout = () => {
     setUser({});
     // setKitchen({});
     // setKitchensImIn({});
-    return navigation.navigate('All Recipes');
+    navigation.navigate('All Recipes');
+    return () => console.log('unmounting logout comp');
   }, []);
   return <View></View>;
 };
