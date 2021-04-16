@@ -25,6 +25,10 @@ const Register = () => {
   const {setUser} = useContext(UserContext);
   const navigation = useNavigation();
 
+  React.useEffect(() => {
+    return () => console.log('cleanup register');
+  }, []);
+
   const mutation = useMutation(registerUser, {
     onMutate: variables => {
       // A mutation is about to happen!

@@ -28,9 +28,7 @@ const SearchUsers = props => {
   const {_id, participants, owner} = info;
   // console.log(participants);
   useEffect(() => {
-    return () => {
-      console.log('cleanup searchUser');
-    };
+    return () => console.log('cleanup searchUser');
   }, []);
 
   const handleSearchSubmit = e => {
@@ -42,13 +40,14 @@ const SearchUsers = props => {
   const addFriendToKitchen = idToAdd => {
     axios
       .put(`http://192.168.56.1:3001/api/addparticipant/${_id}`, idToAdd)
-      .then(res => participants.push(res.data))
+      .then(async res => await participants.push(res.data))
       .catch(err => console.log(err));
   };
 
   const handleAddToKitchen = id => {
     console.log(id === owner);
     if (participants.length > 0) {
+      //  the filter prevent duplicate participants
       if (participants.filter(i => i._id === id).length > 0 || id === owner) {
         // TODO: alrdy added or it's yourkitchen - do something to tell user
         console.log('alrdy in or your kitchen');
@@ -59,9 +58,12 @@ const SearchUsers = props => {
 
       return;
     }
-    if (!id === owner) console.log('added empty');
+    if (id === owner) {
+      console.log('must be you? and empty kitchen');
+      return;
+    }
+    console.log('added empty');
     addFriendToKitchen(id);
-    return;
   };
 
   return (

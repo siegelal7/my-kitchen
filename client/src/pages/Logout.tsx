@@ -9,12 +9,14 @@ const Logout = () => {
   const {setUser} = useContext(UserContext);
   // const {setKitchensImIn} = useContext(KitchensImInContext);
   // const {setKitchen} = useContext(KitchensContext);
+
   const navigation = useNavigation();
   useEffect(() => {
     setUser({});
     // setKitchen({});
     // setKitchensImIn({});
-    return navigation.navigate('All Recipes');
+    navigation.navigate('All Recipes');
+    return () => console.log('unmounting logout comp');
   }, []);
   return <View></View>;
 };

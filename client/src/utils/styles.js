@@ -57,7 +57,10 @@ export const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
-  buttonTiny: {},
+  buttonInputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   container: {
     // marginTop: 32,
     // paddingHorizontal: 24,

@@ -13,6 +13,9 @@ const Input = ({
   numberOfLines,
   secureTextEntry,
 }) => {
+  React.useEffect(() => {
+    return () => console.log('unmounting Input cmponent');
+  }, []);
   // const {labelStyles, inputStyles, viewStyles} = allStyles;
   // console.log(allStyles.viewStyles);
   return (

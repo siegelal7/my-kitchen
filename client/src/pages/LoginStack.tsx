@@ -7,6 +7,9 @@ import Register from './Register';
 const LoginStackNav = createStackNavigator();
 
 const LoginStack = () => {
+  React.useEffect(() => {
+    return () => {};
+  }, []);
   return (
     <LoginStackNav.Navigator>
       <LoginStackNav.Screen name="Login" component={Login} />

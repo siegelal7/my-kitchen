@@ -16,6 +16,7 @@ const ManageKitchens = ({navigation}) => {
 
   const handleMyKitchenClick = name => {
     const match = myKitchens.filter(i => i.name === name)[0];
+    console.log(match);
     navigation.navigate('Grocery List', {
       info: match,
     });
