@@ -27,15 +27,18 @@ const SingleRecipeCard = ({
         <Text style={{fontWeight: 'bold', color: 'white'}}>{i.title} </Text>
         <Text style={{color: 'white'}}>from {i.author}</Text>
       </View>
-      <Text style={{color: 'white'}} onPress={handleIngredPress}>
-        {ingredDisplay === 'none' ? 'Show' : 'Hide'} Ingredients
-      </Text>
+      <Text style={{marginBottom: 5, color: 'white'}}>{i.instructions}</Text>
+      {i.ingredients && i.ingredients.length > 0 && (
+        <Text style={{color: 'white'}} onPress={handleIngredPress}>
+          {ingredDisplay === 'none' ? 'Show' : 'Hide'} Ingredients
+        </Text>
+      )}
+
       {i.ingredients.map(j => (
         <Text key={j} style={{color: 'white', display: ingredDisplay}}>
           {j}
         </Text>
       ))}
-      <Text style={{marginBottom: 5, color: 'white'}}>{i.instructions}</Text>
     </View>
   );
 };

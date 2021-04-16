@@ -88,6 +88,31 @@ router.put("/api/additem/:id", (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
+router.put("/api/additemparticipant/:id", (req, res) => {
+  console.log(req.body);
+  // const payload = Object.keys(req.body)[0];
+  // console.log(payload);
+  const id = req.params.id;
+  db.Kitchen.findByIdAndUpdate(
+    id,
+    { $push: { groceryList: req.body.newItem } },
+    { new: true }
+  )
+    .then((newNew) => {
+      // console.log(newNew._id);
+      db.User.findById(req.body.user)
+        .populate("recipes")
+        // .populate("kitchens")
+        .populate({ path: "kitchens", populate: { path: "recipes" } })
+        .populate({ path: "kitchens", populate: { path: "participants" } })
+        .then((found) => {
+          // console.log("eh");
+          res.json(found);
+        });
+    })
+    .catch((err) => res.status(400).json(err));
+});
+
 // Delete a kitchen
 router.delete("/api/kitchen/:id", (req, res) => {
   db.Kitchen.findByIdAndDelete(req.params.id).then((del) =>

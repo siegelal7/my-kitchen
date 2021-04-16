@@ -42,7 +42,13 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {marginTop: 20, width: 100},
-  buttonBtm: {position: 'absolute', bottom: 10, marginVertical: 20, width: 100},
+  buttonBtm: {
+    // position: 'absolute',
+    // bottom: 10,
+    marginBottom: 20,
+    marginTop: 60,
+    width: 100,
+  },
   button2: {
     // marginTop: 20,
     // width: 30,
