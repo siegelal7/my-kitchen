@@ -9,6 +9,7 @@ const Logout = () => {
   const {setUser} = useContext(UserContext);
   // const {setKitchensImIn} = useContext(KitchensImInContext);
   // const {setKitchen} = useContext(KitchensContext);
+
   const navigation = useNavigation();
   useEffect(() => {
     setUser({});

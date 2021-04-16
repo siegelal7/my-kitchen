@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const db = require("../models");
+const { populate } = require("../models/Recipe");
 
 // New kitchen route
 router.post("/api/kitchen", (req, res) => {
@@ -13,6 +14,9 @@ router.post("/api/kitchen", (req, res) => {
         },
         { new: true }
       )
+        .populate("recipes")
+        .populate({ path: "kitchens", populate: { path: "recipes" } })
+        .populate({ path: "kitchens", populate: { path: "participants" } })
         .then((response) => {
           res.json(response);
         })

@@ -8,6 +8,9 @@ import CreateRecipe from './CreateRecipe';
 const RecipeStack = createStackNavigator();
 
 const RecipesStack = () => {
+  React.useEffect(() => {
+    return () => console.log('cleanup recipeStack');
+  }, []);
   return (
     <RecipeStack.Navigator initialRouteName="All Recipes">
       <RecipeStack.Screen name="All Recipes" component={Recipes} />

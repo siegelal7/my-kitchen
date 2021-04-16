@@ -25,39 +25,44 @@ const CreateKitchen = ({navigation}) => {
   const handleNameInputChange = e => {
     setKitchen({...kitchen, name: e});
   };
-  const handleSubmit = () => {
+
+  const handleKitchenSubmit = () => {
     console.log('woah i added a kitchen');
     // FIXME: holy shit what was I  thinking?
     // TODO: fix this shit
     axios
       .post('http://192.168.56.1:3001/api/kitchen', kitchen)
-      .then(res => {
-        // console.log(res.data.kitchens);
-        // setMyKitchens(res.data.kitchens);
-        // setUser({...user, kitchens: res.data.kitchens});
-        setUser({
-          ...user,
-          kitchens: res.data.kitchens,
-        });
-        axios
-          .get(`http://192.168.56.1:3001/api/user/${user.id}`)
-          .then(async now => {
-            // console.log(now.data);
-            // console.log(now.data.kitchens);
-            const imIn = await now.data.kitchens.filter(
-              j => j.owner !== user.id,
-            );
-            const mine = await now.data.kitchens.filter(
-              i => i.owner === user.id,
-            );
-            setKitchensImIn(imIn);
-            setMyKitchens(mine);
-            // setMyKitchens(now.data.kitchens);
-          })
-          .catch(error => console.log(error));
+      .then(async res => {
+        setUser({...user, kitchens: res.data.kitchens});
+        // const imIn = await res.data.kitchens.filter(j => j.owner !== user.id);
+        const mine = await res.data.kitchens.filter(i => i.owner === user.id);
+        // setKitchensImIn(imIn);
+        setMyKitchens(mine);
+        navigation.navigate('Manage Kitchens');
+        // setUser({
+        //   ...user,
+        //   kitchens: res.data.kitchens,
+        // });
+        //     axios
+        //       .get(`http://192.168.56.1:3001/api/user/${user.id}`)
+        //       .then(async now => {
+        //         // console.log(now.data);
+        //         // console.log(now.data.kitchens);
+        //         const imIn = await now.data.kitchens.filter(
+        //           j => j.owner !== user.id,
+        //         );
+        //         const mine = await now.data.kitchens.filter(
+        //           i => i.owner === user.id,
+        //         );
+        //         setKitchensImIn(imIn);
+        //         setMyKitchens(mine);
+        //         // setMyKitchens(now.data.kitchens);
+        //       })
+        //       .catch(error => console.log(error));
       })
       .catch(err => console.log(err));
-    navigation.navigate('Manage Kitchens');
+    //   .catch(err => console.log(err));
+    // navigation.navigate('Manage Kitchens');
   };
   return (
     <View style={styles.container}>
@@ -68,7 +73,7 @@ const CreateKitchen = ({navigation}) => {
         inputStyles={styles.inputStyles}
         viewStyles={styles.viewStyles}
         // placeHolder="title"
-        onSubmitEditing={handleSubmit}
+        onSubmitEditing={handleKitchenSubmit}
       />
     </View>
   );

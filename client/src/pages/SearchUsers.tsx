@@ -28,9 +28,7 @@ const SearchUsers = props => {
   const {_id, participants, owner} = info;
   // console.log(participants);
   useEffect(() => {
-    return () => {
-      console.log('cleanup searchUser');
-    };
+    return () => console.log('cleanup searchUser');
   }, []);
 
   const handleSearchSubmit = e => {

@@ -5,6 +5,9 @@ import UserContext from '../utils/UserContext';
 
 const Profile = ({navigation}) => {
   const {user} = useContext(UserContext);
+  React.useEffect(() => {
+    return () => console.log('unmounting profile');
+  }, []);
   return (
     <View style={styles.flexColContainer}>
       {/* // FIXME: */}

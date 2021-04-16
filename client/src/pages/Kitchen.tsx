@@ -10,6 +10,7 @@ import GroceryList from '../components/GroceryList';
 import Participants from '../components/Participants';
 import {ScrollView} from 'react-native-gesture-handler';
 import KitchensImInContext from '../utils/KitchensImInContext';
+import SingleRecipeCard from '../components/SingleRecipeCard';
 
 const Kitchen = props => {
   const [newItem, setNewItem] = useState('');
@@ -71,13 +72,14 @@ const Kitchen = props => {
           .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
           .then(res => {
             setNewItem('');
-            const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
+            // setIngredients
+            // const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
             //           // console.log(imIn);
             const mine = res.data.kitchens.filter(i => i.owner === user.id);
             const newList = res.data.kitchens.filter(i => i.name === name);
             setGroceryListItems(newList[0].groceryList);
             setMyKitchens(mine);
-            setKitchensImIn(imIn);
+            // setKitchensImIn(imIn);
           })
           .catch(err => console.log(err));
       } else {
@@ -91,13 +93,14 @@ const Kitchen = props => {
             payload,
           )
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
             const newList = res.data.kitchens.filter(i => i.name === name);
             setGroceryListItems(newList[0].groceryList);
             setKitchensImIn(imIn);
           });
       }
+      return;
     }
     //   // TODO: tell user alrdy added or whatever
     console.log('alrdy added that item');
@@ -166,29 +169,7 @@ const Kitchen = props => {
         </View>
         <View style={styles.container}>
           {recipes.map(i => (
-            <View style={styles.recipeCard} key={i._id}>
-              <Text style={{color: 'white'}}>{i.title}</Text>
-              <Text style={{color: 'white'}}>{i.instructions}</Text>
-              {i.ingredients && i.ingredients.length > 0 && (
-                <Text
-                  style={{color: 'white'}}
-                  onPress={() => {
-                    if (ingredDisplay === 'none') {
-                      setingredDisplay('flex');
-                      return;
-                    }
-                    setingredDisplay('none');
-                  }}>
-                  {ingredDisplay === 'none' ? 'Show' : 'Hide'} Ingredients
-                </Text>
-              )}
-
-              {i.ingredients.map(j => (
-                <Text key={j} style={{color: 'white', display: ingredDisplay}}>
-                  {j}
-                </Text>
-              ))}
-            </View>
+            <SingleRecipeCard i={i} />
           ))}
         </View>
       </View>

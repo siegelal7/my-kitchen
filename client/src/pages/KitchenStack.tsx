@@ -26,39 +26,39 @@ const KitchenStack = () => {
   const fetchKitchens = () => {
     return axios.get(`http://192.168.56.1:3001/api/user/${user.id}`);
   };
-  const {isLoading, isError, data, error} = useQuery('kitchens', fetchKitchens);
+  // const {isLoading, isError, data, error} = useQuery('kitchens', fetchKitchens);
 
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
+  // if (isLoading) {
+  //   return <Text>Loading...</Text>;
+  // }
 
-  if (isError) {
-    return <Text>Error: {error.message}</Text>;
-  }
-
-  useEffect(() => {
-    if (data && data.data) {
-      console.log('ranKitchenStack useEffect');
-      const imIn = data.data.kitchens.filter(j => j.owner !== user.id);
-      const mine = data.data.kitchens.filter(i => i.owner === user.id);
-      setKitchensImIn(imIn);
-      setMyKitchens(mine);
-      return;
-    }
-    return () => {};
-  }, [data]);
+  // if (isError) {
+  //   return <Text>Error: {error.message}</Text>;
+  // }
 
   // useEffect(() => {
-  //   fetchKitchens()
-  //     .then(res => {
-  //       const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
-  //       const mine = res.data.kitchens.filter(i => i.owner === user.id);
-  //       setKitchensImIn(imIn);
-  //       setMyKitchens(mine);
-  //     })
-  //     .catch(err => console.log(err));
+  //   if (data && data.data) {
+  //     console.log('ranKitchenStack useEffect');
+  //     const imIn = data.data.kitchens.filter(j => j.owner !== user.id);
+  //     const mine = data.data.kitchens.filter(i => i.owner === user.id);
+  //     setKitchensImIn(imIn);
+  //     setMyKitchens(mine);
+  //     return;
+  //   }
   //   return () => {};
-  // }, []);
+  // }, [data]);
+
+  useEffect(() => {
+    fetchKitchens()
+      .then(res => {
+        const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
+        const mine = res.data.kitchens.filter(i => i.owner === user.id);
+        setKitchensImIn(imIn);
+        setMyKitchens(mine);
+      })
+      .catch(err => console.log(err));
+    return () => {};
+  }, []);
 
   return (
     // <NavigationContainer>

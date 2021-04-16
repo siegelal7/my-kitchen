@@ -33,12 +33,8 @@ const CreateRecipe = props => {
   const [errorToast, setErrorToast] = useState(false);
 
   useEffect(() => {
-    return () => console.log('cleanup createRecipe');
-  }, []);
-
-  useEffect(() => {
     setLength(ingredients.length);
-    return () => {};
+    return () => console.log('cleanup createRecipe');
   }, [ingredients]);
 
   const mutationToKitchen = useMutation(
@@ -61,6 +57,7 @@ const CreateRecipe = props => {
         // recipes.push(e);
         setTitle('');
         setInstructions('');
+        setingredients([]);
         setingredInput('');
         // setPayload({
         //   title: '',
@@ -95,6 +92,7 @@ const CreateRecipe = props => {
         // });
         setingredInput('');
         setTitle('');
+        setingredients([]);
         setInstructions('');
         Keyboard.dismiss();
         props.navigation.navigate('All Recipes');
@@ -121,7 +119,7 @@ const CreateRecipe = props => {
     setInstructions(e);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = () => {
     if (title != '' && instructions != '' && !kitchen) {
       let payload = {
         title,
@@ -144,14 +142,15 @@ const CreateRecipe = props => {
       mutationToKitchen.mutate(payload, kitchen);
       return;
       // FIXME:
-      // axios
-      //   .post(
-      //     `http://192.168.56.1:3001/api/kitchen/newrecipe/${kitchen}`,
-      //     payload,
-      //   )
-      //   .then(res => console.log(res.data));
     }
     // TODO: set an error toast saying enter all shit
+  };
+
+  const handleAddIngredToArray = () => {
+    if (ingredInput !== '' && !ingredients.includes(ingredInput)) {
+      setingredients(ingredients => [...ingredients, ingredInput]);
+      setingredInput('');
+    }
   };
 
   return (
@@ -178,24 +177,30 @@ const CreateRecipe = props => {
         numberOfLines={10}
       />
 
-      <Input
+      {/* <Input
         label="Ingredients"
         value={ingredInput}
         onChangeText={setingredInput}
         inputStyles={styles.inputStyles}
         // onSubmitEditing={}
-      />
-      <TouchableOpacity style={styles.buttonTiny}>
-        <Button
-          onPress={() => {
-            setingredients(ingredients => [...ingredients, ingredInput]);
-            setingredInput('');
-          }}
-          title="+"
-          color="#318ce7"
-          accessibilityLabel="Submit a new recipe"
+      /> */}
+      <View style={styles.buttonInputRow}>
+        <Input
+          label="Ingredients"
+          value={ingredInput}
+          onChangeText={setingredInput}
+          inputStyles={styles.inputStyles}
+          // onSubmitEditing={}
         />
-      </TouchableOpacity>
+        <TouchableOpacity style={{position: 'relative', top: 3, left: 3}}>
+          <Button
+            onPress={handleAddIngredToArray}
+            title="+"
+            color="#318ce7"
+            accessibilityLabel="Submit a new recipe"
+          />
+        </TouchableOpacity>
+      </View>
       <Text>
         {ingredients &&
           ingredients.map((i, index) => (

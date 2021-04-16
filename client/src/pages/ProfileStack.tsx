@@ -5,13 +5,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 // import {NavigationContainer} from '@react-navigation/native';
 import Logout from './Logout';
 import Profile from './Profile';
-import SearchUsers from './SearchUsers';
+// import SearchUsers from './SearchUsers';
 // import CreateKitchen from './CreateKitchen';
 // import ManageKitchens from './ManageKitchens';
-import KitchensContext from '../utils/KitchensContext';
-import KitchensImInContext from '../utils/KitchensImInContext';
+// import KitchensContext from '../utils/KitchensContext';
+// import KitchensImInContext from '../utils/KitchensImInContext';
 import UserContext from '../utils/UserContext';
-import axios from 'axios';
+// import axios from 'axios';
 import KitchenStack from './KitchenStack';
 
 const ProfStack = createStackNavigator();
@@ -20,6 +20,10 @@ const ProfileStack = () => {
   const [myKitchens, setMyKitchens] = useState([]);
   const [kitchensImIn, setKitchensImIn] = useState([]);
   const {user} = useContext(UserContext);
+
+  useEffect(() => {
+    return () => console.log('unmounging profileStack');
+  }, []);
   // useEffect(() => {
   //   console.log('ran');
   //   // if (myKitchens.length == 0) {
