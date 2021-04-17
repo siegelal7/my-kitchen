@@ -172,7 +172,7 @@ const Kitchen = props => {
         </View>
         <View style={styles.container}>
           {recipes.map(i => (
-            <SingleRecipeCard i={i} />
+            <SingleRecipeCard key={i._id} i={i} />
           ))}
         </View>
       </View>

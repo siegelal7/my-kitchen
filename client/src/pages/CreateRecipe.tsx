@@ -78,11 +78,11 @@ const CreateRecipe = props => {
     payload =>
       axios.post(`http://192.168.56.1:3001/api/recipes/${user.id}`, payload),
     {
-      onMutate: async variables => {
+      onMutate: variables => {
         // A mutation is about to happen!
         // Optionally return a context containing data to use when for example rolling back
         // return {id: 1};
-        await recipes.push(variables);
+
         return variables;
       },
       onSuccess: () => {
@@ -122,30 +122,22 @@ const CreateRecipe = props => {
 
   const handleSubmit = () => {
     if (title !== '' && instructions != '') {
-      if (!kitchen) {
-        let payload = {
-          title,
-          instructions,
-          author,
-          ingredients,
-          authorId,
-        };
-        mutation.mutate(payload, user.id);
-        return;
-      }
+      let payload = {
+        title,
+        instructions,
+        author,
+        ingredients,
+        authorId,
+      };
       // New Recipe to a kitchen- didnt work once the rec got added but not showing frontend
       if (kitchen) {
-        let payload = {
-          title,
-          instructions,
-          author,
-          ingredients,
-          authorId,
-        };
         mutationToKitchen.mutate(payload, kitchen);
         return;
         // FIXME:
       }
+
+      mutation.mutate(payload, user.id);
+      return;
     }
 
     // TODO: set an error toast saying enter all shit
@@ -169,7 +161,7 @@ const CreateRecipe = props => {
         // placeHolder="title"
         onSubmitEditing={handleSubmit}
       />
-      {/* {} */}
+
       <Input
         label="Instructions"
         value={instructions}
@@ -182,13 +174,6 @@ const CreateRecipe = props => {
         numberOfLines={10}
       />
 
-      {/* <Input
-        label="Ingredients"
-        value={ingredInput}
-        onChangeText={setingredInput}
-        inputStyles={styles.inputStyles}
-        // onSubmitEditing={}
-      /> */}
       <View style={styles.buttonInputRow}>
         <Input
           label="Ingredients"
