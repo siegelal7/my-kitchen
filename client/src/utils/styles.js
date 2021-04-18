@@ -16,8 +16,20 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'relative',
     backgroundColor: '#30363a',
-
     // paddingTop: 10,
+  },
+  flexColContainerBtm: {
+    flex: 1,
+    // flexGrow: 1,
+    // marginTop: 15,
+    flexDirection: 'column',
+    alignItems: 'center',
+    // color: 'white',
+    // height: screenHeight,
+    textAlign: 'center',
+    position: 'relative',
+    backgroundColor: '#30363a',
+    paddingBottom: 20,
   },
   blockFlexColContainer: {
     flex: 1,
@@ -64,7 +76,9 @@ export const styles = StyleSheet.create({
   container: {
     // marginTop: 32,
     // paddingHorizontal: 24,
-    height: screenHeight,
+    // height: screenHeight,
+    flex: 1,
+    flexDirection: 'column',
     paddingBottom: 100,
     // color: 'white',
     backgroundColor: '#30363a',

@@ -6,7 +6,7 @@ const SingleRecipeCard = ({i}) => {
   const [recipeDisplay, setRecipeDisplay] = React.useState('none');
 
   const handleRecipePress = () => {
-    console.log('que');
+    // console.log('que');
     if (recipeDisplay === 'none') {
       setRecipeDisplay('flex');
       return;
