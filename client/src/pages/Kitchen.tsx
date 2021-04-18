@@ -16,7 +16,7 @@ const Kitchen = props => {
   const [newItem, setNewItem] = useState('');
   // const [searchValue, setSearchValue] = useState('');
   const [results, setResults] = useState([]);
-  const [ingredDisplay, setingredDisplay] = useState('none');
+  // const [ingredDisplay, setingredDisplay] = useState('none');
 
   const {myKitchens, setMyKitchens} = useContext(KitchensContext);
   const {info} = props.route.params;
@@ -24,7 +24,7 @@ const Kitchen = props => {
   const {setKitchensImIn} = useContext(KitchensImInContext);
 
   const {groceryList, name, _id, participants, owner, recipes} = info;
-  console.log(recipes);
+  // console.log(recipes);
 
   const [groceryListItems, setGroceryListItems] = useState(
     groceryList ? groceryList : [],
@@ -72,13 +72,13 @@ const Kitchen = props => {
       if (owner === user.id) {
         axios
           .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
-          .then(res => {
+          .then(({data}) => {
             setNewItem('');
             // setIngredients
             // const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
             //           // console.log(imIn);
-            const mine = res.data.kitchens.filter(i => i.owner === user.id);
-            const newList = res.data.kitchens.filter(i => i.name === name);
+            const mine = data.kitchens.filter(i => i.owner === user.id);
+            const newList = data.kitchens.filter(i => i.name === name);
             setGroceryListItems(newList[0].groceryList);
             setMyKitchens(mine);
             // setKitchensImIn(imIn);
@@ -110,51 +110,53 @@ const Kitchen = props => {
   };
 
   return (
-    // <SafeAreaView style={{flex: 1}}>
-    <ScrollView
-      //   // contentContainerStyle={{flexGrow: 1}}
-      style={styles.scrollScreen}>
-      <View style={styles.flexColContainer}>
-        {owner === user.id && (
-          <TouchableOpacity style={{}}>
-            <Button
-              color="#FF033f"
-              onPress={handleDeleteKitchen}
-              title="Delete Kitchen"
-            />
-          </TouchableOpacity>
-        )}
+    <SafeAreaView style={{backgroundColor: '#30363a'}}>
+      <ScrollView
+        //   // contentContainerStyle={{flexGrow: 1}}
+        style={styles.scrollScreen}>
+        <View style={styles.flexColContainer}>
+          {owner === user.id && (
+            <TouchableOpacity style={{}}>
+              <Button
+                color="#FF033f"
+                onPress={handleDeleteKitchen}
+                title="Delete Kitchen"
+              />
+            </TouchableOpacity>
+          )}
 
-        <Text style={styles.header}>
-          {name}
-          {/* her */}
-        </Text>
-        {/* <Text> */}
-        {groceryListItems.length !== 0 ? (
-          groceryListItems.map((i, n) => <GroceryList key={i} i={i} n={n} />)
-        ) : (
-          <Text style={styles.noGroceryItemsText}>Grocery list goes here!</Text>
-        )}
-        <Input
-          placeholder="Add an item"
-          inputStyles={styles.inputStyles}
-          onChangeText={e => setNewItem(e)}
-          value={newItem}
-          onSubmitEditing={() => handleGroceryItemAdd(newItem)}
-        />
-        <Participants
-          participants={participants}
-          groceryList={groceryList}
-          name={name}
-          recipes={recipes}
-          navigation={props.navigation}
-          user={user}
-          owner={owner}
-          _id={_id}
-        />
+          <Text style={styles.header}>
+            {name}
+            {/* her */}
+          </Text>
+          {/* <Text> */}
+          {groceryListItems.length !== 0 ? (
+            groceryListItems.map((i, n) => <GroceryList key={i} i={i} n={n} />)
+          ) : (
+            <Text style={styles.noGroceryItemsText}>
+              Grocery list goes here!
+            </Text>
+          )}
+          <Input
+            placeholder="Add an item"
+            inputStyles={styles.inputStyles}
+            onChangeText={e => setNewItem(e)}
+            value={newItem}
+            onSubmitEditing={() => handleGroceryItemAdd(newItem)}
+          />
+          <Participants
+            participants={participants}
+            groceryList={groceryList}
+            name={name}
+            recipes={recipes}
+            navigation={props.navigation}
+            user={user}
+            owner={owner}
+            _id={_id}
+          />
 
-        <View>
-          {/* <Input
+          <View>
+            {/* <Input
           // label="Dish Name"
           value={searchValue}
           onChangeText={handleInputChange}
@@ -163,21 +165,21 @@ const Kitchen = props => {
           // placeHolder="title"
           onSubmitEditing={handleSearchSubmit}
         /> */}
-          {results &&
-            results.map(i => (
-              <Text onPress={() => handleRecipeAddToKitchen(i)} key={i._id}>
-                {i.title}
-              </Text>
+            {results &&
+              results.map(i => (
+                <Text onPress={() => handleRecipeAddToKitchen(i)} key={i._id}>
+                  {i.title}
+                </Text>
+              ))}
+          </View>
+          <View style={styles.container}>
+            {recipes.map(i => (
+              <SingleRecipeCard key={i._id} i={i} />
             ))}
+          </View>
         </View>
-        <View style={styles.container}>
-          {recipes.map(i => (
-            <SingleRecipeCard key={i._id} i={i} />
-          ))}
-        </View>
-      </View>
-    </ScrollView>
-    // </SafeAreaView
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

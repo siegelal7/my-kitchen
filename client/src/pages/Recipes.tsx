@@ -68,7 +68,7 @@ const Recipes = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
       {data.data.map((i, index) => (
-        <SingleRecipeCard i={i} index={index} max={max} />
+        <SingleRecipeCard key={i._id} i={i} index={index} max={max} />
       ))}
       {user.username && (
         <Text
