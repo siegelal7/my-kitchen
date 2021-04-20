@@ -47,20 +47,27 @@ router.put("/api/addparticipant/:id", (req, res) => {
     },
     { new: true }
   )
-    .populate({ path: "participants", select: "-password -email" })
+    // .populate({ path: "participants", select: "-password -email" })
     .then(
       (nowNow) =>
         // res.json(nowNow);
-        db.User.findByIdAndUpdate(
-          newPerson,
+        db.User.findOneAndUpdate(
+          { _id: newPerson },
           {
             $push: { kitchens: nowNow._id },
           },
           { new: true }
-        ).then((newnewnew) => {
-          // console.log("got here");
-          res.json(newnewnew);
-        })
+        )
+          // .populate("kitchens")
+          // .populate({ path: "kitchens", populate: { path: "recipes" } })
+          .populate({
+            path: "kitchens",
+            populate: { path: "participants", select: "-password -email" },
+          })
+          .then((newnewnew) => {
+            // console.log("got here");
+            res.json(newnewnew);
+          })
       // .catch((error) => res.status(400).json(error))
     )
     .catch((err) => res.status(400).json(err));

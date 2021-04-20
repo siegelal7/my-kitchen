@@ -11,7 +11,7 @@ const ManageKitchens = ({navigation}) => {
   const {kitchensImIn} = useContext(KitchensImInContext);
   // console.log(myKitchens);
   useEffect(() => {
-    return () => console.log('cleanup manageKitchens');
+    return () => {};
   }, []);
 
   const handleMyKitchenClick = name => {
@@ -24,6 +24,7 @@ const ManageKitchens = ({navigation}) => {
 
   const handleKitchenImInClick = name => {
     const match = kitchensImIn.filter(i => i.name === name)[0];
+
     navigation.navigate('Grocery List', {
       info: match,
     });
@@ -31,7 +32,7 @@ const ManageKitchens = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.flexColContainer}>
-      {myKitchens.length > 0 && (
+      {myKitchens && myKitchens.length > 0 && (
         <Text style={styles.header}>Your Kitchens</Text>
       )}
 

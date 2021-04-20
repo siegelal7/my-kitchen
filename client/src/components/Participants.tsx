@@ -16,7 +16,7 @@ const Participants = ({
 }) => {
   //   const {user} = React.useContext(UserContext);
   React.useEffect(() => {
-    return () => console.log('cleanup participants');
+    return () => {};
   }, []);
   return (
     <View style={{marginTop: 40}}>
@@ -48,7 +48,7 @@ const Participants = ({
           recipes={recipes}
           navigation={navigation}
           _id={_id}
-          user={user}
+          // user={user}
           groceryList={groceryList}
         />
       )}

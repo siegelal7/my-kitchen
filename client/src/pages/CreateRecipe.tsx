@@ -29,12 +29,11 @@ const CreateRecipe = props => {
   const [author, setAuthor] = useState(user.username ? user.username : '');
   const [authorId, setAuthorId] = useState(user.id ? user.id : '');
   const {kitchen, recipes} = props.route.params;
-  // console.log(kitchen);
   const [errorToast, setErrorToast] = useState(false);
 
   useEffect(() => {
     setLength(ingredients.length);
-    return () => console.log('cleanup createRecipe');
+    return () => {};
   }, [ingredients]);
 
   const mutationToKitchen = useMutation(

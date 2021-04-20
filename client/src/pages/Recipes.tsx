@@ -24,7 +24,7 @@ const Recipes = ({navigation}) => {
       setMax(data.data.length);
     }
 
-    return () => console.log('cleanup Recipes');
+    return () => {};
   }, [data]);
 
   if (isLoading) {
@@ -63,12 +63,10 @@ const Recipes = ({navigation}) => {
     );
   }
 
-  // const max = data.data.length;
-
   return (
     <ScrollView style={styles.container}>
-      {data.data.map((i, index) => (
-        <SingleRecipeCard key={i._id} i={i} index={index} max={max} />
+      {data.data.map(i => (
+        <SingleRecipeCard key={i._id} i={i} />
       ))}
       {user.username && (
         <Text

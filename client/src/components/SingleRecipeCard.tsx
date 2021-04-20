@@ -6,7 +6,6 @@ const SingleRecipeCard = ({i}) => {
   const [recipeDisplay, setRecipeDisplay] = React.useState('none');
 
   const handleRecipePress = () => {
-    // console.log('que');
     if (recipeDisplay === 'none') {
       setRecipeDisplay('flex');
       return;
@@ -16,13 +15,13 @@ const SingleRecipeCard = ({i}) => {
   };
 
   React.useEffect(() => {
-    return () => console.log('unmounting singlerecipecard component');
+    return () => {};
   }, []);
   return (
     // <View
     <TouchableOpacity
       onPress={handleRecipePress}
-      key={i._id}
+      // key={i._id}
       style={styles.recipeCard}>
       <View style={styles.recipeInfo}>
         {/* <Text> */}

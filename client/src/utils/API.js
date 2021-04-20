@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import {response} from 'express';
-export const postRecipe = (data, id) => {
-  axios.post(`http://192.168.56.1:3001/api/recipes/${id}`, data);
+export const postRecipe = async (data, id) => {
+  return await axios.post(`http://192.168.56.1:3001/api/recipes/${id}`, data);
 };
 
 export const getRecipes = async () => {
@@ -19,9 +19,22 @@ export const loginUser = user => {
   return response;
 };
 
-export const searchForUser = user => {
-  const response = axios.get(`http://192.168.56.1:3001/api/finduser/${user}`);
+export const searchForUser = async user => {
+  const response = await axios.get(
+    `http://192.168.56.1:3001/api/finduser/${user}`,
+  );
   return response;
+};
+
+export const fetchKitchens = async id => {
+  return await axios.get(`http://192.168.56.1:3001/api/user/${id}`);
+};
+
+export const friendToKitchen = async idToAdd => {
+  return await axios.put(
+    `http://192.168.56.1:3001/api/addparticipant/${_id}`,
+    idToAdd,
+  );
 };
 
 // export const getUser = () => {

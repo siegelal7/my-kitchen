@@ -14,10 +14,9 @@ const Input = ({
   secureTextEntry,
 }) => {
   React.useEffect(() => {
-    return () => console.log('unmounting Input cmponent');
+    return () => {};
   }, []);
-  // const {labelStyles, inputStyles, viewStyles} = allStyles;
-  // console.log(allStyles.viewStyles);
+
   return (
     <View style={viewStyles ? viewStyles : {marginTop: 14}}>
       {label ? (

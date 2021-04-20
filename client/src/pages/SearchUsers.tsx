@@ -1,69 +1,88 @@
-import React, {useState, useContext, useEffect} from 'react';
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import {SafeAreaView, ScrollView} from 'react-native';
 import Input from '../components/Input';
 import {styles} from '../utils/styles';
-import {searchForUser} from '../utils/API';
-import UserContext from '../utils/UserContext';
-import axios from 'axios';
+import {fetchKitchens, searchForUser, friendToKitchen} from '../utils/API';
+import FoundUsers from '../components/FoundUsers';
 import KitchensContext from '../utils/KitchensContext';
-import {part} from 'core-js/core/function';
+import UserContext from '../utils/UserContext';
 
 const SearchUsers = props => {
   const [searchValue, setSearchValue] = useState('');
   const [foundUsers, setFoundUsers] = useState([]);
-  //   const {user} = useContext(UserContext);
-  // const {myKitchens, setMyKitchens} = useContext(KitchensContext);
+
+  const {setMyKitchens} = React.useContext(KitchensContext);
+  const {user} = React.useContext(UserContext);
+
   const handleTitleInputChange = e => {
     setSearchValue(e);
   };
   const {info} = props.route.params;
 
   const {_id, participants, owner} = info;
-  // console.log(participants);
-  useEffect(() => {
-    return () => console.log('cleanup searchUser');
-  }, []);
 
-  const handleSearchSubmit = e => {
-    setSearchValue('');
-    searchForUser(searchValue).then(res => setFoundUsers(res.data));
-  };
-  // console.log(owner);
+  // const pushToParticipants = (person, kitchens) => {
+  //   participants.push(person);
+  //   // console.log(kitchens);
+  //   setMyKitchens(kitchens);
+  // };
+  // const unmount = () => {
+  //   axios.get(`http://192.168.56.1:3001/api/user/${user.id}`).then(response => {
+  //     const mine = response.data.kitchens.filter(m => m.owner === user.id);
+  //     participants.push(res.data);
+  //     setMineTemp(mine);
+
+  //     // pushToParticipants(response.data, mine);
+  //   });
+  // };
 
   const addFriendToKitchen = idToAdd => {
-    axios
-      .put(`http://192.168.56.1:3001/api/addparticipant/${_id}`, idToAdd)
-      .then(async res => await participants.push(res.data))
+    friendToKitchen(idToAdd)
+      .then(
+        async res =>
+          // const testing = res.data.kitchens.map(j => j.owner);
+          // const blah = [];
+          // await testing.forEach(p => p == props.userId && blah.push(p));
+          // console.log(blah);
+          // console.log(res.data.kitchens);
+          await fetchKitchens(user.id).then(response => {
+            const mine = response.data.kitchens.filter(
+              m => m.owner === user.id,
+            );
+            participants.push(res.data);
+
+            setMyKitchens(mine);
+          }),
+        // axios
+        //   .get(`http://192.168.56.1:3001/api/user/${user.id}`)
+        //   .then(response => {
+        //     const mine = response.data.kitchens.filter(
+        //       m => m.owner === user.id,
+        //     );
+        //     participants.push(res.data);
+        //     // console.log(mine);
+        //     setMyKitchens(mine);
+        //     // setMineTemp(mine);
+
+        //     // pushToParticipants(response.data, mine);
+        //   }),
+
+        // await props.participants.push(res.data, mine);
+      )
       .catch(err => console.log(err));
   };
 
-  const handleAddToKitchen = id => {
-    console.log(id === owner);
-    if (participants.length > 0) {
-      //  the filter prevent duplicate participants
-      if (participants.filter(i => i._id === id).length > 0 || id === owner) {
-        // TODO: alrdy added or it's yourkitchen - do something to tell user
-        console.log('alrdy in or your kitchen');
-        return;
-      }
-      console.log('added with ppl alrdy');
-      addFriendToKitchen(id);
+  useEffect(() => {
+    return () => {
+      // unmount();
+      // setMyKitchens(mineTemp);
+    };
+  }, []);
 
-      return;
-    }
-    if (id === owner) {
-      console.log('must be you? and empty kitchen');
-      return;
-    }
-    console.log('added empty');
-    addFriendToKitchen(id);
+  const handleSearchSubmit = () => {
+    setSearchValue('');
+    searchForUser(searchValue).then(res => setFoundUsers(res.data));
   };
 
   return (
@@ -80,20 +99,16 @@ const SearchUsers = props => {
         />
         {foundUsers &&
           foundUsers.map(i => (
-            <View key={i._id} style={styles.userCard}>
-              <Text
-                style={{marginTop: 4, fontSize: 18, color: 'white'}}
-                key={i._id}>
-                {i.username}
-              </Text>
-              <TouchableOpacity style={styles.button2}>
-                <Button
-                  color="#318ce7"
-                  title="+"
-                  onPress={() => handleAddToKitchen(i._id)}
-                />
-              </TouchableOpacity>
-            </View>
+            <FoundUsers
+              i={i}
+              key={i._id}
+              participants={participants}
+              _id={_id}
+              owner={owner}
+              // pushToParticipants={pushToParticipants}
+              userId={user.id}
+              addFriendToKitchen={addFriendToKitchen}
+            />
           ))}
       </ScrollView>
     </SafeAreaView>
