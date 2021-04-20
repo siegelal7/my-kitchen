@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native';
 import {styles} from '../utils/styles';
 
 const GroceryList = ({n, i}) => {

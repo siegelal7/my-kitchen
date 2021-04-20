@@ -14,9 +14,7 @@ import SingleRecipeCard from '../components/SingleRecipeCard';
 
 const Kitchen = props => {
   const [newItem, setNewItem] = useState('');
-  // const [searchValue, setSearchValue] = useState('');
-  const [results, setResults] = useState([]);
-  // const [ingredDisplay, setingredDisplay] = useState('none');
+  // const [results, setResults] = useState([]);
 
   const {myKitchens, setMyKitchens} = useContext(KitchensContext);
   const {info} = props.route.params;
@@ -24,35 +22,21 @@ const Kitchen = props => {
   const {setKitchensImIn} = useContext(KitchensImInContext);
 
   const {groceryList, name, _id, participants, owner, recipes} = info;
-  // console.log(recipes);
+  // console.log(participants);
 
   const [groceryListItems, setGroceryListItems] = useState(
     groceryList ? groceryList : [],
   );
 
-  // const mutation = useMutation()
-  // console.log(user.id);
   useEffect(() => {
-    return () => {
-      console.log('cleanup kitchen');
-    };
+    return () => {};
   }, []);
 
-  // const handleInputChange = e => {
-  //   setSearchValue(e);
-  // };
-  // const handleSearchSubmit = () => {
+  // const handleRecipeAddToKitchen = i => {
   //   axios
-  //     .get(`http://192.168.56.1:3001/api/recipes/${searchValue}`)
-  //     .then(res => setResults(res.data))
-  //     .catch(err => console.log(err));
+  //     .put(`http://192.168.56.1:3001/api/kitchen/addrecipe/${_id}`, i._id)
+  //     .then(res => {});
   // };
-
-  const handleRecipeAddToKitchen = i => {
-    axios
-      .put(`http://192.168.56.1:3001/api/kitchen/addrecipe/${_id}`, i._id)
-      .then(res => console.log(res.data));
-  };
 
   const handleDeleteKitchen = () => {
     axios
@@ -74,14 +58,11 @@ const Kitchen = props => {
           .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
           .then(({data}) => {
             setNewItem('');
-            // setIngredients
-            // const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
-            //           // console.log(imIn);
             const mine = data.kitchens.filter(i => i.owner === user.id);
             const newList = data.kitchens.filter(i => i.name === name);
+
             setGroceryListItems(newList[0].groceryList);
             setMyKitchens(mine);
-            // setKitchensImIn(imIn);
           })
           .catch(err => console.log(err));
       } else {
@@ -95,7 +76,6 @@ const Kitchen = props => {
             payload,
           )
           .then(res => {
-            // console.log(res.data);
             setNewItem('');
             const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
             const newList = res.data.kitchens.filter(i => i.name === name);
@@ -106,7 +86,6 @@ const Kitchen = props => {
       return;
     }
     //   // TODO: tell user alrdy added or whatever
-    console.log('alrdy added that item');
   };
 
   return (
@@ -131,7 +110,7 @@ const Kitchen = props => {
           </Text>
           {/* <Text> */}
           {groceryListItems.length !== 0 ? (
-            groceryListItems.map((i, n) => <GroceryList key={i} i={i} n={n} />)
+            groceryListItems.map((i, n) => <GroceryList i={i} n={n} />)
           ) : (
             <Text style={styles.noGroceryItemsText}>
               Grocery list goes here!
@@ -155,8 +134,8 @@ const Kitchen = props => {
             _id={_id}
           />
 
-          <View>
-            {/* <Input
+          {/*<View>
+             <Input
           // label="Dish Name"
           value={searchValue}
           onChangeText={handleInputChange}
@@ -164,14 +143,14 @@ const Kitchen = props => {
           viewStyles={styles.viewStyles}
           // placeHolder="title"
           onSubmitEditing={handleSearchSubmit}
-        /> */}
-            {results &&
+        /> 
+             {results &&
               results.map(i => (
                 <Text onPress={() => handleRecipeAddToKitchen(i)} key={i._id}>
                   {i.title}
                 </Text>
-              ))}
-          </View>
+              ))} 
+          </View>*/}
           <View style={styles.container}>
             {recipes.map(i => (
               <SingleRecipeCard key={i._id} i={i} />

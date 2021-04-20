@@ -1,19 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Text} from 'react-native';
+// import {Text} from 'react-native';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 // import {NavigationContainer} from '@react-navigation/native';
-import Logout from './Logout';
-import Profile from './Profile';
+// import Logout from './Logout';
+// import Profile from './Profile';
 import SearchUsers from './SearchUsers';
 import CreateKitchen from './CreateKitchen';
 import ManageKitchens from './ManageKitchens';
 import KitchensContext from '../utils/KitchensContext';
 import KitchensImInContext from '../utils/KitchensImInContext';
 import UserContext from '../utils/UserContext';
-import axios from 'axios';
+// import axios from 'axios';
 import Kitchen from './Kitchen';
-import {useQuery} from 'react-query';
+// import {useQuery} from 'react-query';
+
+import {fetchKitchens} from '../utils/API';
 
 const KitchStack = createStackNavigator();
 
@@ -23,9 +25,9 @@ const KitchenStack = () => {
   // const {}
   const [kitchensImIn, setKitchensImIn] = useState([]);
 
-  const fetchKitchens = () => {
-    return axios.get(`http://192.168.56.1:3001/api/user/${user.id}`);
-  };
+  // const fetchKitchens = () => {
+  //   return axios.get(`http://192.168.56.1:3001/api/user/${user.id}`);
+  // };
   // const {isLoading, isError, data, error} = useQuery('kitchens', fetchKitchens);
 
   // if (isLoading) {
@@ -49,7 +51,7 @@ const KitchenStack = () => {
   // }, [data]);
 
   useEffect(() => {
-    fetchKitchens()
+    fetchKitchens(user.id)
       .then(res => {
         const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
         const mine = res.data.kitchens.filter(i => i.owner === user.id);

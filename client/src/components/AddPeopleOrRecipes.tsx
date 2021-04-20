@@ -1,20 +1,19 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
-import {styles} from '../utils/styles';
+import {View, Button} from 'react-native';
+// import {styles} from '../utils/styles';
 
 const AddPeopleOrRecipes = ({
   navigation,
   owner,
-  user,
+  // user,
   name,
   participants,
   groceryList,
   recipes,
   _id,
 }) => {
-  //   console.log(recipes);
   React.useEffect(() => {
-    return () => console.log('cleanup addPplOrRec');
+    return () => {};
   }, []);
   return (
     <View
