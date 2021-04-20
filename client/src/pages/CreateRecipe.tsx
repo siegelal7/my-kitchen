@@ -10,7 +10,7 @@ import UserContext from '../utils/UserContext';
 import axios from 'axios';
 import {styles} from '../utils/styles';
 // import AddPeopleOrRecipes from '../components/AddPeopleOrRecipes';
-import {fetchKitchens} from '../utils/API';
+import {fetchKitchens, postRecipeToKitchen} from '../utils/API';
 import KitchensContext from '../utils/KitchensContext';
 
 const CreateRecipe = props => {
@@ -41,11 +41,8 @@ const CreateRecipe = props => {
   }, [ingredients]);
 
   const mutationToKitchen = useMutation(
-    payload =>
-      axios.post(
-        `http://192.168.56.1:3001/api/kitchen/newrecipe/${kitchen}`,
-        payload,
-      ),
+    payload => postRecipeToKitchen(kitchen, payload),
+
     {
       onMutate: async variables => {
         // A mutation is about to happen!
@@ -129,7 +126,7 @@ const CreateRecipe = props => {
     setInstructions(e);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (title !== '' && instructions != '') {
       let payload = {
         title,
@@ -140,8 +137,26 @@ const CreateRecipe = props => {
       };
       // New Recipe to a kitchen- didnt work once the rec got added but not showing frontend
       if (kitchen) {
-        // recipes.push(payload);
+        // await recipes.push(payload);
         mutationToKitchen.mutate(payload, kitchen);
+        // postRecipeToKitchen(kitchen, payload).then(
+        //   async res =>
+        //     await fetchKitchens(user.id).then(nowNow => {
+        //       setTitle('');
+        //       setInstructions('');
+        //       setingredients([]);
+        //       setingredInput('');
+        //       const mine = nowNow.data.kitchens.filter(
+        //         m => m.owner === user.id,
+        //       );
+
+        //       setMyKitchens(mine);
+        //       Keyboard.dismiss();
+        //       props.navigation.navigate('Kitchens', {
+        //         screen: 'Manage Kitchens',
+        //       });
+        //     }),
+        // );
 
         return;
         // FIXME:

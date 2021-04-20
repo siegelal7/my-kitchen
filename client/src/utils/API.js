@@ -4,6 +4,13 @@ export const postRecipe = async (data, id) => {
   return await axios.post(`http://192.168.56.1:3001/api/recipes/${id}`, data);
 };
 
+export const postRecipeToKitchen = async (kitchen, payload) => {
+  return await axios.post(
+    `http://192.168.56.1:3001/api/kitchen/newrecipe/${kitchen}`,
+    payload,
+  );
+};
+
 export const getRecipes = async () => {
   const response = await axios.get('http://192.168.56.1:3001/api/recipes');
   return response;

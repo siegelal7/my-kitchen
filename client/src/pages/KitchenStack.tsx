@@ -8,7 +8,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SearchUsers from './SearchUsers';
 import CreateKitchen from './CreateKitchen';
 import ManageKitchens from './ManageKitchens';
-import KitchensContext from '../utils/KitchensContext';
+// import KitchensContext from '../utils/KitchensContext';
 import KitchensImInContext from '../utils/KitchensImInContext';
 import UserContext from '../utils/UserContext';
 // import axios from 'axios';
@@ -16,13 +16,14 @@ import Kitchen from './Kitchen';
 // import {useQuery} from 'react-query';
 
 import {fetchKitchens} from '../utils/API';
+import KitchensContext from '../utils/KitchensContext';
 
 const KitchStack = createStackNavigator();
 
 const KitchenStack = () => {
-  const [myKitchens, setMyKitchens] = useState([]);
+  // const [myKitchens, setMyKitchens] = useState([]);
   const {user} = useContext(UserContext);
-  // const {}
+  const {setMyKitchens} = useContext(KitchensContext);
   const [kitchensImIn, setKitchensImIn] = useState([]);
 
   // const fetchKitchens = () => {
@@ -65,23 +66,17 @@ const KitchenStack = () => {
   return (
     // <NavigationContainer>
     <KitchensImInContext.Provider value={{kitchensImIn, setKitchensImIn}}>
-      <KitchensContext.Provider value={{myKitchens, setMyKitchens}}>
-        <KitchStack.Navigator initialRouteName="Manage Kitchens">
-          <KitchStack.Screen
-            name="Manage Kitchens"
-            component={ManageKitchens}
-          />
-          {/* <KitchStack.Screen name="Logout" component={Logout} /> */}
-          <KitchStack.Screen name="Search Users" component={SearchUsers} />
-          <KitchStack.Screen
-            name="Create a Kitchen"
-            component={CreateKitchen}
-          />
-          <KitchStack.Screen name="Grocery List" component={Kitchen} />
-          {/* <KitchStack.Screen name="Search Users" component={SearchUsers} /> */}
-          {/* <KitchStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
-        </KitchStack.Navigator>
-      </KitchensContext.Provider>
+      {/* <KitchensContext.Provider value={{myKitchens, setMyKitchens}}> */}
+      <KitchStack.Navigator initialRouteName="Manage Kitchens">
+        <KitchStack.Screen name="Manage Kitchens" component={ManageKitchens} />
+        {/* <KitchStack.Screen name="Logout" component={Logout} /> */}
+        <KitchStack.Screen name="Search Users" component={SearchUsers} />
+        <KitchStack.Screen name="Create a Kitchen" component={CreateKitchen} />
+        <KitchStack.Screen name="Grocery List" component={Kitchen} />
+        {/* <KitchStack.Screen name="Search Users" component={SearchUsers} /> */}
+        {/* <KitchStack.Screen name="Manage Kitchens" component={ManageKitchens} /> */}
+      </KitchStack.Navigator>
+      {/* </KitchensContext.Provider> */}
     </KitchensImInContext.Provider>
     // </NavigationContainer>
   );
