@@ -22,30 +22,10 @@ const SearchUsers = props => {
 
   const {_id, participants, owner} = info;
 
-  // const pushToParticipants = (person, kitchens) => {
-  //   participants.push(person);
-  //   // console.log(kitchens);
-  //   setMyKitchens(kitchens);
-  // };
-  // const unmount = () => {
-  //   axios.get(`http://192.168.56.1:3001/api/user/${user.id}`).then(response => {
-  //     const mine = response.data.kitchens.filter(m => m.owner === user.id);
-  //     participants.push(res.data);
-  //     setMineTemp(mine);
-
-  //     // pushToParticipants(response.data, mine);
-  //   });
-  // };
-
   const addFriendToKitchen = idToAdd => {
-    friendToKitchen(idToAdd)
+    friendToKitchen(idToAdd, _id)
       .then(
         async res =>
-          // const testing = res.data.kitchens.map(j => j.owner);
-          // const blah = [];
-          // await testing.forEach(p => p == props.userId && blah.push(p));
-          // console.log(blah);
-          // console.log(res.data.kitchens);
           await fetchKitchens(user.id).then(response => {
             const mine = response.data.kitchens.filter(
               m => m.owner === user.id,
@@ -54,30 +34,12 @@ const SearchUsers = props => {
 
             setMyKitchens(mine);
           }),
-        // axios
-        //   .get(`http://192.168.56.1:3001/api/user/${user.id}`)
-        //   .then(response => {
-        //     const mine = response.data.kitchens.filter(
-        //       m => m.owner === user.id,
-        //     );
-        //     participants.push(res.data);
-        //     // console.log(mine);
-        //     setMyKitchens(mine);
-        //     // setMineTemp(mine);
-
-        //     // pushToParticipants(response.data, mine);
-        //   }),
-
-        // await props.participants.push(res.data, mine);
       )
       .catch(err => console.log(err));
   };
 
   useEffect(() => {
-    return () => {
-      // unmount();
-      // setMyKitchens(mineTemp);
-    };
+    return () => {};
   }, []);
 
   const handleSearchSubmit = () => {
@@ -101,11 +63,9 @@ const SearchUsers = props => {
           foundUsers.map(i => (
             <FoundUsers
               i={i}
-              key={i._id}
               participants={participants}
               _id={_id}
               owner={owner}
-              // pushToParticipants={pushToParticipants}
               userId={user.id}
               addFriendToKitchen={addFriendToKitchen}
             />

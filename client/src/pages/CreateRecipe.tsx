@@ -9,11 +9,14 @@ import {useQuery, useMutation, useQueryClient} from 'react-query';
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
 import {styles} from '../utils/styles';
-import AddPeopleOrRecipes from '../components/AddPeopleOrRecipes';
+// import AddPeopleOrRecipes from '../components/AddPeopleOrRecipes';
+import {fetchKitchens} from '../utils/API';
+import KitchensContext from '../utils/KitchensContext';
 
 const CreateRecipe = props => {
   const queryClient = useQueryClient();
   const {user} = useContext(UserContext);
+  const {setMyKitchens} = useContext(KitchensContext);
   const [length, setLength] = useState();
 
   // const [payload, setPayload] = useState({
@@ -29,6 +32,7 @@ const CreateRecipe = props => {
   const [author, setAuthor] = useState(user.username ? user.username : '');
   const [authorId, setAuthorId] = useState(user.id ? user.id : '');
   const {kitchen, recipes} = props.route.params;
+
   const [errorToast, setErrorToast] = useState(false);
 
   useEffect(() => {
@@ -47,13 +51,19 @@ const CreateRecipe = props => {
         // A mutation is about to happen!
         // Optionally return a context containing data to use when for example rolling back
         // return {id: 1};
+        // console.log(variables);
         await recipes.push(variables);
         return variables;
       },
-      onSuccess: () => {
+      onSuccess: async () => {
         queryClient.invalidateQueries('recipes');
         // console.log(e.data);
-        // recipes.push(e);
+        // recipes.push(payload);
+        await fetchKitchens(user.id).then(nowNow => {
+          const mine = nowNow.data.kitchens.filter(m => m.owner === user.id);
+
+          setMyKitchens(mine);
+        });
         setTitle('');
         setInstructions('');
         setingredients([]);
@@ -130,11 +140,14 @@ const CreateRecipe = props => {
       };
       // New Recipe to a kitchen- didnt work once the rec got added but not showing frontend
       if (kitchen) {
+        // recipes.push(payload);
         mutationToKitchen.mutate(payload, kitchen);
+
         return;
         // FIXME:
       }
 
+      // just creating a recipe not attached to any kitchen
       mutation.mutate(payload, user.id);
       return;
     }
