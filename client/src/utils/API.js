@@ -44,10 +44,6 @@ export const friendToKitchen = async (idToAdd, _id) => {
   );
 };
 
-// export const getUser = () => {
-//   const response = axios.get(`http://192.168.56.1:3001/api/user`);
-//   return response;
-// };
 // export const getUser = (id, token) => {
 //   const response = axios.get(`http://192.168.56.1:3001/api/user/${id}`, {
 //     headers: {

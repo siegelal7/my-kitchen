@@ -4,13 +4,25 @@ import KitchensContext from '../utils/KitchensContext';
 import {styles} from '../utils/styles';
 import UserContext from '../utils/UserContext';
 import KitchensImInContext from '../utils/KitchensImInContext';
+import {fetchKitchens} from '../utils/API';
 
 const ManageKitchens = ({navigation}) => {
-  const {myKitchens} = useContext(KitchensContext);
+  const [loading, setLoading] = React.useState(false);
+  const {myKitchens, setMyKitchens} = useContext(KitchensContext);
   const {user} = useContext(UserContext);
-  const {kitchensImIn} = useContext(KitchensImInContext);
-  // console.log(myKitchens);
+  const {kitchensImIn, setKitchensImIn} = useContext(KitchensImInContext);
+
   useEffect(() => {
+    setLoading(true);
+    fetchKitchens(user.id)
+      .then(res => {
+        const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
+        const mine = res.data.kitchens.filter(i => i.owner === user.id);
+        setKitchensImIn(imIn);
+        setMyKitchens(mine);
+        setLoading(false);
+      })
+      .catch(err => console.log(err));
     return () => {};
   }, []);
 
@@ -29,6 +41,16 @@ const ManageKitchens = ({navigation}) => {
       info: match,
     });
   };
+
+  if (loading) {
+    return (
+      <View style={styles.flexColContainer}>
+        <Text style={{color: 'white', fontSize: 18, marginTop: 20}}>
+          Loading
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.flexColContainer}>
