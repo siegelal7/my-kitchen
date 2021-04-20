@@ -22,12 +22,8 @@ const FoundUsers = props => {
       setShowAddedToast(false);
       clearTimeout(alert);
     }, 1500);
-
-    // setShowAddedToast(false);
-    // return;
   };
   const handleAddToKitchen = id => {
-    // console.log(id === owner);
     if (props.participants.length > 0) {
       //  the filter prevent duplicate participants
       if (

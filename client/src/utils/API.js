@@ -4,6 +4,13 @@ export const postRecipe = async (data, id) => {
   return await axios.post(`http://192.168.56.1:3001/api/recipes/${id}`, data);
 };
 
+export const postRecipeToKitchen = async (kitchen, payload) => {
+  return await axios.post(
+    `http://192.168.56.1:3001/api/kitchen/newrecipe/${kitchen}`,
+    payload,
+  );
+};
+
 export const getRecipes = async () => {
   const response = await axios.get('http://192.168.56.1:3001/api/recipes');
   return response;
@@ -30,7 +37,7 @@ export const fetchKitchens = async id => {
   return await axios.get(`http://192.168.56.1:3001/api/user/${id}`);
 };
 
-export const friendToKitchen = async idToAdd => {
+export const friendToKitchen = async (idToAdd, _id) => {
   return await axios.put(
     `http://192.168.56.1:3001/api/addparticipant/${_id}`,
     idToAdd,

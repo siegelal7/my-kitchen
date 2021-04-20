@@ -18,6 +18,7 @@ import Recipes from './src/pages/Recipes';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import LoginStack from './src/pages/LoginStack';
 import UserContext from './src/utils/UserContext';
+import KitchensContext from './src/utils/KitchensContext';
 // import Logout from './src/pages/Logout';
 import ProfileStack from './src/pages/ProfileStack';
 import RecipesStack from './src/pages/RecipesStack';
@@ -35,27 +36,30 @@ const queryClient = new QueryClient({
 
 const App: () => Node = () => {
   const [user, setUser] = useState({});
+  const [myKitchens, setMyKitchens] = useState([]);
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <Tab.Navigator initialRouteName="All Recipes">
-            <Tab.Screen name="Recipes" component={RecipesStack} />
+    <KitchensContext.Provider value={{myKitchens, setMyKitchens}}>
+      <UserContext.Provider value={{user, setUser}}>
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
+            <Tab.Navigator initialRouteName="All Recipes">
+              <Tab.Screen name="Recipes" component={RecipesStack} />
 
-            {user.token ? (
-              <>
-                <Tab.Screen name="Kitchens" component={KitchenStack} />
-                <Tab.Screen name="Profile" component={ProfileStack} />
-              </>
-            ) : (
-              <Tab.Screen name="Login" component={LoginStack} />
-            )}
-          </Tab.Navigator>
-        </NavigationContainer>
-      </QueryClientProvider>
-    </UserContext.Provider>
+              {user.token ? (
+                <>
+                  <Tab.Screen name="Kitchens" component={KitchenStack} />
+                  <Tab.Screen name="Profile" component={ProfileStack} />
+                </>
+              ) : (
+                <Tab.Screen name="Login" component={LoginStack} />
+              )}
+            </Tab.Navigator>
+          </NavigationContainer>
+        </QueryClientProvider>
+      </UserContext.Provider>
+    </KitchensContext.Provider>
   );
 };
 

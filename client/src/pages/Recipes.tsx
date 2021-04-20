@@ -11,7 +11,7 @@ import UserContext from '../utils/UserContext';
 const Recipes = ({navigation}) => {
   const {user} = useContext(UserContext);
 
-  const [max, setMax] = useState();
+  // const [max, setMax] = useState();
 
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
     'recipes',
@@ -20,9 +20,9 @@ const Recipes = ({navigation}) => {
 
   useEffect(() => {
     // const max = data.data.length;
-    if (data) {
-      setMax(data.data.length);
-    }
+    // if (data) {
+    //   setMax(data.data.length);
+    // }
 
     return () => {};
   }, [data]);

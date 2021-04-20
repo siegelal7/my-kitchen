@@ -139,7 +139,7 @@ router.delete("/api/kitchen/:id", (req, res) => {
   );
 });
 
-// add an existing recipe to a kitchen specifically
+// add an existing recipe to a kitchen specifically- not in use rn
 router.put("/api/kitchen/addrecipe/:id", (req, res) => {
   const body = Object.keys(req.body)[0];
   console.log(body);

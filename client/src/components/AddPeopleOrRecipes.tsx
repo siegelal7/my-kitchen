@@ -17,6 +17,7 @@ const AddPeopleOrRecipes = ({
   }, []);
   return (
     <View
+      key={_id}
       style={{
         flexDirection: 'row',
         justifyContent: 'space-around',
