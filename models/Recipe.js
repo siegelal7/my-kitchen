@@ -12,6 +12,7 @@ const RecipeSchema = new Schema({
   author: {
     type: String,
   },
+  category: { type: String },
   ingredients: [
     {
       type: String,

@@ -19,7 +19,7 @@ const Participants = ({
     return () => {};
   }, []);
   return (
-    <View style={{marginTop: 40}}>
+    <View key={_id} style={{marginTop: 40}}>
       <Text style={styles.header}>Kitchen-mates</Text>
       {/* {owner === user.id && (
         <AddPeopleOrRecipes

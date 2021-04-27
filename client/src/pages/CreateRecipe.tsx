@@ -1,17 +1,23 @@
 import React, {useState, useContext, useEffect} from 'react';
-import type {Node} from 'react';
-import {View, Text, Button, TouchableOpacity, Keyboard} from 'react-native';
-
+// import type {Node} from 'react';
+import {
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  Keyboard,
+  ScrollView,
+} from 'react-native';
+import ModalDropdown from 'react-native-modal-dropdown';
 import Input from '../components/Input';
-import {useQuery, useMutation, useQueryClient} from 'react-query';
-// import {postRecipe} from '../utils/API';
-
+import {useMutation, useQueryClient} from 'react-query';
 import UserContext from '../utils/UserContext';
 import axios from 'axios';
 import {styles} from '../utils/styles';
-// import AddPeopleOrRecipes from '../components/AddPeopleOrRecipes';
+
 import {fetchKitchens, postRecipeToKitchen} from '../utils/API';
 import KitchensContext from '../utils/KitchensContext';
+import {foodChoicesRecipeEntry} from '../utils/foodCategories';
 
 const CreateRecipe = props => {
   const queryClient = useQueryClient();
@@ -19,14 +25,9 @@ const CreateRecipe = props => {
   const {setMyKitchens} = useContext(KitchensContext);
   const [length, setLength] = useState();
 
-  // const [payload, setPayload] = useState({
-  //   title: '',
-  //   instructions: '',
-  //   author: user.username ? user.username : '',
-  //   authorId: user.id ? user.id : '',
-  // });
   const [title, setTitle] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [category, setCategory] = useState('');
   const [ingredients, setingredients] = useState([]);
   const [ingredInput, setingredInput] = useState('');
   const [author, setAuthor] = useState(user.username ? user.username : '');
@@ -131,6 +132,7 @@ const CreateRecipe = props => {
       let payload = {
         title,
         instructions,
+        category,
         author,
         ingredients,
         authorId,
@@ -178,65 +180,86 @@ const CreateRecipe = props => {
   };
 
   return (
-    <View style={styles.flexColContainer}>
-      <Input
-        label="Dish Name"
-        value={title}
-        onChangeText={handleTitleInputChange}
-        inputStyles={styles.inputStyles}
-        viewStyles={styles.viewStyles}
-        // placeHolder="title"
-        onSubmitEditing={handleSubmit}
-      />
-
-      <Input
-        label="Instructions"
-        value={instructions}
-        onChangeText={handleInstructionsChange}
-        inputStyles={styles.textarea}
-        // placeHolder=""
-        // onSubmitEditing={handleSubmit}
-        viewStyles={styles.viewStyles}
-        multiline={true}
-        numberOfLines={10}
-      />
-
-      <View style={styles.buttonInputRow}>
+    <ScrollView style={styles.scrollScreen}>
+      <View style={styles.flexColContainer}>
         <Input
-          label="Ingredients"
-          value={ingredInput}
-          onChangeText={setingredInput}
+          label="Dish Name"
+          value={title}
+          onChangeText={handleTitleInputChange}
           inputStyles={styles.inputStyles}
-          // onSubmitEditing={}
+          viewStyles={styles.viewStyles}
+          // placeHolder="title"
+          onSubmitEditing={handleSubmit}
         />
-        <TouchableOpacity style={{position: 'relative', top: 3, left: 3}}>
+        <ModalDropdown
+          onSelect={(index, value) => setCategory(value)}
+          // multipleSelect={true}
+          options={foodChoicesRecipeEntry}
+          textStyle={{fontSize: 16, width: 300, textAlign: 'center'}}
+          dropdownStyle={{
+            fontSize: 16,
+            width: 300,
+            // width: 150,
+            // marginLeft: 75,
+          }}
+          style={{
+            height: 40,
+            width: 300,
+            backgroundColor: 'white',
+            color: '#30363a',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
+        <Input
+          label="Instructions"
+          value={instructions}
+          onChangeText={handleInstructionsChange}
+          inputStyles={styles.textarea}
+          // placeHolder=""
+          // onSubmitEditing={handleSubmit}
+          viewStyles={styles.viewStyles}
+          multiline={true}
+          numberOfLines={10}
+        />
+
+        <View style={styles.buttonInputRow}>
+          <Input
+            label="Ingredients"
+            value={ingredInput}
+            onChangeText={setingredInput}
+            inputStyles={styles.inputStyles}
+            // onSubmitEditing={}
+          />
+          <TouchableOpacity style={{position: 'relative', top: 3, left: 3}}>
+            <Button
+              onPress={handleAddIngredToArray}
+              title="+"
+              color="#318ce7"
+              accessibilityLabel="Submit a new recipe"
+            />
+          </TouchableOpacity>
+        </View>
+        <Text>
+          {ingredients &&
+            ingredients.map((i, index) => (
+              <Text style={{color: 'white', fontSize: 16}} key={i}>
+                {i}
+                {index !== length - 1 ? ', ' : ' '}
+              </Text>
+            ))}
+        </Text>
+        {errorToast && <Text>Please enter all info</Text>}
+        <TouchableOpacity style={styles.buttonBtm}>
           <Button
-            onPress={handleAddIngredToArray}
-            title="+"
+            onPress={handleSubmit}
+            title="Serve"
             color="#318ce7"
             accessibilityLabel="Submit a new recipe"
           />
         </TouchableOpacity>
       </View>
-      <Text>
-        {ingredients &&
-          ingredients.map((i, index) => (
-            <Text style={{color: 'white', fontSize: 16}} key={i}>
-              {i}
-              {index !== length - 1 ? ', ' : ' '}
-            </Text>
-          ))}
-      </Text>
-      {errorToast && <Text>Please enter all info</Text>}
-      <TouchableOpacity style={styles.buttonBtm}>
-        <Button
-          onPress={handleSubmit}
-          title="Serve"
-          color="#318ce7"
-          accessibilityLabel="Submit a new recipe"
-        />
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 

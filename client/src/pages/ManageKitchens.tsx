@@ -54,42 +54,48 @@ const ManageKitchens = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.flexColContainer}>
-      {myKitchens && myKitchens.length > 0 && (
-        <Text style={styles.header}>Your Kitchens</Text>
-      )}
+      <ScrollView
+        style={{height: kitchensImIn.length + myKitchens.length * 60}}>
+        <View style={styles.flexColContainerNoMargin}>
+          {myKitchens && myKitchens.length > 0 && (
+            <Text style={styles.header}>Your Kitchens</Text>
+          )}
 
-      {myKitchens &&
-        myKitchens.map(i => (
+          {myKitchens &&
+            myKitchens.map(i => (
+              <Text
+                key={i._id}
+                value={i.name}
+                style={styles.linkStyle}
+                onPress={() => handleMyKitchenClick(i.name)}>
+                {i.name}
+              </Text>
+            ))}
+        </View>
+
+        <View style={styles.flexColContainerNoMargin}>
           <Text
-            key={i._id}
-            value={i.name}
             style={styles.linkStyle}
-            onPress={() => handleMyKitchenClick(i.name)}>
-            {i.name}
+            onPress={() => navigation.navigate('Create a Kitchen')}>
+            {myKitchens.length > 0
+              ? 'Create another Kitchen'
+              : 'Create your own Kitchen'}
           </Text>
-        ))}
-      <View style={{marginTop: 40}}>
-        <Text
-          style={styles.linkStyle}
-          onPress={() => navigation.navigate('Create a Kitchen')}>
-          {myKitchens.length > 0
-            ? 'Create another Kitchen'
-            : 'Create your own Kitchen'}
-        </Text>
-      </View>
-      <View style={styles.blockFlexColContainer}>
-        <Text style={styles.header}>Kitchens you're in</Text>
-        {kitchensImIn &&
-          kitchensImIn.map(j => (
-            <Text
-              key={j._id}
-              // value={j.name}
-              style={styles.linkStyle}
-              onPress={() => handleKitchenImInClick(j.name)}>
-              {j.name}
-            </Text>
-          ))}
-      </View>
+        </View>
+        <View style={styles.blockFlexColContainer}>
+          <Text style={styles.header}>Kitchens you're in</Text>
+          {kitchensImIn &&
+            kitchensImIn.map(j => (
+              <Text
+                key={j._id}
+                // value={j.name}
+                style={styles.linkStyle}
+                onPress={() => handleKitchenImInClick(j.name)}>
+                {j.name}
+              </Text>
+            ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
