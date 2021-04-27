@@ -31,9 +31,16 @@ const SingleRecipeCard = ({i}) => {
           {i.title}{' '}
         </Text>
         <Text style={{color: 'white', fontSize: 16}}>from {i.author}</Text>
+
         {/* </Text> */}
       </View>
+
       <View style={{display: recipeDisplay}}>
+        {i.category && (
+          <Text style={{color: 'white', fontSize: 16}}>
+            Category: <Text style={{fontWeight: 'bold'}}>{i.category}</Text>
+          </Text>
+        )}
         <Text style={{marginBottom: 5, color: 'white', fontSize: 16}}>
           {i.instructions}
         </Text>
