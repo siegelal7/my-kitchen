@@ -92,6 +92,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     paddingBottom: 100,
+
     // color: 'white',
     backgroundColor: '#30363a',
   },
@@ -122,12 +123,15 @@ export const styles = StyleSheet.create({
   },
   recipeCard: {
     marginTop: 5,
+    width: '60%',
     borderWidth: 1,
     borderColor: '#cec9c6',
     paddingHorizontal: 5,
     alignItems: 'center',
+
     textAlign: 'center',
     borderRadius: 10,
+    backgroundColor: '#cfc9c5',
     // color: 'white',
   },
   recipeCardBtm: {
@@ -173,7 +177,7 @@ export const styles = StyleSheet.create({
     color: '#318ce7',
   },
   bottomLink: {
-    marginVertical: 15,
+    marginTop: 15,
     color: '#318ce7',
     textAlign: 'center',
     fontSize: 20,

@@ -56,4 +56,4 @@ const Participants = ({
   );
 };
 
-export default Participants;
+export default React.memo(Participants);

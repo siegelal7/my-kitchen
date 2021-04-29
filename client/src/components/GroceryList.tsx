@@ -10,4 +10,4 @@ const GroceryList = ({n, i}) => {
   );
 };
 
-export default GroceryList;
+export default React.memo(GroceryList);

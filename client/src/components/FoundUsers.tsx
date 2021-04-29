@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import {View, Text, TouchableOpacity, Button} from 'react-native';
 import {styles} from '../utils/styles';
 

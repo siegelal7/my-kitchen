@@ -34,7 +34,7 @@ const Recipes = ({navigation}) => {
   const [dataLength, setDataLength] = useState(
     foodCategories?.length ? foodCategories.length : 0,
   );
-  const [categoryFilter, setCategoryFilter] = React.useState('');
+  const [categoryFilter, setCategoryFilter] = React.useState([]);
 
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
     'recipes',
@@ -161,22 +161,23 @@ const Recipes = ({navigation}) => {
         ))}
       </View>
       {/* TODO: only map thru certain number? */}
-      {renderRecipes.map(i => (
-        <SingleRecipeCard key={i._id} i={i} />
-      ))}
-
-      {user.username && (
-        <Text
-          style={styles.bottomLink}
-          onPress={() => {
-            navigation.navigate('New Recipe', {
-              recipes: null,
-              kitchen: null,
-            });
-          }}>
-          Add a Recipe
-        </Text>
-      )}
+      <View style={{flex: 1, alignItems: 'center', marginBottom: 35}}>
+        {renderRecipes.map(i => (
+          <SingleRecipeCard key={i._id} i={i} />
+        ))}
+        {user.username && (
+          <Text
+            style={styles.bottomLink}
+            onPress={() => {
+              navigation.navigate('New Recipe', {
+                recipes: null,
+                kitchen: null,
+              });
+            }}>
+            Add a Recipe
+          </Text>
+        )}
+      </View>
     </ScrollView>
   );
 };

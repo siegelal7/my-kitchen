@@ -39,23 +39,19 @@ const Kitchen = props => {
   // };
 
   const handleDeleteKitchen = () => {
-    axios
-      .delete(`http://192.168.56.1:3001/api/kitchen/${info._id}`)
-      .then(res => {
-        const without = myKitchens.filter(i =>
-          res.data.kitchens.includes(i._id),
-        );
+    axios.delete(`http://10.0.0.50:3001/api/kitchen/${info._id}`).then(res => {
+      const without = myKitchens.filter(i => res.data.kitchens.includes(i._id));
 
-        setMyKitchens(without);
-        props.navigation.navigate('Manage Kitchens');
-      });
+      setMyKitchens(without);
+      props.navigation.navigate('Manage Kitchens');
+    });
   };
 
   const handleGroceryItemAdd = item => {
     if (_id && !groceryListItems.includes(item) && newItem != '') {
       if (owner === user.id) {
         axios
-          .put(`http://192.168.56.1:3001/api/additem/${_id}`, newItem)
+          .put(`http://10.0.0.50:3001/api/additem/${_id}`, newItem)
           .then(({data}) => {
             setNewItem('');
             const mine = data.kitchens.filter(i => i.owner === user.id);
@@ -71,10 +67,7 @@ const Kitchen = props => {
           newItem,
         };
         axios
-          .put(
-            `http://192.168.56.1:3001/api/additemparticipant/${_id}`,
-            payload,
-          )
+          .put(`http://10.0.0.50:3001/api/additemparticipant/${_id}`, payload)
           .then(res => {
             setNewItem('');
             const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
@@ -151,7 +144,7 @@ const Kitchen = props => {
                 </Text>
               ))} 
           </View>*/}
-          <View style={styles.container}>
+          <View style={{flex: 1, alignItems: 'center'}}>
             {recipes.map(i => (
               <SingleRecipeCard key={i._id} i={i} />
             ))}

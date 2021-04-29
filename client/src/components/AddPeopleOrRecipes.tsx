@@ -52,4 +52,4 @@ const AddPeopleOrRecipes = ({
   );
 };
 
-export default AddPeopleOrRecipes;
+export default React.memo(AddPeopleOrRecipes);

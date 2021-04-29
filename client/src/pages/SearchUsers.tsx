@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import {SafeAreaView, ScrollView} from 'react-native';
 import Input from '../components/Input';
 import {styles} from '../utils/styles';
