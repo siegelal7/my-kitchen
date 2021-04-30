@@ -5,7 +5,6 @@ import {View, Button} from 'react-native';
 const AddPeopleOrRecipes = ({
   navigation,
   owner,
-  // user,
   name,
   participants,
   groceryList,
@@ -15,6 +14,7 @@ const AddPeopleOrRecipes = ({
   React.useEffect(() => {
     return () => {};
   }, []);
+
   return (
     <View
       key={_id}

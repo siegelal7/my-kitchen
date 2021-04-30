@@ -52,10 +52,8 @@ const FoundUsers = props => {
   };
 
   return (
-    <View key={props.i._id} style={styles.userCard}>
-      <Text
-        style={{marginTop: 4, fontSize: 18, color: 'white'}}
-        key={props.i._id}>
+    <View style={styles.userCard}>
+      <Text style={{marginTop: 4, fontSize: 18, color: 'white'}}>
         {props.i.username}
       </Text>
       <TouchableOpacity style={styles.button2}>

@@ -50,12 +50,32 @@ const SingleRecipeCard = ({i}) => {
             ))}
           </Text>
         )}
-        <Text style={{color: '#30363a', fontSize: 18, marginVertical: 10}}>
-          Instructions
-        </Text>
-        <Text style={{marginBottom: 5, color: '#30363a', fontSize: 16}}>
-          {i.instructions}
-        </Text>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: 'black',
+            borderRadius: 10,
+            marginBottom: 5,
+          }}>
+          <Text
+            style={{
+              color: '#30363a',
+              fontSize: 18,
+              marginVertical: 10,
+              marginLeft: 3,
+            }}>
+            Instructions
+          </Text>
+          <Text
+            style={{
+              marginBottom: 5,
+              color: '#30363a',
+              fontSize: 16,
+              marginLeft: 3,
+            }}>
+            {i.instructions}
+          </Text>
+        </View>
 
         {/* {i.ingredients && i.ingredients.length > 0 && (
           <Text style={{color: 'white', marginVertical: 5, fontSize: 16}}>

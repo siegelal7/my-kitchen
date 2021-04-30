@@ -103,7 +103,7 @@ const Kitchen = props => {
           </Text>
           {/* <Text> */}
           {groceryListItems.length !== 0 ? (
-            groceryListItems.map((i, n) => <GroceryList i={i} n={n} />)
+            groceryListItems.map((i, n) => <GroceryList key={n} i={i} n={n} />)
           ) : (
             <Text style={styles.noGroceryItemsText}>
               Grocery list goes here!

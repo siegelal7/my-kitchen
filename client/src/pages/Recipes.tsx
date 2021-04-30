@@ -150,7 +150,7 @@ const Recipes = ({navigation}) => {
         }}>
         {foodCategories.map(i => (
           <CategoryPickers
-            // key={i.category}
+            key={i.category}
             i={i}
             dataLength={dataLength}
             // setRenderRecipes={setRenderRecipes}
