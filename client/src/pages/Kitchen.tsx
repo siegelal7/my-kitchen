@@ -88,7 +88,7 @@ const Kitchen = props => {
         style={styles.scrollScreen}>
         <View style={styles.flexColContainer}>
           {owner === user.id && (
-            <TouchableOpacity style={{}}>
+            <TouchableOpacity style={styles.buttonTop}>
               <Button
                 color="#FF033f"
                 onPress={handleDeleteKitchen}

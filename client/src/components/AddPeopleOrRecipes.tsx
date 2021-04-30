@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, TouchableOpacity} from 'react-native';
+import {styles} from '../utils/styles';
 // import {styles} from '../utils/styles';
 
 const AddPeopleOrRecipes = ({
@@ -23,31 +24,35 @@ const AddPeopleOrRecipes = ({
         justifyContent: 'space-around',
         marginVertical: 20,
       }}>
-      <Button
-        color="#318ce7"
-        onPress={() =>
-          navigation.navigate('Search Users', {
-            info: {
-              groceryList: groceryList,
-              name: name,
-              _id: _id,
-              participants: participants,
-              owner: owner,
-            },
-          })
-        }
-        title="Add user"
-      />
-      <Button
-        color="#318ce7"
-        onPress={() =>
-          navigation.navigate('Recipes', {
-            screen: 'New Recipe',
-            params: {kitchen: _id, recipes: recipes},
-          })
-        }
-        title="Add Dish"
-      />
+      <TouchableOpacity style={styles.button}>
+        <Button
+          color="#318ce7"
+          onPress={() =>
+            navigation.navigate('Search Users', {
+              info: {
+                groceryList: groceryList,
+                name: name,
+                _id: _id,
+                participants: participants,
+                owner: owner,
+              },
+            })
+          }
+          title="Add user"
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Button
+          color="#318ce7"
+          onPress={() =>
+            navigation.navigate('Recipes', {
+              screen: 'New Recipe',
+              params: {kitchen: _id, recipes: recipes},
+            })
+          }
+          title="Add Dish"
+        />
+      </TouchableOpacity>
     </View>
   );
 };

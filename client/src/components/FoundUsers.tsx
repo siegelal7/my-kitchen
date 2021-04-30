@@ -78,4 +78,4 @@ const FoundUsers = props => {
   );
 };
 
-export default FoundUsers;
+export default React.memo(FoundUsers);
