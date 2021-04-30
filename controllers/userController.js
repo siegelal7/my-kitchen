@@ -103,6 +103,7 @@ router.get("/api/user/:id", (req, res) => {
     });
 });
 
+//TODO: might not need that seoncd db check
 router.get("/api/finduser/:name", async (req, res) => {
   const name = req.params.name;
   db.User.find({ username: { $regex: name } })
@@ -122,6 +123,26 @@ router.get("/api/finduser/:name", async (req, res) => {
         })
         .catch((error) => res.status(400).json(error));
     })
+    .catch((err) => res.status(400).json(err));
+});
+
+router.get("/api/finduserexact/:name", (req, res) => {
+  db.User.findOne({ username: req.params.name })
+    .then((found) => res.json(found))
+    .catch((err) => res.status(400).json(err));
+});
+
+// router.get("/api/usernames", (req, res) => {
+//   db.User.find({})
+//     .select("-email -password -kitchens -recipes -register_date")
+//     .then((all) => res.json(all))
+//     .catch((err) => res.status(400).json(err));
+// });
+
+router.get("/api/usernames/:name", (req, res) => {
+  db.User.find({ username: { $regex: req.params.name, $options: "i" } })
+    .select("-email -password -kitchens -recipes -register_date")
+    .then((all) => res.json(all))
     .catch((err) => res.status(400).json(err));
 });
 

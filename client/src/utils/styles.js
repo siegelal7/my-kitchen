@@ -7,26 +7,17 @@ const screenWidth = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
   flexColContainer: {
     flex: 1,
-    // flexGrow: 1,
-    // marginTop: 15,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    // color: 'white',
-    // height: screenHeight,
+    // justifyContent: 'center',
     textAlign: 'center',
     position: 'relative',
     backgroundColor: '#30363a',
-    // paddingTop: 10,
   },
   flexColContainerBtm: {
     flex: 1,
-    // flexGrow: 1,
-    // marginTop: 15,
     flexDirection: 'column',
     alignItems: 'center',
-    // color: 'white',
-    // height: screenHeight,
     textAlign: 'center',
     position: 'relative',
     backgroundColor: '#30363a',
@@ -65,8 +56,6 @@ export const styles = StyleSheet.create({
   button: {marginTop: 20, width: 100, borderRadius: 10},
   buttonBtm: {
     borderRadius: 10,
-    // position: 'absolute',
-    // bottom: 10,
     marginBottom: 20,
     paddingBottom: 50,
     marginTop: 60,
@@ -75,8 +64,6 @@ export const styles = StyleSheet.create({
   button2: {
     // marginTop: 20,
     borderRadius: 10,
-    // width: 30,
-    // marginBottom: 10,
     position: 'absolute',
     top: 0,
     right: 0,
@@ -86,13 +73,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    // marginTop: 32,
-    // paddingHorizontal: 24,
-    // height: screenHeight,
     flex: 1,
     flexDirection: 'column',
     paddingBottom: 100,
-    // color: 'white',
     backgroundColor: '#30363a',
   },
   searchInput: {
@@ -101,9 +84,15 @@ export const styles = StyleSheet.create({
     height: 40,
     width: 300,
     marginTop: 10,
-    marginBottom: 20,
+    // marginBottom: 20,
     backgroundColor: 'white',
     color: '#30363a',
+  },
+  foundUsersRow: {
+    backgroundColor: 'white',
+    paddingVertical: 15,
+    borderBottomColor: '#cec9c6',
+    borderBottomWidth: 2,
   },
   inputStyles: {
     borderColor: '#cec9c6',
@@ -122,12 +111,15 @@ export const styles = StyleSheet.create({
   },
   recipeCard: {
     marginTop: 5,
+    width: '60%',
     borderWidth: 1,
     borderColor: '#cec9c6',
     paddingHorizontal: 5,
     alignItems: 'center',
+
     textAlign: 'center',
     borderRadius: 10,
+    backgroundColor: '#cfc9c5',
     // color: 'white',
   },
   recipeCardBtm: {
@@ -173,7 +165,7 @@ export const styles = StyleSheet.create({
     color: '#318ce7',
   },
   bottomLink: {
-    marginVertical: 15,
+    marginTop: 15,
     color: '#318ce7',
     textAlign: 'center',
     fontSize: 20,
