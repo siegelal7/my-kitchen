@@ -53,16 +53,20 @@ export const styles = StyleSheet.create({
     color: '#cec9c6',
     marginTop: 20,
   },
-  button: {marginTop: 20, width: 100, borderRadius: 10},
+  button: {overflow: 'hidden', marginTop: 20, width: 100, borderRadius: 10},
+  buttonTop: {overflow: 'hidden', borderRadius: 10},
   buttonBtm: {
     borderRadius: 10,
     marginBottom: 20,
     paddingBottom: 50,
     marginTop: 60,
     width: 100,
+    overflow: 'hidden',
   },
   button2: {
     // marginTop: 20,
+    // flex: 1,
+    overflow: 'hidden',
     borderRadius: 10,
     position: 'absolute',
     top: 0,
@@ -81,6 +85,7 @@ export const styles = StyleSheet.create({
   searchInput: {
     borderColor: '#cec9c6',
     borderWidth: 1,
+    borderRadius: 10,
     height: 40,
     width: 300,
     marginTop: 10,
@@ -116,7 +121,6 @@ export const styles = StyleSheet.create({
     borderColor: '#cec9c6',
     paddingHorizontal: 5,
     alignItems: 'center',
-
     textAlign: 'center',
     borderRadius: 10,
     backgroundColor: '#cfc9c5',
@@ -141,6 +145,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 20,
     borderRadius: 10,
+
+    overflow: 'hidden',
     // position: 'relative',
     // width: screenWidth - 40,
   },
