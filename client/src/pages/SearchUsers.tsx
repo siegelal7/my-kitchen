@@ -29,7 +29,7 @@ const SearchUsers = props => {
   useEffect(() => {
     if (searchValue !== '') {
       axios
-        .get(`http://10.0.0.50:3001/api/usernames/${searchValue}`)
+        .get(`http://10.0.0.112:3001/api/usernames/${searchValue}`)
         .then(res => {
           console.log(res.data);
           setOptions(res.data);
@@ -45,7 +45,7 @@ const SearchUsers = props => {
   useEffect(() => {
     if (selection !== '') {
       axios
-        .get(`http://10.0.0.50:3001/api/finduserexact/${selection}`)
+        .get(`http://10.0.0.112:3001/api/finduserexact/${selection}`)
         .then(res => {
           setFoundUsers([res.data]);
           setOptions([]);
@@ -55,21 +55,19 @@ const SearchUsers = props => {
     return () => {};
   }, [selection]);
 
-  const addFriendToKitchen = idToAdd => {
+  const addFriendToKitchen = React.useCallback(idToAdd => {
     friendToKitchen(idToAdd, _id)
-      .then(
-        async res =>
-          await fetchKitchens(user.id).then(response => {
-            const mine = response.data.kitchens.filter(
-              m => m.owner === user.id,
-            );
-            participants.push(res.data);
-
-            setMyKitchens(mine);
-          }),
-      )
+      .then(async res => {
+        // FIXME: not working..
+        await participants.push(res.data);
+        await fetchKitchens(user.id).then(response => {
+          const mine = response.data.kitchens.filter(m => m.owner === user.id);
+          // await participants.push(res.data);
+          setMyKitchens(mine);
+        });
+      })
       .catch(err => console.log(err));
-  };
+  });
 
   const handleSearchSubmit = () => {
     setSearchValue('');

@@ -31,7 +31,7 @@ const CreateKitchen = ({navigation}) => {
     // FIXME: holy shit what was I  thinking?
     // TODO: fix this shit
     axios
-      .post('http://10.0.0.50:3001/api/kitchen', kitchen)
+      .post('http://10.0.0.112:3001/api/kitchen', kitchen)
       .then(async res => {
         setUser({...user, kitchens: res.data.kitchens});
         // const imIn = await res.data.kitchens.filter(j => j.owner !== user.id);

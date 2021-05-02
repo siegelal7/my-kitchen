@@ -45,16 +45,16 @@ const CreateRecipe = props => {
     payload => postRecipeToKitchen(kitchen, payload),
 
     {
-      onMutate: async variables => {
+      onMutate: variables => {
         // A mutation is about to happen!
         // Optionally return a context containing data to use when for example rolling back
         // return {id: 1};
         // console.log(variables);
-        await recipes.push(variables);
+        recipes.push(variables);
         return variables;
       },
       onSuccess: async () => {
-        queryClient.invalidateQueries('recipes');
+        queryClient.invalidateQueries('limited-recipes');
         // console.log(e.data);
         // recipes.push(payload);
         await fetchKitchens(user.id).then(nowNow => {
@@ -83,7 +83,7 @@ const CreateRecipe = props => {
 
   const mutation = useMutation(
     payload =>
-      axios.post(`http://10.0.0.50:3001/api/recipes/${user.id}`, payload),
+      axios.post(`http://10.0.0.112:3001/api/recipes/${user.id}`, payload),
     {
       onMutate: variables => {
         // A mutation is about to happen!
@@ -93,7 +93,7 @@ const CreateRecipe = props => {
         return variables;
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('recipes');
+        queryClient.invalidateQueries('limited-recipes');
         // setPayload({
         //   title: '',
         //   instructions: '',
