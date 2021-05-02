@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {
   useEffect,
   useContext,
@@ -19,7 +20,7 @@ import SingleRecipeCard from '../components/SingleRecipeCard';
 //   () => import('../components/SingleRecipeCard'),
 // );
 // import Input from '../components/Input';
-import {getRecipes} from '../utils/API';
+import {getAllRecipes, getLimitRecipes} from '../utils/API';
 import {foodCategories} from '../utils/foodCategories';
 import {styles} from '../utils/styles';
 import UserContext from '../utils/UserContext';
@@ -37,30 +38,20 @@ const Recipes = ({navigation}) => {
   const [categoryFilter, setCategoryFilter] = React.useState([]);
 
   const {isLoading, status, data, isFetching, isError, error} = useQuery(
-    'recipes',
-    getRecipes,
+    'limited-recipes',
+    getLimitRecipes,
   );
 
   useEffect(() => {
     if (data?.data) {
-      const len = data.data.length;
-      const limit = len - 15;
-      let arr = [];
-      for (let m = limit; m < len; m++) {
-        // setAllRecipes
-        arr.push(data.data[m]);
-      }
-      setRenderRecipes(arr);
-      setRenderRecipesStore(arr);
-      // setAllRecipes(data)
-      setAllData(data.data);
-      // setAllRecipes(data.data);
+      setRenderRecipes(data.data);
+      setRenderRecipesStore(data.data);
     }
-    // const max = foodCategories.length;
-    // if (max) {
-    //   setMax(max);
-    // }
-    // console.log(max);
+    axios
+      .get('http://10.0.0.112:3001/api/recipes')
+      .then(response => setAllData(response.data))
+      .catch(er => console.log(er));
+
     return () => {};
   }, [data?.data]);
 
@@ -136,9 +127,12 @@ const Recipes = ({navigation}) => {
     <ScrollView style={styles.container}>
       <View
         style={{
-          marginVertical: 20,
+          marginTop: 20,
+          marginBottom: 50,
+
           height: dataLength * 10 + 5,
           // width: 500,
+
           flex: 1,
           flexDirection: 'row',
           flexWrap: 'wrap',
@@ -162,9 +156,8 @@ const Recipes = ({navigation}) => {
       </View>
       {/* TODO: only map thru certain number? */}
       <View style={{flex: 1, alignItems: 'center', marginBottom: 35}}>
-        {renderRecipes.map(i => (
-          <SingleRecipeCard key={i._id} i={i} />
-        ))}
+        {renderRecipes.length > 0 &&
+          renderRecipes.map(i => <SingleRecipeCard key={i._id} i={i} />)}
         {user.username && (
           <Text
             style={styles.bottomLink}

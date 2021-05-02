@@ -31,6 +31,17 @@ router.get("/api/recipes", (req, res) => {
     });
 });
 
+router.get("/api/limitrecipes", (req, res) => {
+  db.Recipe.find({})
+    .limit(15)
+    .then((all) => {
+      res.json(all);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
 router.get("/api/recipes/:name", (req, res) => {
   const name = req.params.name;
   db.Recipe.find({ title: { $regex: name } })

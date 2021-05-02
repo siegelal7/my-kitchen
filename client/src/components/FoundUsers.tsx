@@ -34,7 +34,6 @@ const FoundUsers = props => {
         showModal("Can't add them again");
         return;
       }
-
       props.addFriendToKitchen(id);
       showModal('Added');
 
