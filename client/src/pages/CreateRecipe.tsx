@@ -6,6 +6,7 @@ import {
   Button,
   TouchableOpacity,
   Keyboard,
+  Image,
   ScrollView,
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -18,6 +19,7 @@ import {styles} from '../utils/styles';
 import {fetchKitchens, postRecipeToKitchen} from '../utils/API';
 import KitchensContext from '../utils/KitchensContext';
 import {foodChoicesRecipeEntry} from '../utils/foodCategories';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const CreateRecipe = props => {
   const queryClient = useQueryClient();
@@ -33,6 +35,8 @@ const CreateRecipe = props => {
   const [author, setAuthor] = useState(user.username ? user.username : '');
   const [authorId, setAuthorId] = useState(user.id ? user.id : '');
   const {kitchen, recipes} = props.route.params;
+
+  const [image, setImage] = useState({});
 
   const [errorToast, setErrorToast] = useState(false);
 
@@ -139,29 +143,8 @@ const CreateRecipe = props => {
       };
       // New Recipe to a kitchen- didnt work once the rec got added but not showing frontend
       if (kitchen) {
-        // await recipes.push(payload);
         mutationToKitchen.mutate(payload, kitchen);
-        // postRecipeToKitchen(kitchen, payload).then(
-        //   async res =>
-        //     await fetchKitchens(user.id).then(nowNow => {
-        //       setTitle('');
-        //       setInstructions('');
-        //       setingredients([]);
-        //       setingredInput('');
-        //       const mine = nowNow.data.kitchens.filter(
-        //         m => m.owner === user.id,
-        //       );
-
-        //       setMyKitchens(mine);
-        //       Keyboard.dismiss();
-        //       props.navigation.navigate('Kitchens', {
-        //         screen: 'Manage Kitchens',
-        //       });
-        //     }),
-        // );
-
         return;
-        // FIXME:
       }
 
       // just creating a recipe not attached to any kitchen
@@ -170,6 +153,7 @@ const CreateRecipe = props => {
     }
 
     // TODO: set an error toast saying enter all shit
+    setErrorToast(true);
   };
 
   const handleAddIngredToArray = () => {
@@ -178,6 +162,17 @@ const CreateRecipe = props => {
       setingredInput('');
     }
   };
+
+  const callback = response => {
+    // console.log(response);
+    setImage(response);
+  };
+
+  useEffect(() => {
+    // TODO: here
+    if (image) console.log(image.uri);
+    return () => {};
+  }, [image]);
 
   return (
     <ScrollView style={styles.scrollScreen}>
@@ -249,7 +244,26 @@ const CreateRecipe = props => {
               </Text>
             ))}
         </Text>
-        {errorToast && <Text>Please enter all info</Text>}
+        <TouchableOpacity style={{overflow: 'hidden', borderRadius: 10}}>
+          <Button
+            title="Add Image"
+            onPress={() => {
+              launchCamera({mediaType: 'photo'}, callback);
+            }}
+            color="#318ce7"
+          />
+        </TouchableOpacity>
+        {image?.uri && (
+          <View style={{height: '100%', width: '100%'}}>
+            <Text style={{color: 'white'}}>{image.fileName}</Text>
+            <Image source={image.fileName} style={{height: 100, width: 100}} />
+          </View>
+        )}
+        {errorToast && (
+          <Text style={{fontSize: 16, color: 'white'}}>
+            Please enter all info
+          </Text>
+        )}
         <TouchableOpacity style={styles.buttonBtm}>
           <Button
             onPress={handleSubmit}
