@@ -39,7 +39,7 @@ const Kitchen = props => {
   // };
 
   const handleDeleteKitchen = () => {
-    axios.delete(`http://10.0.0.112:3001/api/kitchen/${info._id}`).then(res => {
+    axios.delete(`http://10.0.0.50:3001/api/kitchen/${info._id}`).then(res => {
       const without = myKitchens.filter(i => res.data.kitchens.includes(i._id));
 
       setMyKitchens(without);
@@ -51,7 +51,7 @@ const Kitchen = props => {
     if (_id && !groceryListItems.includes(item) && newItem != '') {
       if (owner === user.id) {
         axios
-          .put(`http://10.0.0.112:3001/api/additem/${_id}`, newItem)
+          .put(`http://10.0.0.50:3001/api/additem/${_id}`, newItem)
           .then(({data}) => {
             setNewItem('');
             const mine = data.kitchens.filter(i => i.owner === user.id);
@@ -67,7 +67,7 @@ const Kitchen = props => {
           newItem,
         };
         axios
-          .put(`http://10.0.0.112:3001/api/additemparticipant/${_id}`, payload)
+          .put(`http://10.0.0.50:3001/api/additemparticipant/${_id}`, payload)
           .then(res => {
             setNewItem('');
             const imIn = res.data.kitchens.filter(j => j.owner !== user.id);
