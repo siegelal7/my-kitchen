@@ -48,7 +48,7 @@ const Recipes = ({navigation}) => {
       setRenderRecipesStore(data.data);
     }
     axios
-      .get('http://10.0.0.112:3001/api/recipes')
+      .get('http://10.0.0.50:3001/api/recipes')
       .then(response => setAllData(response.data))
       .catch(er => console.log(er));
 

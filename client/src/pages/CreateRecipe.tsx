@@ -87,7 +87,7 @@ const CreateRecipe = props => {
 
   const mutation = useMutation(
     payload =>
-      axios.post(`http://10.0.0.112:3001/api/recipes/${user.id}`, payload),
+      axios.post(`http://10.0.0.50:3001/api/recipes/${user.id}`, payload),
     {
       onMutate: variables => {
         // A mutation is about to happen!
